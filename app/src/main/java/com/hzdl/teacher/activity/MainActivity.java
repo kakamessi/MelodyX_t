@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hzdl.mex.socket.SocketParams;
 import com.hzdl.mex.socket.teacher.TeacherClient;
+import com.hzdl.mex.socket.teacher.udp.UdpClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.activity.net.ITeacher;
 import com.hzdl.teacher.activity.net.NetConstant;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,15 +38,27 @@ public class MainActivity extends AppCompatActivity {
 
         //testRetrofit();
 
-        final TeacherClient client = new TeacherClient();
-        client.start(null);
 
+        TeacherClient.getInstance().start(null);
         tv_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                client.sendMsgToAll("0|0|0".getBytes());
+                TeacherClient.getInstance().sendMsgToAll("0|0|0".getBytes());
             }
         });
+
+        try {
+            DatagramSocket socket = new DatagramSocket(SocketParams.TEACHER_UDP_PORT);
+            final UdpClient uc = new UdpClient(socket);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    uc.readSynMsg();
+                }
+            }).start();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -19,6 +19,13 @@ public class TeacherClient {
 
     private Thread mTeacher;
 
+    private static TeacherClient instance=new TeacherClient();
+    private TeacherClient(){
+    }
+    public static TeacherClient getInstance(){
+        return instance;
+    }
+
 
     /**
      * 启动socket服务
@@ -51,6 +58,8 @@ public class TeacherClient {
     public void stop(){
 
     }
+
+
 
 
 }
