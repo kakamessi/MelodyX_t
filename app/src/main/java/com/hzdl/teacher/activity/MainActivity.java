@@ -1,5 +1,6 @@
 package com.hzdl.teacher.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,8 +10,9 @@ import com.hzdl.mex.socket.SocketParams;
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.socket.teacher.udp.UdpClient;
 import com.hzdl.teacher.R;
-import com.hzdl.teacher.activity.net.ITeacher;
-import com.hzdl.teacher.activity.net.NetConstant;
+import com.hzdl.teacher.net.ITeacher;
+import com.hzdl.teacher.net.NetConstant;
+import com.hzdl.teacher.utils.Utils;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -35,32 +37,20 @@ public class MainActivity extends AppCompatActivity {
 
         tv_test = (TextView) findViewById(R.id.tv_test);
         tv_test.setText(Utils.getLocalIp(this));
-
-        //testRetrofit();
-
-
-        TeacherClient.getInstance().start(null);
         tv_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TeacherClient.getInstance().sendMsgToAll("0|0|0".getBytes());
+                Intent intent=new Intent(MainActivity.this,CourseActivity.class);
+                startActivity(intent);
             }
         });
 
-        try {
-            DatagramSocket socket = new DatagramSocket(SocketParams.TEACHER_UDP_PORT);
-            final UdpClient uc = new UdpClient(socket);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    uc.readSynMsg();
-                }
-            }).start();
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-
     }
+
+
+
+
+
 
     private void testRetrofit() {
 
@@ -90,9 +80,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
+
+
+    private void testSocket(){
+        TeacherClient.getInstance().start(null);
+        tv_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TeacherClient.getInstance().sendMsgToAll("0|0|0".getBytes());
+            }
+        });
+
+        try {
+            DatagramSocket socket = new DatagramSocket(SocketParams.TEACHER_UDP_PORT);
+            final UdpClient uc = new UdpClient(socket);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    uc.readSynMsg();
+                }
+            }).start();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    uc.sendSycMsg();
+                }
+            }).start();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

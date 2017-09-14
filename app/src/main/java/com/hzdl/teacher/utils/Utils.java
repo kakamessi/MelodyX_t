@@ -1,11 +1,14 @@
-package com.hzdl.teacher.activity;
+package com.hzdl.teacher.utils;
 
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Environment;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+
+import com.hzdl.teacher.net.Constant;
 
 import java.io.File;
 
@@ -76,6 +79,11 @@ public class Utils {
             }
             file.delete();
         }
+    }
+
+    public static String getVideoPath(){
+
+        return Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH;
     }
 
 }

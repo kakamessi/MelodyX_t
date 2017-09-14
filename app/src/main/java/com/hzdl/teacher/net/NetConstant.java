@@ -1,4 +1,4 @@
-package com.hzdl.teacher.activity.net;
+package com.hzdl.teacher.net;
 
 /**
  * Created by wangshuai on 2017/9/8.

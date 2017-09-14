@@ -1,4 +1,4 @@
-package com.hzdl.teacher.activity.net;
+package com.hzdl.teacher.net;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

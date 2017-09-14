@@ -34,4 +34,5 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
     compile project(':mex')
+    compile 'com.charonchui.vitamio:vitamio:4.2.2'
 }
