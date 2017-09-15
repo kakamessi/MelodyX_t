@@ -84,7 +84,7 @@ public class SocketClient {
 
             byte[] data = new byte[totalLen - 4 - 1];
             dins.readFully(data);
-            String msg = new String(data);
+
             receiver.receive(data);
         }
 

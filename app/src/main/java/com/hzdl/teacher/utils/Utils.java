@@ -8,7 +8,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 
-import com.hzdl.teacher.net.Constant;
+import com.hzdl.teacher.base.Constant;
 
 import java.io.File;
 
