@@ -1,26 +1,24 @@
 package com.hzdl.teacher.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.hardware.usb.UsbManager;
+import android.hardware.usb.UsbDevice;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hzdl.mex.usb.UsbDeviceConnect;
-import com.hzdl.mex.usb.UsbDeviceInfo;
-import com.hzdl.mex.usb.callback.CallbackInterface;
+import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
+import com.hzdl.teacher.base.BaseMidiActivity;
+import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.net.ITeacher;
-import com.hzdl.teacher.net.NetConstant;
 import com.hzdl.teacher.utils.Utils;
 
 import java.io.IOException;
 
+import jp.kshoji.driver.midi.device.MidiInputDevice;
+import jp.kshoji.driver.midi.device.MidiOutputDevice;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,12 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends BaseActivity {
-
-
-    protected static final String ACTION_USB_PERMISSION = "com.Aries.usbhosttest.USB_PERMISSION";
-
-
+public class MainActivity extends BaseMidiActivity {
 
 
     TextView tv_test;
@@ -43,29 +36,38 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init();
+        initMidi();
 
         tv_test = (TextView) findViewById(R.id.tv_test);
         tv_test.setText(Utils.getLocalIp(this));
         tv_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,CourseActivity.class);
-                startActivity(intent);
+
+//                Intent intent=new Intent(MainActivity.this,CourseActivity.class);
+//                startActivity(intent);
+//
+//                  MidiOutputDevice midiOutputDevice = getMidiOutputDevice();
+//                  midiOutputDevice.sendMidiNoteOn(0, 0x90, 0x40, 0x7f);
+
+                TeacherClient.getInstance().sendMsgToAll("3|1|1&".getBytes());
+                Toast.makeText(MainActivity.this,TeacherClient.getInstance().tRunner.getSocketList().size()+"",0).show();
+
             }
         });
 
     }
 
-
-
-
-
+    int i=0;
+    @Override
+    protected void handleMsg(Message msg) {
+        tv_test.setText(i++ + "");
+    }
 
 
     private void testRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(NetConstant.URL_TEST_QQ)
+                .baseUrl(Constant.URL_TEST_QQ)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ITeacher userBiz = retrofit.create(ITeacher.class);
@@ -91,80 +93,144 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void init() {
-        final IntentFilter filter = new IntentFilter();
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-        filter.addAction(ACTION_USB_PERMISSION);
-        registerReceiver(mUsbReceiver, filter);
-        setPiano();
+
+    @Override
+    public void onDeviceAttached(@NonNull UsbDevice usbDevice) {
+
     }
 
-    private void setPiano() {
-        UsbDeviceConnect.setCallbackInterface(new CallbackInterface() {
-            @Override
-            public void onReadCallback(String str) {
-                Message msg = Message.obtain();
-                msg.what = 1;
-                msg.obj = str;
+    @Override
+    public void onMidiInputDeviceAttached(@NonNull MidiInputDevice midiInputDevice) {
 
-
-            }
-            @Override
-            public void onSendCallback(boolean isSend) {
-            }
-            @Override
-            public void onConnect(boolean isConnected) {
-                if(isConnected){
-
-                }
-            }
-        });
-        UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).update();
-        UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).connect();
     }
 
-    public void stopConnect() {
-        UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).stopConnect();
+    @Override
+    public void onMidiOutputDeviceAttached(@NonNull MidiOutputDevice midiOutputDevice) {
+
     }
-    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
 
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            //Log.i(TAG, "BroadcastReceiver-->" + action);
-            String status = null;
-            switch (action) {
-                case UsbManager.ACTION_USB_DEVICE_ATTACHED:
-                    status = "usb-insert";
-                    Toast.makeText(context, "检测到有USB插口接入", Toast.LENGTH_SHORT).show();
-                    setPiano();
+    @Override
+    public void onDeviceDetached(@NonNull UsbDevice usbDevice) {
 
-                    break;
-                case UsbManager.ACTION_USB_DEVICE_DETACHED:
-                    status = "usb-discrete";
-                    Toast.makeText(context, "USB线被拔出", Toast.LENGTH_SHORT).show();
-                    UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).colse();
-                    // clear();
+    }
 
-                    break;
-                case ACTION_USB_PERMISSION:
-                    boolean isconnect = false;
-                    // 判断用户点击的是取消还是确认
-                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-                        Toast.makeText(context, "连接权限被允许", Toast.LENGTH_SHORT).show();
-                        isconnect = UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).getUsbDeviceConnection();
-                    } else {
-                        stopConnect();
-                    }
-                    status = isconnect ? "link-success" : "link-fail";
-                    //连上钢琴 开启静音模式
+    @Override
+    public void onMidiInputDeviceDetached(@NonNull MidiInputDevice midiInputDevice) {
 
-                    break;
-            }
-            if (status != null) {
-                // 发送状态到unity
+    }
 
-            }
-        }
-    };
+    @Override
+    public void onMidiOutputDeviceDetached(@NonNull MidiOutputDevice midiOutputDevice) {
+
+    }
+
+    @Override
+    public void onMidiMiscellaneousFunctionCodes(@NonNull MidiInputDevice sender, int cable, int byte1, int byte2, int byte3) {
+
+    }
+
+    @Override
+    public void onMidiCableEvents(@NonNull MidiInputDevice sender, int cable, int byte1, int byte2, int byte3) {
+
+    }
+
+    @Override
+    public void onMidiSystemCommonMessage(@NonNull MidiInputDevice sender, int cable, byte[] bytes) {
+
+    }
+
+    @Override
+    public void onMidiSystemExclusive(@NonNull MidiInputDevice sender, int cable, byte[] systemExclusive) {
+
+    }
+
+    @Override
+    public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, int note, int velocity) {
+
+    }
+
+    @Override
+    public void onMidiNoteOn(@NonNull MidiInputDevice sender, int cable, int channel, int note, int velocity) {
+
+    }
+
+    @Override
+    public void onMidiPolyphonicAftertouch(@NonNull MidiInputDevice sender, int cable, int channel, int note, int pressure) {
+
+    }
+
+    @Override
+    public void onMidiControlChange(@NonNull MidiInputDevice sender, int cable, int channel, int function, int value) {
+
+    }
+
+    @Override
+    public void onMidiProgramChange(@NonNull MidiInputDevice sender, int cable, int channel, int program) {
+
+    }
+
+    @Override
+    public void onMidiChannelAftertouch(@NonNull MidiInputDevice sender, int cable, int channel, int pressure) {
+
+    }
+
+    @Override
+    public void onMidiPitchWheel(@NonNull MidiInputDevice sender, int cable, int channel, int amount) {
+
+    }
+
+    @Override
+    public void onMidiSingleByte(@NonNull MidiInputDevice sender, int cable, int byte1) {
+
+    }
+
+    @Override
+    public void onMidiTimeCodeQuarterFrame(@NonNull MidiInputDevice sender, int cable, int timing) {
+
+    }
+
+    @Override
+    public void onMidiSongSelect(@NonNull MidiInputDevice sender, int cable, int song) {
+
+    }
+
+    @Override
+    public void onMidiSongPositionPointer(@NonNull MidiInputDevice sender, int cable, int position) {
+
+    }
+
+    @Override
+    public void onMidiTuneRequest(@NonNull MidiInputDevice sender, int cable) {
+
+    }
+
+    @Override
+    public void onMidiTimingClock(@NonNull MidiInputDevice sender, int cable) {
+
+    }
+
+    @Override
+    public void onMidiStart(@NonNull MidiInputDevice sender, int cable) {
+
+    }
+
+    @Override
+    public void onMidiContinue(@NonNull MidiInputDevice sender, int cable) {
+
+    }
+
+    @Override
+    public void onMidiStop(@NonNull MidiInputDevice sender, int cable) {
+
+    }
+
+    @Override
+    public void onMidiActiveSensing(@NonNull MidiInputDevice sender, int cable) {
+
+    }
+
+    @Override
+    public void onMidiReset(@NonNull MidiInputDevice sender, int cable) {
+
+    }
 }

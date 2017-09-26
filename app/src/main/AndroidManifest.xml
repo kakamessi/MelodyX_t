@@ -40,12 +40,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.CourseActivity" />
-        <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".base.BaseActivity" />
 
         <service
             android:name=".service.Mservice"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".base.BaseMidiActivity"></activity>
     </application>
 
 </manifest>

@@ -2,11 +2,13 @@ package com.hzdl.teacher.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hzdl.teacher.R;
+import com.hzdl.teacher.base.BaseActivity;
 import com.hzdl.teacher.utils.Utils;
 
 import io.vov.vitamio.MediaPlayer;
@@ -44,6 +46,11 @@ public class CourseActivity extends BaseActivity implements MediaPlayer.OnPrepar
     protected void onDestroy() {
         super.onDestroy();
         mVV.stopPlayback();
+    }
+
+    @Override
+    protected void handleMsg(Message msg) {
+
     }
 
     private void initView() {
