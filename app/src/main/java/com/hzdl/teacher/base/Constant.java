@@ -10,9 +10,8 @@ public class Constant {
     public static String FILE_PATH = "/anglefile/";
 
 
-
-
-    public static final String ACTION_MSG_COMING = "ACTION_MSG_COMING";
+    //fcg-bin/cgi_playlist_xml.fcg?uin=125921384&json=1&g_tk=1916754934
+    public static final String URL_TEST_QQ = "http://qzone-music.qq.com/";
 
 
 

@@ -62,6 +62,7 @@ public class UdpClient {
                 Thread.sleep(100);
                 socket.send(packet);
             }
+            Log.e("kaka","-----------udp 5times finish-----------");
         } catch (Exception e) {
             e.printStackTrace();
         }

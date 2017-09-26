@@ -2,21 +2,19 @@ package com.hzdl.teacher.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
+import android.util.Log;
 
 import com.hzdl.mex.socket.SocketParams;
 import com.hzdl.mex.socket.teacher.AbsReceiver;
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.socket.teacher.udp.UdpClient;
-import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.core.ActionDispatcher;
 
 import java.net.DatagramSocket;
 
 public class Mservice extends Service {
     
-    private Handler mHandler = null;
     private DatagramSocket socket;
     private UdpClient uc;
 
@@ -24,30 +22,16 @@ public class Mservice extends Service {
     public void onCreate() {
         super.onCreate();
 
+        Log.e("kaka","Mservice onCreate");
         initSocket();
-        initHandler();
 
     }
 
-    private void initHandler() {
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                String str = msg.obj.toString();
-                String[] strs = str.split("\\|");
-                String action1 = strs[0];
-                String action2 = strs[1];
-
-                switch (action1) {
-                    //收到客户端消息
-                    case Constant.ACTION_MSG_COMING:
-
-                        break;
-
-                }
-            }
-        };
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        socket = null;
+        uc = null;
     }
 
     @Override
@@ -56,7 +40,9 @@ public class Mservice extends Service {
         return null;
     }
 
+
     private void initSocket(){
+        //服务端开启
         TeacherClient.getInstance().start(new AbsReceiver() {
             @Override
             public void connected() {
@@ -65,7 +51,7 @@ public class Mservice extends Service {
 
             @Override
             public void receive(byte[] buffer) {
-
+                ActionDispatcher.getInstance().dispatch(new String(buffer));
             }
 
             @Override
@@ -73,19 +59,34 @@ public class Mservice extends Service {
 
             }
         });
+        //udp补偿开启
         try {
-            socket = new DatagramSocket(SocketParams.TEACHER_UDP_PORT);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    uc = new UdpClient(socket);
-                    uc.readSynMsg();
-                    uc.sendSycMsg();
-                }
-            }).start();
+            if(socket==null) {
+                socket = new DatagramSocket(SocketParams.TEACHER_UDP_PORT);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                uc = new UdpClient(socket);
+                //教师端上线通知
+                uc.sendSycMsg();
+                //监听并且下发ip
+                uc.readSynMsg();
+
+            }
+        }).start();
+
     }
 
 

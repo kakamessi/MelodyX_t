@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class TeacherClient {
 
-    private TcpServerRunnable tRunner;
+    public TcpServerRunnable tRunner;
     private ServerSocket sScoket;
     private SendMsgHandler msgHandler = new SendMsgHandler();
 

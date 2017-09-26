@@ -17,12 +17,13 @@ public class TcpServerRunnable implements Runnable {
 
     private AbsReceiver receiver;
     private ServerSocket serverSocket;
-    private HashMap<String,SocketClient> socketList = new HashMap<>();
+    private HashMap<String,SocketClient> socketList;
 
 
     public TcpServerRunnable(AbsReceiver handler, ServerSocket serverSocket) {
         this.receiver = handler;
         this.serverSocket = serverSocket;
+        socketList = new HashMap<>();
     }
 
     @Override
