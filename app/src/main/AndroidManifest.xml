@@ -32,21 +32,29 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity" android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".activity.CourseActivity" android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activity.CourseActivity"
+            android:screenOrientation="landscape" />
 
         <service
             android:name=".service.Mservice"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".base.BaseMidiActivity"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.SplashActivity" android:screenOrientation="landscape" android:theme="@style/ThemeSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
