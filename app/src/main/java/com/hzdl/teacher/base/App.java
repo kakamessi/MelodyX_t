@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Environment;
 
+import com.hzdl.mex.utils.MyCrashHandler;
 import com.hzdl.teacher.service.Mservice;
 
 import java.io.File;
@@ -26,6 +27,7 @@ public class App extends Application {
         myApplication = this;
         initService();
         initParam();
+        initCrash();
     }
 
     private void initParam() {
@@ -39,6 +41,13 @@ public class App extends Application {
     private void initService() {
         Intent startIntent = new Intent(this, Mservice.class);
         startService(startIntent);
+    }
+
+    private void initCrash() {
+        // 初始化捕捉异常的类
+        MyCrashHandler handler = MyCrashHandler.getInstance();
+        handler.init(getApplicationContext());
+        Thread.setDefaultUncaughtExceptionHandler(handler);
     }
 
 
