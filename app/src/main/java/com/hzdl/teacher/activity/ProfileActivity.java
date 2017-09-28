@@ -45,7 +45,7 @@ public class ProfileActivity extends BaseActivity {
         //将TabLayout和ViewPager关联起来。
         tab.setupWithViewPager(viewpager);
         //设置可以滑动
-        tab.setTabMode(TabLayout.MODE_SCROLLABLE);
+        //tab.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     public class TabAdapter extends FragmentPagerAdapter {

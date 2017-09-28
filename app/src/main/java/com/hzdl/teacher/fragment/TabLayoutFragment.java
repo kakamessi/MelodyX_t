@@ -51,34 +51,13 @@ public class TabLayoutFragment extends Fragment {
 
         switch (type) {
             case 1:
-                txt.setText("这是综艺Fragment");
+                txt.setText("Fragment");
                 break;
             case 2:
-                txt.setText("这是体育Fragment");
+                txt.setText("Fragment");
                 break;
             case 3:
-                txt.setText("这是新闻Fragment");
-                break;
-            case 4:
-                txt.setText("这是热点Fragment");
-                break;
-            case 5:
-                txt.setText("这是头条Fragment");
-                break;
-            case 6:
-                txt.setText("这是军事Fragment");
-                break;
-            case 7:
-                txt.setText("这是历史Fragment");
-                break;
-            case 8:
-                txt.setText("这是科技Fragment");
-                break;
-            case 9:
-                txt.setText("这是人文Fragment");
-                break;
-            case 10:
-                txt.setText("这是地理Fragment");
+                txt.setText("Fragment");
                 break;
         }
 
