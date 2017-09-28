@@ -34,7 +34,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.CourseActivity"
             android:screenOrientation="landscape" />
@@ -57,7 +57,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CourseChoseActivity" android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activity.CourseChoseActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

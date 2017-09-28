@@ -43,6 +43,9 @@ public class LoginActivity extends BaseActivity {
         usernameEditText = (EditText)findViewById(R.id.username);
         passwordEditText = (EditText)findViewById(R.id.password);
 
+        usernameEditText.setText("13700000001");
+        passwordEditText.setText("123456");
+
     }
 
 

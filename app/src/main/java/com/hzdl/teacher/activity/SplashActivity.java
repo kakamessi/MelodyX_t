@@ -29,7 +29,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
 
                 Intent intent = null;
-                if(SPUtils.contains(SplashActivity.this, Constant.KEY_LOGIN)) {
+                if(SPUtils.contains(SplashActivity.this, Constant.KEY_LOGIN_PHONE)) {
                     intent = new Intent(SplashActivity.this, MainActivity.class);
                 }else{
                     intent = new Intent(SplashActivity.this, LoginActivity.class);

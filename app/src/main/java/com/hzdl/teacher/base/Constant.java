@@ -19,7 +19,9 @@ public class Constant {
 
 
 
-    public static final String KEY_LOGIN = "KEY_LOGIN";
+    //----持久化相关-------------------------------------------------------------------------------------------
+    public static final String KEY_LOGIN_PHONE = "KEY_LOGIN_PHONE";
+
 
 
 }

@@ -42,7 +42,7 @@ public class MainActivity extends BaseMidiActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(MainActivity.this,CourseChoseActivity.class);
+                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
                 startActivity(intent);
 
                 TeacherClient.getInstance().sendMsgToAll("3|1|1&".getBytes());
