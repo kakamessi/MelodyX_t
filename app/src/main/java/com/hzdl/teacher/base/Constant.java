@@ -10,8 +10,13 @@ public class Constant {
     public static String FILE_PATH = "/anglefile/";
 
 
-    //fcg-bin/cgi_playlist_xml.fcg?uin=125921384&json=1&g_tk=1916754934
-    public static final String URL_TEST_QQ = "http://qzone-music.qq.com/";
+
+    //----网络相关-------------------------------------------------------------------------------------------
+
+    public static final String URL_ROOT = "http://10.0.0.6:8080/";
+
+    public static final String URL_LOGIN = "client/teacherLogin.json";
+
 
 
     public static final String KEY_LOGIN = "KEY_LOGIN";

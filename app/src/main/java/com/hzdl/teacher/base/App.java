@@ -27,7 +27,7 @@ public class App extends Application {
         myApplication = this;
         initService();
         initParam();
-        initCrash();
+        //initCrash();
     }
 
     private void initParam() {

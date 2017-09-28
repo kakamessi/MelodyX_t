@@ -40,6 +40,7 @@ public class CourseChoseActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
                 Intent intent=new Intent(CourseChoseActivity.this,CourseActivity.class);
                 startActivity(intent);
+                CourseChoseActivity.this.finish();
             }
 
             @Override

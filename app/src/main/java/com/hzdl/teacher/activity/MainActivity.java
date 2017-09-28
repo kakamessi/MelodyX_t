@@ -60,33 +60,5 @@ public class MainActivity extends BaseMidiActivity {
     }
 
 
-    private void testRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.URL_TEST_QQ)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ITeacher userBiz = retrofit.create(ITeacher.class);
-        Call<ResponseBody> call = userBiz.getTestInfos("125921384","1","1916754934");
-        call.enqueue(new Callback<ResponseBody>()
-        {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
-            {
-                try {
-                    tv_test.setText(new String(response.body().bytes(),"gbk"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t)
-            {
-                tv_test.setText(t.toString());
-            }
-        });
-    }
-
 
 }

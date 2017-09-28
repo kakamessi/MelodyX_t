@@ -1,9 +1,12 @@
 package com.hzdl.teacher.net;
 
-import okhttp3.ResponseBody;
+import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.bean.LoginBean;
+
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 
 /**
  * Created by wangshuai on 2017/9/8.
@@ -12,8 +15,9 @@ import retrofit2.http.Query;
 public interface ITeacher {
 
     //测试数据接口
-    @GET("fcg-bin/cgi_playlist_xml.fcg")
-    Call<ResponseBody> getTestInfos(@Query("uin") String uin, @Query("json") String json, @Query("g_tk") String g_tk);
+    @FormUrlEncoded
+    @POST(Constant.URL_LOGIN)
+    Call<LoginBean> postLogin(@Field("account") String account, @Field("password") String password);
 
 
 
