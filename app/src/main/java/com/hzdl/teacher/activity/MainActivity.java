@@ -1,10 +1,10 @@
 package com.hzdl.teacher.activity;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.hardware.usb.UsbDevice;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,8 +18,6 @@ import com.hzdl.teacher.utils.Utils;
 
 import java.io.IOException;
 
-import jp.kshoji.driver.midi.device.MidiInputDevice;
-import jp.kshoji.driver.midi.device.MidiOutputDevice;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +42,7 @@ public class MainActivity extends BaseMidiActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(MainActivity.this,CourseActivity.class);
+                Intent intent=new Intent(MainActivity.this,CourseChoseActivity.class);
                 startActivity(intent);
 
                 TeacherClient.getInstance().sendMsgToAll("3|1|1&".getBytes());

@@ -51,6 +51,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         initView();
         initVV();
         initMidi();
+        setUIType(R.id.rl_piano);
 
     }
 

@@ -1,14 +1,14 @@
 package com.hzdl.teacher.base;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.view.WindowManager;
 
 import com.hzdl.teacher.core.ActionDispatcher;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends FragmentActivity {
 
     protected String TAG = this.getClass().getName();
 

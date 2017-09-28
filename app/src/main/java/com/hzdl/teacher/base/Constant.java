@@ -14,7 +14,7 @@ public class Constant {
     public static final String URL_TEST_QQ = "http://qzone-music.qq.com/";
 
 
-
+    public static final String KEY_LOGIN = "KEY_LOGIN";
 
 
 }
