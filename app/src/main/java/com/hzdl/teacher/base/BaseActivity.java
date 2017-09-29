@@ -43,4 +43,26 @@ public abstract class BaseActivity extends FragmentActivity {
     protected abstract void handleMsg(Message msg);
 
 
+
+
+
+
+
+
+    /**
+     * 加载过程中显示旋转圈
+     */
+    public void showLoadingDialog() {
+
+    }
+
+    /**
+     * 停止旋转圈
+     */
+    public void hideLoadingDialog() {
+
+    }
+
+
+
 }

@@ -41,4 +41,7 @@
     <color name="btn_answer_pressed">#4ebcd3</color>
     <color name="btn_answer_normal">#2dafa3</color>
 
+
+    <!--黑线的颜色-->
+    <color name="black_line">#d8d8d8</color>
 </resources>

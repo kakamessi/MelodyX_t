@@ -86,4 +86,13 @@ public class Utils {
         return Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH;
     }
 
+    public static boolean isFileExist(String filename){
+        boolean result = false;
+        File file = new File(getVideoPath() + filename);
+        if(file.exists()){
+            result = true;
+        }
+        return result;
+    }
+
 }

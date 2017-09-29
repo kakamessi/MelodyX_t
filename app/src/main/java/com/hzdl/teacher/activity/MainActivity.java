@@ -13,6 +13,7 @@ import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.downloadcourse.DownloadActivity;
 import com.hzdl.teacher.net.ITeacher;
 import com.hzdl.teacher.utils.Utils;
 
@@ -28,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends BaseMidiActivity {
 
 
-    TextView tv_test;
+    TextView tv_test,tv_down;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,8 @@ public class MainActivity extends BaseMidiActivity {
         initMidi();
 
         tv_test = (TextView) findViewById(R.id.tv_test);
+        tv_down = (TextView) findViewById(R.id.tv_down);
+
         tv_test.setText(Utils.getLocalIp(this));
         tv_test.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +50,16 @@ public class MainActivity extends BaseMidiActivity {
 
                 TeacherClient.getInstance().sendMsgToAll("3|1|1&".getBytes());
                 Toast.makeText(MainActivity.this,TeacherClient.getInstance().tRunner.getSocketList().size()+"",0).show();
+
+            }
+        });
+
+        tv_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(MainActivity.this,DownloadActivity.class);
+                startActivity(intent);
 
             }
         });

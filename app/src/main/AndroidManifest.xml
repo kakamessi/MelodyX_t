@@ -63,6 +63,9 @@
         <activity
             android:name=".activity.ProfileActivity"
             android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".downloadcourse.DownloadActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
