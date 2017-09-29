@@ -1,7 +1,5 @@
 package com.hzdl.teacher.activity;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -12,19 +10,8 @@ import android.widget.Toast;
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
-import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.downloadcourse.DownloadActivity;
-import com.hzdl.teacher.net.ITeacher;
 import com.hzdl.teacher.utils.Utils;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends BaseMidiActivity {
 

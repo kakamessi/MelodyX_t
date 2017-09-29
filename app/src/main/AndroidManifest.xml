@@ -62,10 +62,15 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.ProfileActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".downloadcourse.DownloadActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+
+        <service
+            android:name=".service.UpdateService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

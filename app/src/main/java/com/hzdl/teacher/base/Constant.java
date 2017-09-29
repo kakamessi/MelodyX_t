@@ -16,11 +16,15 @@ public class Constant {
     public static final String DOWNLOAD_PATH = "/client/course/findCourseOnlyPath.json";
 
 
+    public static final String DOWNLOAD_APK = "/client/course/findCourseOnlyPath.json";
+
+
     //----网络相关-------------------------------------------------------------------------------------------
 
     public static final String URL_ROOT = "http://10.0.0.6:8080/";
     public static final String URL_LOGIN = "client/teacherLogin.json";
     public static final String URL_COURSE_DOWNLOAD = "http://video.angelmusic360.com";
+    public static final String URL_CHECK_UPDATE = "/client/version/versionInfo.json";
 
 
     //----持久化相关-------------------------------------------------------------------------------------------
