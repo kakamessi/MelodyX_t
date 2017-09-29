@@ -7,7 +7,7 @@ package com.hzdl.teacher.base;
 public class Constant {
 
     //视频文件存储路径
-    public static String FILE_PATH = "/anglefile/";
+    public static String FILE_PATH = "/xmelody/";
 
 
 

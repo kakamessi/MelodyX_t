@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
+import com.hzdl.teacher.utils.Utils;
 
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
@@ -51,7 +52,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         initView();
         initVV();
         initMidi();
-        setUIType(R.id.rl_piano);
+        setUIType(R.id.rl_video);
 
     }
 
@@ -71,9 +72,16 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             if(fl_one.getChildAt(i).getId()==id){
                 fl_one.getChildAt(i).setVisibility(View.VISIBLE);
             }else{
-                fl_one.getChildAt(i).setVisibility(View.INVISIBLE);
+                fl_one.getChildAt(i).setVisibility(View.GONE);
             }
         }
+    }
+
+    private void setFullScreen()
+    {
+        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
+        mVV.setLayoutParams(layoutParams1);
     }
 
     private void initView() {
@@ -97,13 +105,17 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         mVV.setOnPreparedListener(this);
         mVV.setOnErrorListener(this);
         mVV.setOnCompletionListener(this);
+
+        //mVV.setVideoURI(Uri.parse("http://112.253.22.157/17/z/z/y/u/zzyuasjwufnqerzvyxgkuigrkcatxr/hc.yinyuetai.com/D046015255134077DDB3ACA0D7E68D45.flv"));
+        mVV.setVideoURI(Uri.parse(Utils.getVideoPath()+"hehe.mp4"));
+
     }
 
     /**
-     * 装载播放
+     * 切换资源
      */
-    private void loadPlay(String path){
-        mVV.setVideoURI(Uri.parse(path));
+    private void swichPlayScr(String name){
+        mVV.setVideoURI(Uri.parse(Utils.getVideoPath()+"hehe.mp4"));
         mVV.start();
     }
 
@@ -121,15 +133,16 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        Toast.makeText(this,"准备好了", Toast.LENGTH_LONG).show();
     }
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
+        Toast.makeText(this,"error", Toast.LENGTH_LONG).show();
         return false;
     }
     @Override
     public void onPrepared(MediaPlayer mp) {
-
+        playOrPause();
     }
+
 
 }
