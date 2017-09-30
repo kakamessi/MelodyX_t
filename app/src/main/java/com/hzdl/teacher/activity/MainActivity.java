@@ -45,7 +45,7 @@ public class MainActivity extends BaseMidiActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(MainActivity.this,DownloadActivity.class);
+                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
                 startActivity(intent);
 
             }

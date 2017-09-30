@@ -29,7 +29,7 @@ public abstract class BaseActivity extends FragmentActivity {
         mBaseApp = App.getApplication();
         ActionDispatcher.getInstance().register(TAG, actionHandler);
 
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override

@@ -71,6 +71,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(Call<LoginBean> call, Response<LoginBean> response)
             {
+                if(response==null || response.body()==null)
+                    return;
                 if(200==response.body().getCode()){
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     LoginActivity.this.startActivity(intent);

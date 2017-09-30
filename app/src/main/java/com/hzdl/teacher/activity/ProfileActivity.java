@@ -10,7 +10,9 @@ import android.support.v4.view.ViewPager;
 
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseActivity;
-import com.hzdl.teacher.fragment.TabLayoutFragment;
+import com.hzdl.teacher.fragment.FeedbackFragment;
+import com.hzdl.teacher.fragment.ModifyPSDFragment;
+import com.hzdl.teacher.fragment.UpdateFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +38,10 @@ public class ProfileActivity extends BaseActivity {
         viewpager = (ViewPager) findViewById(R.id.viewpager);
 
         List<Fragment> fragments = new ArrayList<>();
-        for (int i = 0; i < tabTitle.length; i++) {
-            fragments.add(TabLayoutFragment.newInstance(i + 1));
-        }
+        fragments.add(FeedbackFragment.newInstance("1","2"));
+        fragments.add(ModifyPSDFragment.newInstance("1","2"));
+        fragments.add(UpdateFragment.newInstance(1));
+
         adapter = new TabAdapter(getSupportFragmentManager(), fragments);
         //给ViewPager设置适配器
         viewpager.setAdapter(adapter);
@@ -72,7 +75,9 @@ public class ProfileActivity extends BaseActivity {
         //设置tablayout标题
         @Override
         public CharSequence getPageTitle(int position) {
+
             return ProfileActivity.tabTitle[position];
+
 
         }
 
