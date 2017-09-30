@@ -24,7 +24,7 @@ public class Constant {
     public static final String URL_ROOT = "http://10.0.0.6:8080/";
     public static final String URL_LOGIN = "client/teacherLogin.json";
     public static final String URL_COURSE_DOWNLOAD = "http://video.angelmusic360.com";
-    public static final String URL_CHECK_UPDATE = "/client/version/versionInfo.json";
+    public static final String URL_CHECK_UPDATE = "/client/version/versionInfo.json?type=1";
 
 
     //----持久化相关-------------------------------------------------------------------------------------------

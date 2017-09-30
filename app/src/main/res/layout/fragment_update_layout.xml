@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.hzdl.teacher.fragment.UpdateFragment">
 
@@ -10,7 +11,15 @@
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:text="@string/profile_vertion_code" />
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="检测最新版本"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:id="@+id/button" />
 
 </LinearLayout>

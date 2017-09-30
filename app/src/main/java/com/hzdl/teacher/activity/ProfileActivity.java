@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseActivity;
@@ -86,6 +87,7 @@ public class ProfileActivity extends BaseActivity {
     @Override
     protected void handleMsg(Message msg) {
 
+        Toast.makeText(ProfileActivity.this,"已是最新版本",0).show();
 
     }
 

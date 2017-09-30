@@ -6,17 +6,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.allenliu.versionchecklib.core.AllenChecker;
+import com.allenliu.versionchecklib.core.VersionParams;
 import com.hzdl.teacher.R;
+import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.service.UpdateService;
+import com.hzdl.teacher.utils.Utils;
 
 /**
  */
 public class UpdateFragment extends Fragment {
 
     public static String TABLAYOUT_FRAGMENT = "tab_fragment";
-    private TextView tv_feedback;
+    private TextView tv;
     private int type;
+    private Button button;
 
     public static UpdateFragment newInstance(int type) {
         UpdateFragment fragment = new UpdateFragment();
@@ -49,9 +56,25 @@ public class UpdateFragment extends Fragment {
 
     protected void initView(View view) {
 
-        tv_feedback = (TextView) view.findViewById(R.id.tv_feedback);
+        tv = (TextView) view.findViewById(R.id.tv);
+        button = (Button) view.findViewById(R.id.button);
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                VersionParams.Builder builder = new VersionParams.Builder()
+                        .setRequestUrl(Constant.URL_ROOT + Constant.URL_CHECK_UPDATE)
+                        .setService(UpdateService.class);
+                AllenChecker.startVersionCheck(getActivity(), builder.build());
 
+            }
+        });
+
+        try {
+            tv.setText("当前版本：V" + Utils.getVersionName(getActivity()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }

@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.allenliu.versionchecklib.core.AVersionService;
+import com.hzdl.teacher.bean.UpdateInfoBean;
+import com.hzdl.teacher.core.ActionDispatcher;
+import com.hzdl.teacher.downloadcourse.okhttp.util.GsonUtil;
+import com.hzdl.teacher.utils.Utils;
 
 
 public class UpdateService extends AVersionService {
@@ -20,9 +24,17 @@ public class UpdateService extends AVersionService {
 
     @Override
     public void onResponses(AVersionService service, String response) {
+        try {
+            UpdateInfoBean uib = GsonUtil.jsonToObject(response,UpdateInfoBean.class);
+            if(uib!=null && Utils.getVersionCode(this)<Integer.parseInt(uib.getDetail().getCode())) {
+                service.showVersionDialog("http://video.angelmusic360.com/apk/2017-09-29/app-release10.apk", "发现新版本", "点击升级");
+            }else {
+                ActionDispatcher.getInstance().dispatch("");
+            }
 
-        service.showVersionDialog("http://video.angelmusic360.com/apk/2017-09-29/app-release10.apk","升级","卡卡" );
-
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 /*    VersionParams.Builder builder = new VersionParams.Builder()
