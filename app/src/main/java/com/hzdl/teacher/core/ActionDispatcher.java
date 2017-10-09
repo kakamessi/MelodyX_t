@@ -30,6 +30,12 @@ public class ActionDispatcher {
 
     }
 
+    /**
+     *
+     * 消息发送管理器
+     * @param hander
+     * @param str
+     */
     private void sendHandlerMsg(Handler hander,String str){
         Message msg = Message.obtain();
         msg.obj = str;

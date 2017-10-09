@@ -27,7 +27,7 @@ public class MainActivity extends BaseMidiActivity {
         tv_test = (TextView) findViewById(R.id.tv_test);
         tv_down = (TextView) findViewById(R.id.tv_down);
 
-        tv_test.setText(Utils.getLocalIp(this));
+        tv_test.setText("课程选择 " + Utils.getLocalIp(this));
         tv_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

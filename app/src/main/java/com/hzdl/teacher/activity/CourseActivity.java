@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
+import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.bean.ActionBean;
+import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.utils.Utils;
 
 import io.vov.vitamio.MediaPlayer;
@@ -37,10 +40,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 //    midiOutputDevice.sendMidiNoteOn(0, 0x90, 0x40, 0x7f);
 
 
+    //当前消息
+    private String actionMsg;
+    private ActionBean ab;
 
-
-
-    private FrameLayout fl_one;
+    private FrameLayout fl_root;
     private RelativeLayout rl_video,rl_piano;
     private VideoView mVV;
 
@@ -63,25 +67,27 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     @Override
-    protected void handleMsg(Message msg) {
+    protected void handleMsg(Message action) {
 
     }
 
-    private void setUIType(int id){
-        for(int i=0; i<fl_one.getChildCount(); i++){
-            if(fl_one.getChildAt(i).getId()==id){
-                fl_one.getChildAt(i).setVisibility(View.VISIBLE);
-            }else{
-                fl_one.getChildAt(i).setVisibility(View.GONE);
-            }
+    /**
+     *
+     * 处理消息逻辑 如下课，切换视频等逻辑
+     */
+    private void doAction(String str) {
+        ab = ActionResolver.getInstance().resolve(str);
+        int one = Integer.parseInt(ab.getCodes()[0]);
+
+        if(one== Constant.ACTION_VEDIO_ON){
+
+        }else if(one== Constant.ACTION_VEDIO_PAUSE){
+
+        }else if(one== Constant.ACTION_COURSE_NOTE){
+
+        }else if(one== Constant.ACTION_COURSE_STOP){
+
         }
-    }
-
-    private void setFullScreen()
-    {
-        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
-        mVV.setLayoutParams(layoutParams1);
     }
 
     private void initView() {
@@ -90,7 +96,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         rl_video = (RelativeLayout) findViewById(R.id.rl_video);
         rl_piano = (RelativeLayout) findViewById(R.id.rl_piano);
-        fl_one = (FrameLayout) findViewById(R.id.fl_one);
+        fl_root = (FrameLayout) findViewById(R.id.fl_one);
 
     }
 
@@ -108,9 +114,37 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         //mVV.setVideoURI(Uri.parse("http://112.253.22.157/17/z/z/y/u/zzyuasjwufnqerzvyxgkuigrkcatxr/hc.yinyuetai.com/D046015255134077DDB3ACA0D7E68D45.flv"));
         mVV.setVideoURI(Uri.parse(Utils.getVideoPath()+"hehe.mp4"));
-
     }
 
+    /**
+     * 切换视图类型
+     *
+     * 1，视频类型
+     * 2，画谱弹奏类型
+     * 3，
+     *
+     *
+     * @param id
+     */
+    private void setUIType(int resID){
+        for(int i = 0; i< fl_root.getChildCount(); i++){
+            if(fl_root.getChildAt(i).getId()==resID){
+                fl_root.getChildAt(i).setVisibility(View.VISIBLE);
+            }else{
+                fl_root.getChildAt(i).setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void setFullScreen()
+    {
+        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
+        mVV.setLayoutParams(layoutParams1);
+    }
+
+
+    //-----------------------------------------------------------视频相关-----------------------------------------------------------------
     /**
      * 切换资源
      */
@@ -118,7 +152,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         mVV.setVideoURI(Uri.parse(Utils.getVideoPath()+"hehe.mp4"));
         mVV.start();
     }
-
     /**
      * 播放/暂停
      */
@@ -130,7 +163,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 mVV.start();
             }
     }
-
     @Override
     public void onCompletion(MediaPlayer mp) {
     }
@@ -143,6 +175,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void onPrepared(MediaPlayer mp) {
         playOrPause();
     }
+    //-----------------------------------------------------------视频相关-----------------------------------------------------------------
+
+
 
 
 }

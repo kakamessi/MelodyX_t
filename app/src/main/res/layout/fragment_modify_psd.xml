@@ -11,23 +11,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:hint="请输入原密码"
-        android:id="@+id/editText1" />
+        android:id="@+id/et_old" />
 
     <EditText
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/et_old"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="新密码为6-16为的数字或字母组合"
-        android:id="@+id/editText2" />
+        android:id="@+id/et_new" />
 
     <EditText
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/et_new"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:hint="请再次输入新密码"
-        android:id="@+id/editText3" />
+        android:id="@+id/et_confirm" />
 
     <Button
         android:text="提交"
@@ -35,7 +35,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="140dp"
         android:layout_height="60dp"
-        android:layout_below="@+id/editText3"
+        android:layout_below="@+id/et_confirm"
         android:id="@+id/button2" />
 
 

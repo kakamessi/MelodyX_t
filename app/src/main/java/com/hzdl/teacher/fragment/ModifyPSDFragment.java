@@ -6,11 +6,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.hzdl.teacher.R;
 
 
 public class ModifyPSDFragment extends Fragment {
+
+    private EditText et_old,et_new,et_confirm;
+    private Button button2;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -56,7 +63,25 @@ public class ModifyPSDFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_modify_psd, container, false);
+        View v = inflater.inflate(R.layout.fragment_modify_psd, container, false);
+
+        et_old = v.findViewById(R.id.et_old);
+        et_new = v.findViewById(R.id.et_new);
+        et_confirm = v.findViewById(R.id.et_confirm);
+        button2 = v.findViewById(R.id.button2);
+
+
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+
+        });
+
+        return v;
     }
 
 
