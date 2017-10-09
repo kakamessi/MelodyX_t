@@ -34,6 +34,7 @@ public class TcpServerRunnable implements Runnable {
             while(true){
                 SocketClient socket = new SocketClient(serverSocket.accept());
                 socketList.put(socket.mSocket.getInetAddress().getHostAddress(),socket);
+                receiver.connected();
                 Log.e("kaka","Teacher Step 1 :  receive tcp ip ==" + socket.mSocket.getInetAddress().getHostAddress());
 
                 //开启对话线程

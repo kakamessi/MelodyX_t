@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
-import com.hzdl.teacher.downloadcourse.DownloadActivity;
+import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.utils.Utils;
 
 public class MainActivity extends BaseMidiActivity {
@@ -35,9 +34,6 @@ public class MainActivity extends BaseMidiActivity {
                 Intent intent=new Intent(MainActivity.this,CourseChoseActivity.class);
                 startActivity(intent);
 
-                TeacherClient.getInstance().sendMsgToAll("3|1|1&".getBytes());
-                Toast.makeText(MainActivity.this,TeacherClient.getInstance().tRunner.getSocketList().size()+"",0).show();
-
             }
         });
 
@@ -56,9 +52,11 @@ public class MainActivity extends BaseMidiActivity {
     int i=0;
     @Override
     protected void handleMsg(Message msg) {
-        tv_test.setText(i++ + "");
+        int code = Integer.parseInt((String)msg.obj);
+        if(code== Constant.ACTION_CONNECTED){
+            tv_down.setText("当前连入学生：" + TeacherClient.getInstance().tRunner.getSocketList().size());
+        }
     }
-
 
 
 }

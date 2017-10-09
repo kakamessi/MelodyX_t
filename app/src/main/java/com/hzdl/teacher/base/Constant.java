@@ -50,6 +50,9 @@ public class Constant {
     public static final int ACTION_COURSE_STOP = 105;
 
 
+    //--学生连接通知
+    public static final int ACTION_CONNECTED = 401;
+    
 
 
 

@@ -9,10 +9,18 @@ import com.hzdl.mex.socket.SocketParams;
 import com.hzdl.mex.socket.teacher.AbsReceiver;
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.socket.teacher.udp.UdpClient;
+import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.core.ActionDispatcher;
 
 import java.net.DatagramSocket;
 
+
+/**
+ *
+ * TeacherClient.getInstance().sendMsgToAll("3|1|1&".getBytes());
+ * ActionDispatcher.getInstance().dispatch(new String(buffer));
+ *
+ */
 public class Mservice extends Service {
     
     private DatagramSocket socket;
@@ -46,12 +54,12 @@ public class Mservice extends Service {
         TeacherClient.getInstance().start(new AbsReceiver() {
             @Override
             public void connected() {
-
+                ActionDispatcher.getInstance().dispatch("401");
             }
 
             @Override
             public void receive(byte[] buffer) {
-                ActionDispatcher.getInstance().dispatch(new String(buffer));
+
             }
 
             @Override
