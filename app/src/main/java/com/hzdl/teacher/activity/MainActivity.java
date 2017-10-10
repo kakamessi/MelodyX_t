@@ -10,7 +10,6 @@ import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.bean.ActionBean;
-import com.hzdl.teacher.core.ActionDispatcher;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.utils.Utils;
@@ -47,8 +46,8 @@ public class MainActivity extends BaseMidiActivity {
 
 //                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
 //                startActivity(intent);
-                TeacherClient.getInstance().sendMsgToAll(ActionProtocol.ACTION_COURSE_START);
-                ActionDispatcher.getInstance().dispatch(ActionProtocol.ACTION_COURSE_START);
+
+                sendSynAction(ActionProtocol.ACTION_COURSE_START);
 
             }
         });

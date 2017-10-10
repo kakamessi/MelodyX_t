@@ -47,7 +47,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     //当前消息
     private String actionMsg;
-    private ActionBean ab;
 
 
     @Override
@@ -69,21 +68,29 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     @Override
     protected void handleMsg(Message action) {
-
+        doAction((String) action.obj);
     }
 
     /**
      * 处理消息逻辑 如下课，切换视频等逻辑
      */
+    private ActionBean ab;
     private void doAction(String str) {
         ab = ActionResolver.getInstance().resolve(str);
-        int one = Integer.parseInt(ab.getCodes()[0]);
 
-        if (one == ActionProtocol.CODE_ACTION_COURSE) {
+        int c2 = Integer.parseInt(ab.getCodes()[1]);
+        int c3 = Integer.parseInt(ab.getCodes()[2]);
 
-        } else if (one == ActionProtocol.CODE_ACTION_VEDIO) {
+        if (c2 == ActionProtocol.CODE_ACTION_COURSE) {
+            if(c3==0){
+                CourseActivity.this.finish();
+            }
+        } else if (c2 == ActionProtocol.CODE_ACTION_VEDIO) {
 
-        } else if (one == ActionProtocol.CODE_ACTION_NOTE) {
+                playOrPause();
+                setUIType(R.id.rl_video);
+
+        } else if (c2 == ActionProtocol.CODE_ACTION_NOTE) {
 
         }
     }
@@ -170,6 +177,21 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     @OnClick(R.id.fl_one)
     public void onClick() {
+    }
+
+    @OnClick({R.id.bofang, R.id.xiake})
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.bofang:
+                sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
+
+                break;
+            case R.id.xiake:
+                sendSynAction(ActionProtocol.ACTION_COURSE_STOP);
+
+                break;
+        }
     }
     //-----------------------------------------------------------视频相关-----------------------------------------------------------------
 

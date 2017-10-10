@@ -39,5 +39,25 @@
 
     </FrameLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="播放"
+            android:id="@+id/bofang"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp" />
+        <TextView
+            android:id="@+id/xiake"
+            android:layout_marginLeft="40dp"
+            android:text="下课"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp" />
 
+    </LinearLayout>
 </RelativeLayout>

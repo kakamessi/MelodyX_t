@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.WindowManager;
 
+import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.core.ActionDispatcher;
 
 public abstract class BaseActivity extends FragmentActivity {
@@ -43,7 +44,10 @@ public abstract class BaseActivity extends FragmentActivity {
     protected abstract void handleMsg(Message msg);
 
 
-
+    protected void sendSynAction(String action){
+        TeacherClient.getInstance().sendMsgToAll(action);
+        ActionDispatcher.getInstance().dispatch(action);
+    }
 
 
 
