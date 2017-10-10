@@ -46,7 +46,8 @@ public class TeacherClient {
      * 向客户端发送消息
      * @param bytes
      */
-    public void sendMsgToAll(byte[] bytes){
+    public void sendMsgToAll(String msg){
+        byte[] bytes = msg.getBytes();
         for (Map.Entry<String, SocketClient> entry : tRunner.getSocketList().entrySet()) {
             msgHandler.sendMsg(entry.getValue(),bytes);
         }

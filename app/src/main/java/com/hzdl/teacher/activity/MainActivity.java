@@ -9,7 +9,10 @@ import android.widget.TextView;
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
-import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.bean.ActionBean;
+import com.hzdl.teacher.core.ActionDispatcher;
+import com.hzdl.teacher.core.ActionProtocol;
+import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.utils.Utils;
 
 public class MainActivity extends BaseMidiActivity {
@@ -34,6 +37,7 @@ public class MainActivity extends BaseMidiActivity {
                 Intent intent=new Intent(MainActivity.this,CourseChoseActivity.class);
                 startActivity(intent);
 
+
             }
         });
 
@@ -41,8 +45,10 @@ public class MainActivity extends BaseMidiActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
-                startActivity(intent);
+//                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
+//                startActivity(intent);
+                TeacherClient.getInstance().sendMsgToAll(ActionProtocol.ACTION_COURSE_START);
+                ActionDispatcher.getInstance().dispatch(ActionProtocol.ACTION_COURSE_START);
 
             }
         });
@@ -52,11 +58,29 @@ public class MainActivity extends BaseMidiActivity {
     int i=0;
     @Override
     protected void handleMsg(Message msg) {
-        int code = Integer.parseInt((String)msg.obj);
-        if(code== Constant.ACTION_CONNECTED){
+        ActionBean ab = ActionResolver.getInstance().resolve((String) msg.obj);
+        int c1 = Integer.parseInt(ab.getCodes()[0]);
+        if(c1== ActionProtocol.CODE_ACTION_CONNECTED){
             tv_down.setText("当前连入学生：" + TeacherClient.getInstance().tRunner.getSocketList().size());
+            return;
         }
+
+        doAction((String)msg.obj);
     }
 
+    private ActionBean ab;
+    private void doAction(String str) {
+        ab = ActionResolver.getInstance().resolve(str);
+
+        int c2 = Integer.parseInt(ab.getCodes()[1]);
+        int c3 = Integer.parseInt(ab.getCodes()[2]);
+
+        if(c2== ActionProtocol.CODE_ACTION_COURSE){
+            if(c3==1){
+                Intent intent=new Intent(MainActivity.this,CourseActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
 
 }
