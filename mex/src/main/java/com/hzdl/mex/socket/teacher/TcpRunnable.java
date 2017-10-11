@@ -1,5 +1,7 @@
 package com.hzdl.mex.socket.teacher;
 
+import android.util.Log;
+
 import com.hzdl.mex.socket.SocketClient;
 
 import java.net.Socket;
@@ -28,6 +30,8 @@ public class TcpRunnable implements Runnable {
             ss.read(receiver);
         } catch (Exception e) {
             e.printStackTrace();
+            receiver.disconnect();
+            Log.e("kaka"," read Exception--------------error-------------" + e.getMessage());
         }
     }
 

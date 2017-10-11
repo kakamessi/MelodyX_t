@@ -60,7 +60,7 @@ public class Mservice extends Service {
         TeacherClient.getInstance().start(new AbsReceiver() {
             @Override
             public void connected() {
-                ActionDispatcher.getInstance().dispatch("401");
+                ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_CONNECTED));
             }
 
             @Override
@@ -69,7 +69,7 @@ public class Mservice extends Service {
             }
             @Override
             public void disconnect() {
-
+                ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_CONNECTED));
             }
         });
 

@@ -45,7 +45,7 @@ public class TcpServerRunnable implements Runnable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("kaka","Teacher Step 2 :  init tcp loop break --------------error-------------");
+            Log.e("kaka","Teacher Step 2 :  tcp while(true) read --------------error-------------");
         }finally{
             try {
                 if(serverSocket!=null) {

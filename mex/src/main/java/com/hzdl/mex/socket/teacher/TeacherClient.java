@@ -17,7 +17,7 @@ public class TeacherClient {
     private ServerSocket sScoket;
     private SendMsgHandler msgHandler = new SendMsgHandler();
 
-    private Thread mTeacher;
+    private Thread mThread;
 
     private static TeacherClient instance=new TeacherClient();
     private TeacherClient(){
@@ -35,8 +35,8 @@ public class TeacherClient {
         try {
             sScoket = new ServerSocket(SocketParams.PORT);
             tRunner = new TcpServerRunnable(handler,sScoket);
-            mTeacher = new Thread(tRunner);
-            mTeacher.start();
+            mThread = new Thread(tRunner);
+            mThread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
