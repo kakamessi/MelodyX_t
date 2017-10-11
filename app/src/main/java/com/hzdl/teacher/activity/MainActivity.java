@@ -10,76 +10,91 @@ import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.bean.ActionBean;
+import com.hzdl.teacher.core.ActionDispatcher;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.utils.Utils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static com.hzdl.teacher.R.id.tv_test;
+
 public class MainActivity extends BaseMidiActivity {
 
 
-    TextView tv_test,tv_down;
+    @BindView(tv_test)
+    TextView tvTest;
+    @BindView(R.id.tv_down)
+    TextView tvDown;
+    @BindView(R.id.tv_stop)
+    TextView tvStop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initMidi();
 
-        tv_test = (TextView) findViewById(R.id.tv_test);
-        tv_down = (TextView) findViewById(R.id.tv_down);
-
-        tv_test.setText("课程选择 " + Utils.getLocalIp(this));
-        tv_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent=new Intent(MainActivity.this,CourseChoseActivity.class);
-                startActivity(intent);
-
-
-            }
-        });
-
-        tv_down.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-//                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
-//                startActivity(intent);
-
-                sendSynAction(ActionProtocol.ACTION_COURSE_START);
-
-            }
-        });
-
+        tvTest.setText("课程选择 " + Utils.getLocalIp(this));
     }
 
-    int i=0;
+    int i = 0;
+
     @Override
     protected void handleMsg(Message msg) {
         ActionBean ab = ActionResolver.getInstance().resolve((String) msg.obj);
         int c1 = Integer.parseInt(ab.getCodes()[0]);
-        if(c1== ActionProtocol.CODE_ACTION_CONNECTED){
-            tv_down.setText("当前连入学生：" + TeacherClient.getInstance().tRunner.getSocketList().size());
+        if (c1 == ActionProtocol.CODE_ACTION_CONNECTED) {
+            tvDown.setText("当前连入学生：" + TeacherClient.getInstance().tRunner.getSocketList().size());
             return;
         }
 
-        doAction((String)msg.obj);
+        doAction((String) msg.obj);
     }
 
     private ActionBean ab;
+
     private void doAction(String str) {
         ab = ActionResolver.getInstance().resolve(str);
 
         int c2 = Integer.parseInt(ab.getCodes()[1]);
         int c3 = Integer.parseInt(ab.getCodes()[2]);
 
-        if(c2== ActionProtocol.CODE_ACTION_COURSE){
-            if(c3==1){
-                Intent intent=new Intent(MainActivity.this,CourseActivity.class);
+        if (c2 == ActionProtocol.CODE_ACTION_COURSE) {
+            if (c3 == 1) {
+                Intent intent = new Intent(MainActivity.this, CourseActivity.class);
                 startActivity(intent);
             }
         }
     }
+
+    @OnClick({tv_test, R.id.tv_down, R.id.tv_stop,R.id.tv_open})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case tv_test:
+                Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
+                startActivity(intent);
+
+                break;
+            case R.id.tv_down:
+//                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
+//                startActivity(intent);
+
+                sendSynAction(ActionProtocol.ACTION_COURSE_START);
+                break;
+            case R.id.tv_stop:
+                ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_UDP_OFF));
+
+                break;
+            case R.id.tv_open:
+                ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_UDP_ON));
+
+                break;
+        }
+    }
+
 
 }

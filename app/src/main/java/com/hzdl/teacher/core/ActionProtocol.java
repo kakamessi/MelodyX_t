@@ -18,7 +18,6 @@ public class ActionProtocol {
     public static final String ACTION_COURSE_STOP = "1|1|0";
 
 
-
     //--准备上课
     public static final int CODE_ACTION_COURSE = 1;
     //--播放视频
@@ -26,10 +25,18 @@ public class ActionProtocol {
     //--画谱界面
     public static final int CODE_ACTION_NOTE = 3;
 
-
     //--学生连接通知
     public static final int CODE_ACTION_CONNECTED = 401;
+    public static final int CODE_ACTION_UDP_ON = 402;
+    public static final int CODE_ACTION_UDP_OFF = 403;
 
-
+    public static String getActionCode(int code){
+        StringBuffer sb = new StringBuffer();
+        sb.append(code+"");
+        for(int i=0; i<5; i++){
+            sb.append("|0");
+        }
+        return sb.toString();
+    }
 
 }

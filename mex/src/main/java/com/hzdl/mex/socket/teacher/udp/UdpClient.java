@@ -16,6 +16,7 @@ import java.nio.charset.Charset;
 
 public class UdpClient {
 
+    public volatile boolean stop = false;
     private DatagramSocket socket = null;
     private SocketAddress socketAddr = null;
 
@@ -28,25 +29,17 @@ public class UdpClient {
         socketAddr = new InetSocketAddress(SocketParams.UDP_HOST, SocketParams.UDP_PORT);
     }
 
-    public void readSynMsg(){
-
-        try {
+    public void readSynMsg() throws Exception {
             // 2、创建数据报
             byte[] data = new byte[1024];
             DatagramPacket packet = new DatagramPacket(data, data.length);
             // 3、一直监听端口，接收数据包
-            while (true) {
+            while (!stop) {
                 socket.receive(packet);
                 String quest_ip = packet.getAddress().toString().substring(1);
                 sendSycMsg();
-                Log.e("kaka","Teacher Step 2 :  receive upd ip ==" + quest_ip);
+                Log.e("kaka","____________________________Teacher Step 2 :  receive upd ip ==" + quest_ip);
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("kaka","Teacher Step 2 :  init udp loop break --------------error-------------");
-        }
-
     }
 
     /**
@@ -70,6 +63,8 @@ public class UdpClient {
 
     public void close(){
         if (null != socket) {
+            stop = true;
+            socket.disconnect();
             socket.close();
         }
     }
