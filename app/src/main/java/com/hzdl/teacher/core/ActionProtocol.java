@@ -29,6 +29,7 @@ public class ActionProtocol {
     public static final int CODE_ACTION_CONNECTED = 401;
     public static final int CODE_ACTION_UDP_ON = 402;
     public static final int CODE_ACTION_UDP_OFF = 403;
+    public static final int CODE_ACTION_UPDATE = 404;
 
     public static String getActionCode(int code){
         StringBuffer sb = new StringBuffer();

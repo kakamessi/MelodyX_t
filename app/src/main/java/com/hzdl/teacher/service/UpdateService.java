@@ -6,6 +6,7 @@ import android.os.IBinder;
 import com.allenliu.versionchecklib.core.AVersionService;
 import com.hzdl.teacher.bean.UpdateInfoBean;
 import com.hzdl.teacher.core.ActionDispatcher;
+import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.downloadcourse.okhttp.util.GsonUtil;
 import com.hzdl.teacher.utils.Utils;
 
@@ -29,11 +30,12 @@ public class UpdateService extends AVersionService {
             if(uib!=null && Utils.getVersionCode(this)<Integer.parseInt(uib.getDetail().getCode())) {
                 service.showVersionDialog("http://video.angelmusic360.com/apk/2017-09-29/app-release10.apk", "发现新版本", "点击升级");
             }else {
-                ActionDispatcher.getInstance().dispatch("");
+                ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_UPDATE));
             }
 
         }catch (Exception e){
             e.printStackTrace();
+            service.showVersionDialog("http://video.angelmusic360.com/apk/2017-09-29/app-release10.apk", "发现新版本", "点击升级");
         }
     }
 

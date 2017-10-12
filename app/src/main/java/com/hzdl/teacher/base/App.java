@@ -39,7 +39,14 @@ public class App extends Application {
         initService();
         initParam();
         initOkHttp();
+        initRetrofit();
         //initCrash();
+    }
+
+    private void initRetrofit() {
+
+
+
     }
 
     //初始化网络框架

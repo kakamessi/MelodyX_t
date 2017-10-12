@@ -10,7 +10,6 @@ import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.bean.ActionBean;
-import com.hzdl.teacher.core.ActionDispatcher;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.utils.Utils;
@@ -80,17 +79,17 @@ public class MainActivity extends BaseMidiActivity {
 
                 break;
             case R.id.tv_down:
-//                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
-//                startActivity(intent);
 
                 sendSynAction(ActionProtocol.ACTION_COURSE_START);
+
                 break;
             case R.id.tv_stop:
-                ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_UDP_OFF));
+                Intent in=new Intent(MainActivity.this,ProfileActivity.class);
+                startActivity(in);
 
                 break;
             case R.id.tv_open:
-                ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_UDP_ON));
+
 
                 break;
         }

@@ -1,6 +1,7 @@
 package com.hzdl.teacher.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,8 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hzdl.teacher.R;
+import com.hzdl.teacher.activity.LoginActivity;
+import com.hzdl.teacher.activity.MainActivity;
+import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.bean.LoginBean;
+import com.hzdl.teacher.bean.ModifyPswBean;
+import com.hzdl.teacher.net.ITeacher;
+import com.hzdl.teacher.utils.Md5Util;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.os.Build.VERSION_CODES.M;
 
 
 public class ModifyPSDFragment extends Fragment {
@@ -17,6 +34,7 @@ public class ModifyPSDFragment extends Fragment {
     private EditText et_old,et_new,et_confirm;
     private Button button2;
 
+    private String pswOld,pswNew,pswConfirm;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,12 +94,60 @@ public class ModifyPSDFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                pswOld = et_old.getText().toString();
+                pswNew = et_new.getText().toString();
+                pswConfirm = et_confirm.getText().toString();
+
+                if(!pswOld.equals("") && !pswNew.equals("") && !pswConfirm.equals("") ){
+
+                    check();
+                }else{
+                    Toast.makeText(getActivity(),"在检查一下哦",0).show();
+                }
 
             }
 
         });
 
         return v;
+    }
+
+    private void check() {
+
+        if(!pswNew.equals(pswConfirm)){
+            Toast.makeText(getActivity(),"两次输入密码不一致",0).show();
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constant.URL_ROOT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ITeacher userBiz = retrofit.create(ITeacher.class);
+        Call<ModifyPswBean> call = userBiz.postModifyPsw("",Md5Util.md5(pswOld),Md5Util.md5(pswNew),Md5Util.md5(pswConfirm));
+        call.enqueue(new Callback<ModifyPswBean>()
+        {
+            @Override
+            public void onResponse(Call<ModifyPswBean> call, Response<ModifyPswBean> response)
+            {
+                if(response==null || response.body()==null)
+                    return;
+                if(200==response.body().getCode()){
+                    Toast.makeText(getActivity(),"修改成功",0).show();
+                }else{
+                    Toast.makeText(getActivity(),"修改失败",0).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ModifyPswBean> call, Throwable t)
+            {
+                Toast.makeText(getActivity(),"网络出了点问题",0).show();
+
+            }
+
+        });
+
     }
 
 

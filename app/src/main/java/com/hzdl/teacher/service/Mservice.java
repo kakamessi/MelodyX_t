@@ -37,6 +37,7 @@ public class Mservice extends Service {
         ActionDispatcher.getInstance().register(this.getClass().getName(), actionHandler);
         Log.e("kaka","Mservice onCreate");
         initSocket();
+        initUdp();
 
     }
 

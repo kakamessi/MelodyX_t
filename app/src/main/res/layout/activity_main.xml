@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="100sp"
-        android:text="个人信息" />
+        android:text="连入信息" />
 
     <TextView
         android:layout_marginTop="20dp"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="50sp"
-        android:text="结束服务" />
+        android:text="个人信息" />
     <TextView
         android:layout_marginTop="20dp"
         android:id="@+id/tv_open"
