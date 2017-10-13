@@ -16,4 +16,11 @@ public class ActionBean {
         this.codes = codes;
     }
 
+    public int getCodeByPositon(int p){
+
+        int code = Integer.parseInt(codes[p]);
+
+        return code;
+    }
+
 }
