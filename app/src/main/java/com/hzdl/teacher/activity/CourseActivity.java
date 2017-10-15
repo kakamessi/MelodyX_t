@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hzdl.teacher.R;
+import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.bean.ActionBean;
 import com.hzdl.teacher.bean.lesson.LessonInfo;
@@ -74,6 +75,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public static final int TYPE_MUSIC = 3;
 
     private LessonInfo les = null;
+    private int sIndex = 0;
+
     private MidiOutputDevice mOutputDevice;
     //当前消息
     private String actionMsg;
@@ -83,25 +86,25 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
+
         ButterKnife.bind(this);
         initVitamio();
         initMidi();
         mOutputDevice = getMidiOutputDevice();
 
-        setUIType(R.id.rl_loading);
-        netCourseList();
+        setView();
         
     }
 
-    /**
-     * 获取课程信息
-     * 成功后即可开始按小节上课
-     *
-     *
-     *
-     */
-    private void netCourseList() {
+    private void setView() {
+        les = mBaseApp.getLi().get(mBaseApp.getIndexLessonOn());
+        if(les.getSection(sIndex).getType()==0){
+            setUIType(R.id.rl_loading);
+        }else if(les.getSection(sIndex).getType()==1){
 
+        }else if(les.getSection(sIndex).getType()==2){
+
+        }
 
     }
 

@@ -87,7 +87,9 @@ public class LoginActivity extends BaseActivity {
             public void onFailure(Call<LoginBean> call, Throwable t)
             {
                 Toast.makeText( LoginActivity.this,"登录失败",0).show();
-
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                LoginActivity.this.startActivity(intent);
+                LoginActivity.this.finish();
             }
 
         });

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Environment;
 
 import com.hzdl.mex.utils.MyCrashHandler;
+import com.hzdl.teacher.bean.lesson.LessonInfo;
 import com.hzdl.teacher.downloadcourse.okhttp.HttpInterceptor;
 import com.hzdl.teacher.downloadcourse.okhttp.OkHttpUtil;
 import com.hzdl.teacher.downloadcourse.okhttp.annotation.CacheLevel;
@@ -16,6 +17,7 @@ import com.hzdl.teacher.service.Mservice;
 import com.hzdl.teacher.utils.Utils;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by wangshuai on 2017/9/15.
@@ -31,6 +33,10 @@ public class App extends Application {
     public static App getApplication(){
         return myApplication;
     }
+
+    //公共数据区
+    private List<LessonInfo> li = null;
+    private int IndexLessonOn = -1;
 
     @Override
     public void onCreate() {
@@ -88,5 +94,19 @@ public class App extends Application {
         Thread.setDefaultUncaughtExceptionHandler(handler);
     }
 
+    public List<LessonInfo> getLi() {
+        return li;
+    }
 
+    public void setLi(List<LessonInfo> li) {
+        this.li = li;
+    }
+
+    public int getIndexLessonOn() {
+        return IndexLessonOn;
+    }
+
+    public void setIndexLessonOn(int indexLessonOn) {
+        IndexLessonOn = indexLessonOn;
+    }
 }

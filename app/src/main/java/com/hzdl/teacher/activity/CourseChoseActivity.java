@@ -14,7 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hzdl.teacher.R;
+import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseActivity;
+import com.hzdl.teacher.bean.ActionBean;
+import com.hzdl.teacher.core.ActionProtocol;
+import com.hzdl.teacher.core.ActionResolver;
 
 public class CourseChoseActivity extends BaseActivity {
 
@@ -38,9 +42,11 @@ public class CourseChoseActivity extends BaseActivity {
         cc.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(CourseChoseActivity.this,CourseActivity.class);
-                startActivity(intent);
+
+                App.getApplication().setIndexLessonOn(position);
+                sendSynAction(ActionProtocol.ACTION_COURSE_START);
                 CourseChoseActivity.this.finish();
+
             }
 
             @Override
@@ -99,7 +105,7 @@ public class CourseChoseActivity extends BaseActivity {
         @Override
         public int getItemCount()
         {
-            return 32;
+            return App.getApplication().getLi().size();
         }
         class MyViewHolder extends RecyclerView.ViewHolder
         {
@@ -134,12 +140,30 @@ public class CourseChoseActivity extends BaseActivity {
         }
     }
 
+
+
     @Override
     protected void handleMsg(Message msg) {
 
-        
-        
+        doAction((String) msg.obj);
     }
+
+    private ActionBean ab;
+    private void doAction(String str) {
+        ab = ActionResolver.getInstance().resolve(str);
+
+        int c2 = Integer.parseInt(ab.getCodes()[1]);
+        int c3 = Integer.parseInt(ab.getCodes()[2]);
+
+        if (c2 == ActionProtocol.CODE_ACTION_COURSE) {
+            if (c3 == 1) {
+                Intent intent = new Intent(CourseChoseActivity.this, CourseActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
+
 
 
 

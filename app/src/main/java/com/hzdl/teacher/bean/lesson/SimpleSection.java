@@ -6,7 +6,14 @@ package com.hzdl.teacher.bean.lesson;
 
 public class SimpleSection {
 
+    //小节种类
+    private int type;
 
+    public int getType() {
+        return type;
+    }
 
-
+    public void setType(int type) {
+        this.type = type;
+    }
 }

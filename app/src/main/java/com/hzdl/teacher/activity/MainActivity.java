@@ -8,15 +8,27 @@ import android.widget.TextView;
 
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
+import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseMidiActivity;
+import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.bean.ActionBean;
+import com.hzdl.teacher.bean.lesson.CrouseListBean;
+import com.hzdl.teacher.bean.lesson.LessonInfo;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
+import com.hzdl.teacher.net.ITeacher;
 import com.hzdl.teacher.utils.Utils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.hzdl.teacher.R.id.tv_test;
 
@@ -51,23 +63,6 @@ public class MainActivity extends BaseMidiActivity {
             return;
         }
 
-        doAction((String) msg.obj);
-    }
-
-    private ActionBean ab;
-
-    private void doAction(String str) {
-        ab = ActionResolver.getInstance().resolve(str);
-
-        int c2 = Integer.parseInt(ab.getCodes()[1]);
-        int c3 = Integer.parseInt(ab.getCodes()[2]);
-
-        if (c2 == ActionProtocol.CODE_ACTION_COURSE) {
-            if (c3 == 1) {
-                Intent intent = new Intent(MainActivity.this, CourseActivity.class);
-                startActivity(intent);
-            }
-        }
     }
 
     @OnClick({tv_test, R.id.tv_down, R.id.tv_stop,R.id.tv_open})
@@ -80,8 +75,6 @@ public class MainActivity extends BaseMidiActivity {
                 break;
             case R.id.tv_down:
 
-                sendSynAction(ActionProtocol.ACTION_COURSE_START);
-
                 break;
             case R.id.tv_stop:
                 Intent in=new Intent(MainActivity.this,ProfileActivity.class);
@@ -93,6 +86,60 @@ public class MainActivity extends BaseMidiActivity {
 
                 break;
         }
+    }
+
+    private void netLessonKit() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constant.URL_ROOT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ITeacher userBiz = retrofit.create(ITeacher.class);
+        Call<CrouseListBean> call = null;
+        call.enqueue(new Callback<CrouseListBean>()
+        {
+            @Override
+            public void onResponse(Call<CrouseListBean> call, Response<CrouseListBean> response)
+            {
+                if(response==null || response.body()==null)
+                    return;
+                if(200==response.body().getCode()){
+
+                    CrouseListBean clb = null;
+                    fillData(clb);
+                    Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
+                    startActivity(intent);
+
+                }else{
+
+                }
+            }
+            @Override
+            public void onFailure(Call<CrouseListBean> call, Throwable t)
+            {
+
+            }
+
+        });
+    }
+
+    private void fillData(CrouseListBean clb) {
+        ArrayList<LessonInfo> list = null;
+
+        for(CrouseListBean.DetailLoginBean dlb : clb.getDetail()){
+            LessonInfo li = null;
+
+
+            for(CrouseListBean.DetailLoginBean.ChildrenPartLoginBeanX cpb : dlb.getChildrenPart()){
+
+                for(CrouseListBean.DetailLoginBean.ChildrenPartLoginBeanX.ChildrenPartLoginBean cpbb : cpb.getChildrenPart()){
+                }
+
+            }
+
+            list.add(li);
+        }
+
+        App.getApplication().setLi(list);
     }
 
 
