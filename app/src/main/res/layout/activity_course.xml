@@ -37,7 +37,7 @@
                 android:textSize="120sp" />
         </RelativeLayout>
 
-        <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/include_course_play" />
+        <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/include_score" />
 
     </FrameLayout>
 

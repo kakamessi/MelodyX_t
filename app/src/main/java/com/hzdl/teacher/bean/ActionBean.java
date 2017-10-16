@@ -23,4 +23,8 @@ public class ActionBean {
         return code;
     }
 
+    public String getStringByPositon(int p){
+        return codes[p];
+    }
+
 }

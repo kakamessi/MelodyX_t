@@ -11,6 +11,8 @@ public class LessonInfo {
 
     private List<SimpleGroup> groupList;
     private int lessonId;
+    private String name;
+
     private List<SimpleSection> sectionsList;
 
 
@@ -28,6 +30,7 @@ public class LessonInfo {
         for(SimpleGroup sg : groupList){
             if(sg.getList()!=null) {
                 for (SimpleSection ss : sg.getList()) {
+                    ss.setGroupName(sg.getName());
                     sectionsList.add(ss);
                 }
             }
@@ -43,8 +46,23 @@ public class LessonInfo {
         this.lessonId = lessonId;
     }
 
+    public SimpleSection getSection(int i) {
+        return sectionsList.get(i);
+    }
+
     public List<SimpleSection> getSectionsList() {
         return sectionsList;
     }
 
+    public void setSectionsList(List<SimpleSection> sectionsList) {
+        this.sectionsList = sectionsList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

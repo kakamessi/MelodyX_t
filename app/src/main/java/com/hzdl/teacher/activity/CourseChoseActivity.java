@@ -100,7 +100,7 @@ public class CourseChoseActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position)
         {
-            holder.tv_name.setText("第 " + (position+1) + " 课");
+            holder.tv_name.setText(mBaseApp.getLi().get(position).getName());
         }
         @Override
         public int getItemCount()

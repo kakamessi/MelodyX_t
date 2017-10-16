@@ -12,6 +12,10 @@ public class Constant {
     //视频文件存储路径
     public static String FILE_PATH = "/xmelody/";
 
+    public static int SECTION_TYPE_VIDEO = 102;
+    public static int SECTION_TYPE_MUSIC = 102;
+    public static int SECTION_TYPE_XX = 102;
+
 
     //----课程下载相关-------------------------------------------------------------------------------------------
     public static final String DOWNLOAD_ROOT = "http://newapp.tianshiyinyue.cn";

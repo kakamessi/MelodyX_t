@@ -6,7 +6,9 @@ package com.hzdl.teacher.bean.lesson;
 
 public class SimpleSection {
 
-    //小节种类
+    //所属小节名称
+    private String groupName;
+    //单元种类
     private int type;
     //视频名称
     private String videoName;
@@ -28,5 +30,13 @@ public class SimpleSection {
 
     public void setVideoName(String videoName) {
         this.videoName = videoName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

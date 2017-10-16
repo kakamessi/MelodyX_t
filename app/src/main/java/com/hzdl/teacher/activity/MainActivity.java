@@ -155,6 +155,7 @@ public class MainActivity extends BaseMidiActivity {
                     listSG.add(sg);
                 }
                 li.setGroupList(listSG);
+                li.setName(dlb.getName());
             }
 
             list.add(li);
