@@ -47,13 +47,13 @@ import jp.kshoji.driver.midi.device.MidiOutputDevice;
 /**
  * 上课主界面
  * 1--视频播放逻辑
- *
- *
- *       操作： 1，随机选择单元
- *             2，下一步单元
- *             3，投学生屏幕
- *
- *
+ * <p>
+ * <p>
+ * 操作： 1，随机选择单元
+ * 2，下一步单元
+ * 3，投学生屏幕
+ * <p>
+ * <p>
  * //    loadPlay(Utils.getVideoPath()+"hehe.mp4");
  * //    MidiOutputDevice midiOutputDevice = getMidiOutputDevice();
  * //    midiOutputDevice.sendMidiNoteOn(0, 0x90, 0x40, 0x7f);
@@ -68,11 +68,15 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     RelativeLayout rlLoading;
     @BindView(R.id.fl_one)
     FrameLayout fl_root;
+    @BindView(R.id.tv_menu)
+    TextView tvMenu;
+
 
     public static int COURSE_TYPE = -1;
     public static final int TYPE_VEDIO = 1;
     public static final int TYPE_PLAY = 2;
     public static final int TYPE_MUSIC = 3;
+
 
     private LessonInfo les = null;
     private int cellIndex = 0;
@@ -93,7 +97,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         mOutputDevice = getMidiOutputDevice();
 
         les = mBaseApp.getLi().get(mBaseApp.getIndexLessonOn());
-        if(les==null){
+        if (les == null) {
             this.finish();
             return;
         }
@@ -103,9 +107,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getVideoName());
+                //sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getVideoName());
             }
-        },3000);
+        }, 3000);
     }
 
     @Override
@@ -192,13 +196,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void onPrepared(MediaPlayer mp) {
     }
 
-    @OnClick(R.id.qiehuan)
-    public void onClick(View v) {
-
-        showPop();
-
-    }
-
     //-----------------------------------------------------------视频相关-----------------------------------------------------------------
 
 
@@ -239,9 +236,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void initVedioSection() {
         COURSE_TYPE = TYPE_VEDIO;
         setUIType(R.id.rl_video);
-        if(ActionProtocol.CODE_VEDIO_ON==ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF==ab.getCodeByPositon(2) ){
+        if (ActionProtocol.CODE_VEDIO_ON == ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF == ab.getCodeByPositon(2)) {
             playOrPause();
-        }else if(ActionProtocol.CODE_VEDIO_CHANGE==ab.getCodeByPositon(2)){
+        } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
             swichPlayScr(ab.getStringByPositon(3));
         }
     }
@@ -280,18 +277,18 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     /**
-     *  开始上课
+     * 开始上课
      */
     private void action() {
 
-        if(les.getSection(cellIndex).getType()== Constant.SECTION_TYPE_VIDEO){
+        if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
             //视频
             sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getVideoName());
 
-        }else if(les.getSection(cellIndex).getType()== Constant.SECTION_TYPE_MUSIC){
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
             //音乐
 
-        }else if(les.getSection(cellIndex).getType()== Constant.SECTION_TYPE_XX){
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_XX) {
             //画谱
 
         }
@@ -299,7 +296,47 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     private BasePopupWindow popupWindow;
-    public void showPop(){
+
+    private BasePopupWindow buttonPop;
+
+    public void showButtonPop() {
+
+        View vv = getLayoutInflater().inflate(R.layout.pop_button_menu, null);
+        TextView tv1 = vv.findViewById(R.id.tv_select);
+        TextView tv2 = vv.findViewById(R.id.tv_next);
+        TextView tv3 = vv.findViewById(R.id.tv_over);
+
+        tv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPop();
+                buttonPop.dismiss();
+            }
+        });
+
+        tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonPop.dismiss();
+            }
+        });
+
+        tv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendSynAction(ActionProtocol.ACTION_COURSE_STOP);
+                buttonPop.dismiss();
+            }
+        });
+
+        buttonPop = new BasePopupWindow(this);
+        buttonPop.setContentView(vv);
+        buttonPop.showAsDropDown(tvMenu, 0, 0);
+
+
+    }
+
+    public void showPop() {
 
         DisplayMetrics dm = new DisplayMetrics();
         WindowManager wmManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -307,10 +344,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         int H = dm.heightPixels;
         int W = dm.widthPixels;
 
-        View vv = getLayoutInflater().inflate(R.layout.pop_course,null);
-        RecyclerView rcy_course = (RecyclerView)vv.findViewById(R.id.rcy_course);
+        View vv = getLayoutInflater().inflate(R.layout.pop_course, null);
+        RecyclerView rcy_course = (RecyclerView) vv.findViewById(R.id.rcy_course);
         //设置布局管理器
-        rcy_course.setLayoutManager(new GridLayoutManager(this,5));
+        rcy_course.setLayoutManager(new GridLayoutManager(this, 5));
         CCAdapter cc = new CCAdapter();
         cc.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
@@ -334,23 +371,35 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         popupWindow.setWidth(W - 150);
         popupWindow.setHeight(H - 150);
         popupWindow.setContentView(vv);
-        popupWindow.showAtLocation(fl_root, Gravity.TOP,0,75);
+        popupWindow.showAtLocation(fl_root, Gravity.TOP, 0, 75);
 
     }
 
-    class CCAdapter extends RecyclerView.Adapter<CCAdapter.MyViewHolder>
-    {
+    @OnClick({R.id.fl_one, R.id.tv_menu})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fl_one:
+
+                break;
+            case R.id.tv_menu:
+                showButtonPop();
+                break;
+        }
+    }
+
+
+    class CCAdapter extends RecyclerView.Adapter<CCAdapter.MyViewHolder> {
         private OnItemClickLitener mOnItemClickLitener;
-        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
-        {
+
+        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
             this.mOnItemClickLitener = mOnItemClickLitener;
         }
+
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(CourseActivity.this).inflate(R.layout.item_pop_list, parent, false);
-            final CCAdapter.MyViewHolder holder = new CCAdapter.MyViewHolder(v);
-            if(mOnItemClickLitener!=null){
+            final MyViewHolder holder = new MyViewHolder(v);
+            if (mOnItemClickLitener != null) {
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -361,30 +410,32 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
             return holder;
         }
+
         @Override
-        public void onBindViewHolder(CCAdapter.MyViewHolder holder, int position)
-        {
-            holder.tv_name.setText(les.getSection(position).getGroupName()+ "  " +les.getSection(position).getVideoName());
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+            holder.tv_name.setText(les.getSection(position).getGroupName() + "  " + les.getSection(position).getVideoName());
         }
+
         @Override
-        public int getItemCount()
-        {
+        public int getItemCount() {
             return les.getSectionsList().size();
         }
-        class MyViewHolder extends RecyclerView.ViewHolder
-        {
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
             ImageView tv;
             TextView tv_name;
-            public MyViewHolder(View view)
-            {
+
+            public MyViewHolder(View view) {
                 super(view);
                 tv = (ImageView) view.findViewById(R.id.imageView);
                 tv_name = (TextView) view.findViewById(R.id.tv_name);
             }
         }
     }
+
     class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         int mSpace;
+
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
@@ -393,19 +444,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             outRect.bottom = mSpace;
             outRect.top = 10;
         }
+
         public SpaceItemDecoration(int space) {
             this.mSpace = space;
         }
     }
-
-
-
-
-
-
-
-
-
 
 
 }

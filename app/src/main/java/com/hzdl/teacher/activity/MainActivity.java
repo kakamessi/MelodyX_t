@@ -51,7 +51,7 @@ public class MainActivity extends BaseMidiActivity {
         ButterKnife.bind(this);
         initMidi();
 
-        tvTest.setText("课程选择 " + Utils.getLocalIp(this));
+        tvTest.setText("ip: " + Utils.getLocalIp(this));
     }
 
     int i = 0;
@@ -71,8 +71,7 @@ public class MainActivity extends BaseMidiActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case tv_test:
-                Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
-                startActivity(intent);
+
 
                 break;
             case R.id.tv_down:
