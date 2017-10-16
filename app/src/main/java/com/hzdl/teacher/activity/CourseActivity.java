@@ -98,13 +98,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     private void setView() {
         les = mBaseApp.getLi().get(mBaseApp.getIndexLessonOn());
-        if(les.getSection(sIndex).getType()==0){
-            setUIType(R.id.rl_loading);
-        }else if(les.getSection(sIndex).getType()==1){
 
-        }else if(les.getSection(sIndex).getType()==2){
-
-        }
 
     }
 

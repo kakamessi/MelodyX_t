@@ -14,6 +14,8 @@ import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.bean.ActionBean;
 import com.hzdl.teacher.bean.lesson.CrouseListBean;
 import com.hzdl.teacher.bean.lesson.LessonInfo;
+import com.hzdl.teacher.bean.lesson.SimpleGroup;
+import com.hzdl.teacher.bean.lesson.SimpleSection;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.net.ITeacher;
@@ -74,6 +76,7 @@ public class MainActivity extends BaseMidiActivity {
 
                 break;
             case R.id.tv_down:
+                netLessonKit();
 
                 break;
             case R.id.tv_stop:
@@ -94,7 +97,7 @@ public class MainActivity extends BaseMidiActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ITeacher userBiz = retrofit.create(ITeacher.class);
-        Call<CrouseListBean> call = null;
+        Call<CrouseListBean> call = userBiz.getCrouseList();
         call.enqueue(new Callback<CrouseListBean>()
         {
             @Override
@@ -104,7 +107,7 @@ public class MainActivity extends BaseMidiActivity {
                     return;
                 if(200==response.body().getCode()){
 
-                    CrouseListBean clb = null;
+                    CrouseListBean clb = response.body();
                     fillData(clb);
                     Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
                     startActivity(intent);
@@ -123,22 +126,39 @@ public class MainActivity extends BaseMidiActivity {
     }
 
     private void fillData(CrouseListBean clb) {
-        ArrayList<LessonInfo> list = null;
+        ArrayList<LessonInfo> list = new ArrayList<LessonInfo>();
 
         for(CrouseListBean.DetailLoginBean dlb : clb.getDetail()){
-            LessonInfo li = null;
+            LessonInfo li = new LessonInfo();
 
+            if(dlb.getChildrenPart()!=null) {
+                ArrayList<SimpleGroup> listSG = new ArrayList<SimpleGroup>();
 
-            for(CrouseListBean.DetailLoginBean.ChildrenPartLoginBeanX cpb : dlb.getChildrenPart()){
+                for (CrouseListBean.DetailLoginBean.ChildrenPartLoginBeanX cpb : dlb.getChildrenPart()) {
 
-                for(CrouseListBean.DetailLoginBean.ChildrenPartLoginBeanX.ChildrenPartLoginBean cpbb : cpb.getChildrenPart()){
+                    SimpleGroup sg = new SimpleGroup();
+                    sg.setName(cpb.getName());
+
+                    if(cpb.getChildrenPart()!=null) {
+
+                        ArrayList<SimpleSection> listSS = new ArrayList<SimpleSection>();
+                        for (CrouseListBean.DetailLoginBean.ChildrenPartLoginBeanX.ChildrenPartLoginBean cpbb : cpb.getChildrenPart()) {
+                            SimpleSection ss = new SimpleSection();
+                            ss.setType(cpbb.getType());
+                            ss.setVideoName(cpbb.getName());
+
+                            listSS.add(ss);
+                        }
+                        sg.setList(listSS);
+                    }
+
+                    listSG.add(sg);
                 }
-
+                li.setGroupList(listSG);
             }
 
             list.add(li);
         }
-
         App.getApplication().setLi(list);
     }
 

@@ -1,5 +1,6 @@
 package com.hzdl.teacher.bean.lesson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,12 +9,42 @@ import java.util.List;
 
 public class LessonInfo {
 
-    private List<SimpleSection> list;
+    private List<SimpleGroup> groupList;
+    private int lessonId;
+    private List<SimpleSection> sectionsList;
 
-    //获取小节
-    public SimpleSection getSection(int position){
 
-        return list.get(position);
+    public List<SimpleGroup> getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(List<SimpleGroup> groupList) {
+        this.groupList = groupList;
+
+        if(sectionsList==null){
+            sectionsList = new ArrayList<SimpleSection>();
+        }
+
+        for(SimpleGroup sg : groupList){
+            if(sg.getList()!=null) {
+                for (SimpleSection ss : sg.getList()) {
+                    sectionsList.add(ss);
+                }
+            }
+        }
+
+    }
+
+    public int getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public List<SimpleSection> getSectionsList() {
+        return sectionsList;
     }
 
 }

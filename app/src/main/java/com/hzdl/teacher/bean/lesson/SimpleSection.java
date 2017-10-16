@@ -8,6 +8,11 @@ public class SimpleSection {
 
     //小节种类
     private int type;
+    //视频名称
+    private String videoName;
+
+
+
 
     public int getType() {
         return type;
@@ -15,5 +20,13 @@ public class SimpleSection {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getVideoName() {
+        return videoName;
+    }
+
+    public void setVideoName(String videoName) {
+        this.videoName = videoName;
     }
 }

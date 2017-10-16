@@ -28,7 +28,7 @@ public class Constant {
     public static final String URL_MODIFY_PSW = "/client/resetPass.json";
     public static final String URL_COURSE_DOWNLOAD = "http://video.angelmusic360.com";
     public static final String URL_CHECK_UPDATE = "/client/version/versionInfo.json?type=1";
-
+    public static final String URL_COURSE_LIST = "client/course/findCoursePart.json";
 
     //----持久化相关-------------------------------------------------------------------------------------------
 
