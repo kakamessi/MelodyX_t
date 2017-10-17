@@ -6,9 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.hzdl.teacher.activity.CourseChoseActivity">
 
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:src="@mipmap/common_back"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcy_course"
         android:overScrollMode="never"
+        android:layout_below="@+id/iv_back"
         android:layout_marginTop="60dp"
         android:scrollbars="none"
         android:layout_width="match_parent"

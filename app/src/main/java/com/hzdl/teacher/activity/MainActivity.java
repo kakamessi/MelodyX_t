@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
-import android.widget.TextView;
 
-import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseMidiActivity;
@@ -19,11 +17,9 @@ import com.hzdl.teacher.bean.lesson.SimpleSection;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.net.ITeacher;
-import com.hzdl.teacher.utils.Utils;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -32,17 +28,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.hzdl.teacher.R.id.tv_test;
-
 public class MainActivity extends BaseMidiActivity {
 
-
-    @BindView(tv_test)
-    TextView tvTest;
-    @BindView(R.id.tv_down)
-    TextView tvDown;
-    @BindView(R.id.tv_stop)
-    TextView tvStop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +38,6 @@ public class MainActivity extends BaseMidiActivity {
         ButterKnife.bind(this);
         initMidi();
 
-        tvTest.setText("ip: " + Utils.getLocalIp(this));
     }
 
     int i = 0;
@@ -61,33 +47,10 @@ public class MainActivity extends BaseMidiActivity {
         ActionBean ab = ActionResolver.getInstance().resolve((String) msg.obj);
         int c1 = Integer.parseInt(ab.getCodes()[0]);
         if (c1 == ActionProtocol.CODE_ACTION_CONNECTED) {
-            tvDown.setText("当前连入学生：" + TeacherClient.getInstance().tRunner.getSocketList().size());
+
             return;
         }
 
-    }
-
-    @OnClick({tv_test, R.id.tv_down, R.id.tv_stop,R.id.tv_open})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case tv_test:
-
-
-                break;
-            case R.id.tv_down:
-                netLessonKit();
-
-                break;
-            case R.id.tv_stop:
-                Intent in=new Intent(MainActivity.this,ProfileActivity.class);
-                startActivity(in);
-
-                break;
-            case R.id.tv_open:
-
-
-                break;
-        }
     }
 
     private void netLessonKit() {
@@ -97,27 +60,25 @@ public class MainActivity extends BaseMidiActivity {
                 .build();
         ITeacher userBiz = retrofit.create(ITeacher.class);
         Call<CrouseListBean> call = userBiz.getCrouseList();
-        call.enqueue(new Callback<CrouseListBean>()
-        {
+        call.enqueue(new Callback<CrouseListBean>() {
             @Override
-            public void onResponse(Call<CrouseListBean> call, Response<CrouseListBean> response)
-            {
-                if(response==null || response.body()==null)
+            public void onResponse(Call<CrouseListBean> call, Response<CrouseListBean> response) {
+                if (response == null || response.body() == null)
                     return;
-                if(200==response.body().getCode()){
+                if (200 == response.body().getCode()) {
 
                     CrouseListBean clb = response.body();
                     fillData(clb);
                     Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
                     startActivity(intent);
 
-                }else{
+                } else {
 
                 }
             }
+
             @Override
-            public void onFailure(Call<CrouseListBean> call, Throwable t)
-            {
+            public void onFailure(Call<CrouseListBean> call, Throwable t) {
 
             }
 
@@ -127,10 +88,10 @@ public class MainActivity extends BaseMidiActivity {
     private void fillData(CrouseListBean clb) {
         ArrayList<LessonInfo> list = new ArrayList<LessonInfo>();
 
-        for(CrouseListBean.DetailLoginBean dlb : clb.getDetail()){
+        for (CrouseListBean.DetailLoginBean dlb : clb.getDetail()) {
             LessonInfo li = new LessonInfo();
 
-            if(dlb.getChildrenPart()!=null) {
+            if (dlb.getChildrenPart() != null) {
                 ArrayList<SimpleGroup> listSG = new ArrayList<SimpleGroup>();
 
                 for (CrouseListBean.DetailLoginBean.ChildrenPartLoginBeanX cpb : dlb.getChildrenPart()) {
@@ -138,7 +99,7 @@ public class MainActivity extends BaseMidiActivity {
                     SimpleGroup sg = new SimpleGroup();
                     sg.setName(cpb.getName());
 
-                    if(cpb.getChildrenPart()!=null) {
+                    if (cpb.getChildrenPart() != null) {
 
                         ArrayList<SimpleSection> listSS = new ArrayList<SimpleSection>();
                         for (CrouseListBean.DetailLoginBean.ChildrenPartLoginBeanX.ChildrenPartLoginBean cpbb : cpb.getChildrenPart()) {
@@ -163,4 +124,18 @@ public class MainActivity extends BaseMidiActivity {
     }
 
 
+    @OnClick({R.id.iv_start, R.id.iv_exit})
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.iv_start:
+                netLessonKit();
+                break;
+
+            case R.id.iv_exit:
+                Intent in = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(in);
+                break;
+        }
+    }
 }

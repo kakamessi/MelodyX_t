@@ -4,12 +4,23 @@
     android:id="@+id/activity_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/login_bg"
     tools:context="com.hzdl.teacher.activity.SplashActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@mipmap/splash" />
+        <ImageView
+            android:id="@+id/tv_logo"
+            android:layout_width="300dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginLeft="200dp"
+            android:layout_height="300dp"
+            android:background="@mipmap/logox" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/tv_logo"
+            android:background="@mipmap/slogan" />
 
 </RelativeLayout>

@@ -20,24 +20,28 @@ import com.hzdl.teacher.bean.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class CourseChoseActivity extends BaseActivity {
 
-    private RecyclerView rcy_course;
-
+    @BindView(R.id.rcy_course)
+    RecyclerView rcy_course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_chose);
+        ButterKnife.bind(this);
 
         initRcy();
     }
 
     private void initRcy() {
 
-        rcy_course = (RecyclerView)findViewById(R.id.rcy_course);
         //设置布局管理器
-        rcy_course.setLayoutManager(new GridLayoutManager(this,5));
+        rcy_course.setLayoutManager(new GridLayoutManager(this, 5));
         CCAdapter cc = new CCAdapter();
         cc.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
@@ -61,31 +65,33 @@ public class CourseChoseActivity extends BaseActivity {
 
     }
 
-    public interface OnItemClickLitener
-    {
-        void onItemClick(View view, int position);
-        void onItemLongClick(View view , int position);
+    @OnClick(R.id.iv_back)
+    public void onClick() {
+        finish();
     }
 
-    class CCAdapter extends RecyclerView.Adapter<CCAdapter.MyViewHolder>
-    {
+    public interface OnItemClickLitener {
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
+    }
+
+    class CCAdapter extends RecyclerView.Adapter<CCAdapter.MyViewHolder> {
 
 
         private OnItemClickLitener mOnItemClickLitener;
 
-        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
-        {
+        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
             this.mOnItemClickLitener = mOnItemClickLitener;
         }
 
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             View v = LayoutInflater.from(CourseChoseActivity.this).inflate(R.layout.item_c_c, parent, false);
             final MyViewHolder holder = new MyViewHolder(v);
 
-            if(mOnItemClickLitener!=null){
+            if (mOnItemClickLitener != null) {
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -97,22 +103,22 @@ public class CourseChoseActivity extends BaseActivity {
 
             return holder;
         }
+
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
-        {
+        public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.tv_name.setText(mBaseApp.getLi().get(position).getName());
         }
+
         @Override
-        public int getItemCount()
-        {
+        public int getItemCount() {
             return App.getApplication().getLi().size();
         }
-        class MyViewHolder extends RecyclerView.ViewHolder
-        {
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
             ImageView tv;
             TextView tv_name;
-            public MyViewHolder(View view)
-            {
+
+            public MyViewHolder(View view) {
                 super(view);
                 tv = (ImageView) view.findViewById(R.id.imageView);
                 tv_name = (TextView) view.findViewById(R.id.tv_name);
@@ -141,7 +147,6 @@ public class CourseChoseActivity extends BaseActivity {
     }
 
 
-
     @Override
     protected void handleMsg(Message msg) {
 
@@ -149,6 +154,7 @@ public class CourseChoseActivity extends BaseActivity {
     }
 
     private ActionBean ab;
+
     private void doAction(String str) {
         ab = ActionResolver.getInstance().resolve(str);
 
@@ -162,9 +168,6 @@ public class CourseChoseActivity extends BaseActivity {
             }
         }
     }
-
-
-
 
 
 }
