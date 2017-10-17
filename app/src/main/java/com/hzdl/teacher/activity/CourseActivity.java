@@ -107,7 +107,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getVideoName());
+                action();
             }
         }, 3000);
     }
@@ -116,6 +116,18 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     protected void onDestroy() {
         super.onDestroy();
         vv.stopPlayback();
+        closeView();
+
+    }
+
+    private void closeView(){
+        if(popBtns!=null){
+            popBtns.dismiss();
+        }
+        if(popupWindow!=null){
+            popupWindow.dismiss();
+        }
+
     }
 
     /**
@@ -201,6 +213,31 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     //------------课程逻辑----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * 开始上课
+     */
+    private void action() {
+
+        if (cellIndex + 1 > les.getSectionsList().size()) {
+            //课程结束
+            setUIType(R.id.include_course_finish);
+            return;
+        }
+
+        if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
+            //视频
+            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName());
+
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
+            //音乐
+
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_XX) {
+            //画谱
+
+        }
+
+        setCellIndex(++cellIndex);
+    }
 
     /**
      * 消息入口
@@ -276,48 +313,32 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         mOutputDevice = getMidiOutputDevice();
     }
 
-    /**
-     * 开始上课
-     */
-    private void action() {
-
-        if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
-            //视频
-            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getVideoName());
-
-        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
-            //音乐
-
-        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_XX) {
-            //画谱
-
-        }
-
-    }
-
     private BasePopupWindow popupWindow;
 
-    private BasePopupWindow buttonPop;
+    private BasePopupWindow popBtns;
 
     public void showButtonPop() {
 
         View vv = getLayoutInflater().inflate(R.layout.pop_button_menu, null);
         TextView tv1 = vv.findViewById(R.id.tv_select);
-        TextView tv2 = vv.findViewById(R.id.tv_next);
+        TextView tv_next = vv.findViewById(R.id.tv_next);
         TextView tv3 = vv.findViewById(R.id.tv_over);
+        TextView tv_pause = vv.findViewById(R.id.tv_pause);
+        TextView tv_play = vv.findViewById(R.id.tv_play);
 
         tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPop();
-                buttonPop.dismiss();
+                popBtns.dismiss();
             }
         });
 
-        tv2.setOnClickListener(new View.OnClickListener() {
+        tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonPop.dismiss();
+                action();
+                popBtns.dismiss();
             }
         });
 
@@ -325,13 +346,33 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             @Override
             public void onClick(View view) {
                 sendSynAction(ActionProtocol.ACTION_COURSE_STOP);
-                buttonPop.dismiss();
+                popBtns.dismiss();
             }
         });
 
-        buttonPop = new BasePopupWindow(this);
-        buttonPop.setContentView(vv);
-        buttonPop.showAsDropDown(tvMenu, 0, 0);
+        tv_pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (COURSE_TYPE == TYPE_VEDIO) {
+                    playOrPause();
+                }
+                popBtns.dismiss();
+            }
+        });
+
+        tv_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (COURSE_TYPE == TYPE_VEDIO) {
+                    playOrPause();
+                }
+                popBtns.dismiss();
+            }
+        });
+
+        popBtns = new BasePopupWindow(this);
+        popBtns.setContentView(vv);
+        popBtns.showAsDropDown(tvMenu, 0, 0);
 
 
     }
@@ -352,7 +393,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         cc.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                cellIndex = position;
+                setCellIndex(position);
                 action();
                 popupWindow.dismiss();
             }
@@ -375,7 +416,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    @OnClick({R.id.fl_one, R.id.tv_menu})
+    @OnClick({R.id.fl_one, R.id.tv_menu,R.id.iv_backmain})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fl_one:
@@ -383,6 +424,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 break;
             case R.id.tv_menu:
                 showButtonPop();
+                break;
+
+            case R.id.iv_backmain:
+                sendSynAction(ActionProtocol.ACTION_COURSE_STOP);
                 break;
         }
     }
@@ -413,7 +458,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.tv_name.setText(les.getSection(position).getGroupName() + "  " + les.getSection(position).getVideoName());
+            holder.tv_name.setText(les.getSection(position).getGroupName() + "  " + les.getSection(position).getShowName());
         }
 
         @Override
@@ -450,7 +495,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
     }
 
-
+    public void setCellIndex(int index) {
+        this.cellIndex = index;
+    }
 }
 
 

@@ -34,4 +34,24 @@
         android:layout_gravity="center_horizontal"
         android:textSize="40sp" />
 
+    <TextView
+        android:text="暂停"
+        android:textColor="@color/btn_white_normal"
+        android:id="@+id/tv_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="40sp" />
+
+    <TextView
+        android:text="播放"
+        android:textColor="@color/btn_white_normal"
+        android:id="@+id/tv_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="40sp" />
+
 </LinearLayout>

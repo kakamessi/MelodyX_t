@@ -27,17 +27,19 @@
         <RelativeLayout
             android:id="@+id/rl_loading"
             android:gravity="center"
+            android:background="@mipmap/course_loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
                 android:text="加载中..."
-                android:textColor="#FFFFFF"
+                android:textColor="#6eccba"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="120sp" />
         </RelativeLayout>
 
         <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/include_score" />
+        <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/include_course_finish" />
 
     </FrameLayout>
 
@@ -45,7 +47,6 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="match_parent">
-
         <TextView
             android:text="菜单"
             android:layout_alignParentRight="true"

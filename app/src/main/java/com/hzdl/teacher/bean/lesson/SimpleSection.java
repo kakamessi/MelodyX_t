@@ -11,10 +11,17 @@ public class SimpleSection {
     //单元种类
     private int type;
     //视频名称
-    private String videoName;
+    private String showName;
+    //资源名称
+    private String sourceName;
 
+    public String getGroupName() {
+        return groupName;
+    }
 
-
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
     public int getType() {
         return type;
@@ -24,19 +31,19 @@ public class SimpleSection {
         this.type = type;
     }
 
-    public String getVideoName() {
-        return videoName;
+    public String getShowName() {
+        return showName;
     }
 
-    public void setVideoName(String videoName) {
-        this.videoName = videoName;
+    public void setShowName(String showName) {
+        this.showName = showName;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getSourceName() {
+        return sourceName;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
     }
 }

@@ -3,14 +3,13 @@ package com.hzdl.teacher.net;
 import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.bean.LoginBean;
 import com.hzdl.teacher.bean.ModifyPswBean;
-import com.hzdl.teacher.bean.lesson.CrouseListBean;
+import com.hzdl.teacher.bean.lesson.CrouseListBean1017;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * Created by wangshuai on 2017/9/8.
@@ -34,7 +33,7 @@ public interface ITeacher {
      * @return
      */
     @GET(Constant.URL_COURSE_LIST)
-    Call<CrouseListBean> getCrouseList();
+    Call<CrouseListBean1017> getCrouseList();
 
 
 

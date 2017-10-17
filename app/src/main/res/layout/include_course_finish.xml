@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/include_course_finish"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@mipmap/course_loading"
+    tools:context="com.hzdl.teacher.activity.CourseActivity">
+
+
+     <RelativeLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="@mipmap/course_end"
+         >
+
+         <TextView
+             android:id="@+id/tv_thanks"
+             android:layout_marginTop="62dp"
+             android:layout_marginLeft="230dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="20sp"
+             android:textColor="#fefefe"
+             android:text="课程结束\n老师您辛苦了~"
+             />
+         <ImageView
+             android:id="@+id/iv_backmain"
+             android:layout_marginLeft="230dp"
+             android:layout_below="@+id/tv_thanks"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@mipmap/course_back_main"
+             android:layout_marginTop="20dp"
+             />
+
+     </RelativeLayout>
+
+</RelativeLayout>
