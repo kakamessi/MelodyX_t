@@ -278,7 +278,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
             initVedioSection();
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
-
+            initPlaySection();
         }
     }
 
@@ -403,7 +403,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         popBtns = new BasePopupWindow(this);
         popBtns.setContentView(vv);
-        popBtns.showAsDropDown(tvMenu, 0, 0);
+        popBtns.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        popBtns.showAsDropDown(tvMenu, 0, -Utils.dip2px(this,tvMenu.getHeight()));
 
 
     }
