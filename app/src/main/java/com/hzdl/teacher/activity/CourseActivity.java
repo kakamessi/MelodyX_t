@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import com.hzdl.teacher.bean.ActionBean;
 import com.hzdl.teacher.bean.lesson.LessonInfo;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
+import com.hzdl.teacher.core.MelodyU;
 import com.hzdl.teacher.interfacex.OnItemClickLitener;
 import com.hzdl.teacher.utils.BasePopupWindow;
 import com.hzdl.teacher.utils.Utils;
@@ -70,6 +72,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     FrameLayout fl_root;
     @BindView(R.id.tv_menu)
     TextView tvMenu;
+    @BindView(R.id.rl_top)
+    RelativeLayout rlTop;
+    @BindView(R.id.rl_bottom)
+    RelativeLayout rlBottom;
+    @BindView(R.id.include_score)
+    LinearLayout includeScore;
 
 
     public static int COURSE_TYPE = -1;
@@ -110,6 +118,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 action();
             }
         }, 3000);
+
+        //testX();
+    }
+
+    private void testX() {
+        initPlaySection();
+        MelodyU.getInstance().setNoteAndKey(this, includeScore, 1, false, 1, false);
     }
 
     @Override
@@ -120,11 +135,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    private void closeView(){
-        if(popBtns!=null){
+    private void closeView() {
+        if (popBtns != null) {
             popBtns.dismiss();
         }
-        if(popupWindow!=null){
+        if (popupWindow != null) {
             popupWindow.dismiss();
         }
 
@@ -285,6 +300,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
      */
     public void initPlaySection() {
         COURSE_TYPE = TYPE_PLAY;
+        setUIType(R.id.include_score);
+        replaceLayout(rlTop, R.layout.view_score_top);
+        replaceLayout(rlBottom, R.layout.view_score_bottom);
 
     }
 
@@ -293,6 +311,19 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
      */
     public void initMusicSection() {
         COURSE_TYPE = TYPE_MUSIC;
+
+    }
+
+    /**
+     * 根据课程动态选择 布局文件
+     *
+     * @param fu
+     * @param zi
+     */
+    private void replaceLayout(ViewGroup fu, int resId) {
+
+        fu.removeAllViews();
+        ViewGroup vg = (ViewGroup) LayoutInflater.from(this).inflate(resId, fu);
 
     }
 
@@ -416,7 +447,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    @OnClick({R.id.fl_one, R.id.tv_menu,R.id.iv_backmain})
+    @OnClick({R.id.fl_one, R.id.tv_menu, R.id.iv_backmain})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fl_one:
