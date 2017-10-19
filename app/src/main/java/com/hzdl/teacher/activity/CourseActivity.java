@@ -357,8 +357,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(nextInfo.getNote() + 21,nextInfo.isIdNoteRed(),true));
     }
 
-    //------------课程逻辑end----------------------------------------------------------------------------------------------------------------
-
 
     //note 21 -108 序号  钢琴按键排序从1开始
     @Override
@@ -380,6 +378,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         super.onMidiOutputDeviceAttached(midiOutputDevice);
         mOutputDevice = getMidiOutputDevice();
     }
+    //------------公共逻辑end----------------------------------------------------------------------------------------------------------------
+
+
 
     private BasePopupWindow popupWindow;
 
@@ -421,9 +422,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         tv_pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (COURSE_TYPE == TYPE_VEDIO) {
-                    playOrPause();
-                }
+                sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
                 popBtns.dismiss();
             }
         });
@@ -431,9 +430,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         tv_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (COURSE_TYPE == TYPE_VEDIO) {
-                    playOrPause();
-                }
+                sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
                 popBtns.dismiss();
             }
         });
