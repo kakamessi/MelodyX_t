@@ -31,6 +31,7 @@ import com.hzdl.teacher.bean.lesson.LessonInfo;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.core.MelodyU;
+import com.hzdl.teacher.core.NoteInfo;
 import com.hzdl.teacher.interfacex.OnItemClickLitener;
 import com.hzdl.teacher.utils.BasePopupWindow;
 import com.hzdl.teacher.utils.Utils;
@@ -44,6 +45,8 @@ import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
+
+import static com.squareup.javapoet.TypeName.INT;
 
 
 /**
@@ -122,9 +125,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         //testX();
     }
 
+    int testInt = 21;
     private void testX() {
         initPlaySection();
-        MelodyU.getInstance().setNoteAndKey(this, includeScore, 1, false, 1, false);
+        //MelodyU.getInstance().setNoteAndKey(this, includeScore, 1, false, 1, false);
+
+//        mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(testInt,true,true));
+//        testInt++;
     }
 
     @Override
@@ -226,8 +233,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     //-----------------------------------------------------------视频相关-----------------------------------------------------------------
 
 
-    //------------课程逻辑----------------------------------------------------------------------------------------------------------------
-
+    //------------教师端课程逻辑----------------------------------------------------------------------------------------------------------------
     /**
      * 开始上课
      */
@@ -253,6 +259,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         setCellIndex(++cellIndex);
     }
+
+    //------------公共课程逻辑start----------------------------------------------------------------------------------------------------------------
 
     /**
      * 消息入口
@@ -327,15 +335,44 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    //------------课程逻辑----------------------------------------------------------------------------------------------------------------
+    int currentPlayIndex = 0;
+    private void checkInput(int note){
+        Toast.makeText(this,note+"",0).show();
+        NoteInfo nextInfo = null;
+        if((nextInfo=MelodyU.checkInputX(note,currentPlayIndex,-1))!=null){
+            //输入正确，进行下一个音符的UI显示
+            MelodyU.getInstance().setNoteAndKey(this, includeScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
+            //亮灯显示
+            doLight(nextInfo);
+
+            currentPlayIndex++;
+        }
+    }
+
+    private void doLight(NoteInfo nextInfo){
+        for(int i=21; i<109;i++){
+            mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(i,true,false));
+            mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(i,false,false));
+        }
+        mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(nextInfo.getNote() + 21,nextInfo.isIdNoteRed(),true));
+    }
+
+    //------------课程逻辑end----------------------------------------------------------------------------------------------------------------
 
 
-    //note 21 -108
+    //note 21 -108 序号  钢琴按键排序从1开始
     @Override
-    public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, int note, int velocity) {
+    public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
         super.onMidiNoteOff(sender, cable, channel, note, velocity);
+        if(COURSE_TYPE == TYPE_PLAY){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    checkInput(note-21);
+                }
+            });
 
-
+        }
     }
 
     @Override
@@ -351,11 +388,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void showButtonPop() {
 
         View vv = getLayoutInflater().inflate(R.layout.pop_button_menu, null);
-        TextView tv1 = vv.findViewById(R.id.tv_select);
-        TextView tv_next = vv.findViewById(R.id.tv_next);
-        TextView tv3 = vv.findViewById(R.id.tv_over);
-        TextView tv_pause = vv.findViewById(R.id.tv_pause);
-        TextView tv_play = vv.findViewById(R.id.tv_play);
+        ImageView tv1 = vv.findViewById(R.id.tv_select);
+        ImageView tv_next = vv.findViewById(R.id.tv_next);
+        ImageView tv3 = vv.findViewById(R.id.tv_over);
+        ImageView tv_pause = vv.findViewById(R.id.tv_pause);
+        ImageView tv_play = vv.findViewById(R.id.tv_play);
 
         tv1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -456,6 +493,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 break;
             case R.id.tv_menu:
                 showButtonPop();
+
                 break;
 
             case R.id.iv_backmain:

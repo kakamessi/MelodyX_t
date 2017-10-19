@@ -2,67 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/btn_register_pressed"
+    android:background="#82000000"
     android:orientation="vertical"
     android:paddingLeft="40dp"
     android:paddingRight="40dp">
 
-    <TextView
+    <ImageView
         android:id="@+id/tv_select"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:src="@mipmap/btn_course"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="选课"
-        android:textColor="@color/btn_white_normal"
-        android:textSize="40sp" />
+        android:layout_weight="1" />
 
-    <TextView
+    <ImageView
         android:id="@+id/tv_next"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="下一节"
+        android:src="@mipmap/btn_course"/>
 
-        android:textColor="@color/btn_white_normal"
-        android:textSize="40sp" />
-
-    <TextView
+    <ImageView
         android:id="@+id/tv_play"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="播放"
+        android:src="@mipmap/btn_play"/>
 
-        android:textColor="@color/btn_white_normal"
-        android:textSize="40sp" />
-
-    <TextView
+    <ImageView
         android:id="@+id/tv_pause"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
+        android:src="@mipmap/btn_pause"/>
 
-        android:gravity="center"
-        android:text="暂停"
-        android:textColor="@color/btn_white_normal"
-        android:textSize="40sp" />
-
-    <TextView
+    <ImageView
         android:id="@+id/tv_over"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="下课"
-
-        android:textColor="@color/btn_white_normal"
-        android:textSize="40sp" />
+        android:src="@mipmap/btn_finish"/>
 </LinearLayout>
