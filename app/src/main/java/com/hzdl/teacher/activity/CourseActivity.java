@@ -46,8 +46,6 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
-import static com.squareup.javapoet.TypeName.INT;
-
 
 /**
  * 上课主界面
@@ -88,8 +86,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public static final int TYPE_PLAY = 2;
     public static final int TYPE_MUSIC = 3;
 
-
+    //课程数据
     private LessonInfo les = null;
+    //当前小节
     private int cellIndex = 0;
 
     private MidiOutputDevice mOutputDevice;
@@ -242,19 +241,20 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         if (cellIndex + 1 > les.getSectionsList().size()) {
             //课程结束
             setUIType(R.id.include_course_finish);
+            stopVideo();
             return;
         }
 
         if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
             //视频
             sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName());
-
         } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
             //音乐
 
-        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_XX) {
-            //画谱
 
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_NOTEPLAY) {
+            //画谱
+            sendSynAction(ActionProtocol.ACTION_COURSE_NOTE + "|" + les.getSection(cellIndex).getSourceName());
         }
 
         setCellIndex(++cellIndex);
@@ -286,8 +286,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
             initVedioSection();
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
+            stopVideo();
             initPlaySection();
         }
+    }
+
+    private void stopVideo(){
+        vv.stopPlayback();
     }
 
     /***
@@ -309,6 +314,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void initPlaySection() {
         COURSE_TYPE = TYPE_PLAY;
         setUIType(R.id.include_score);
+
+        //定位资源
         replaceLayout(rlTop, R.layout.view_score_top);
         replaceLayout(rlBottom, R.layout.view_score_bottom);
 

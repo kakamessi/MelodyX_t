@@ -14,7 +14,7 @@ public class Constant {
 
     public static int SECTION_TYPE_VIDEO = 102;
     public static int SECTION_TYPE_MUSIC = 102;
-    public static int SECTION_TYPE_XX = 102;
+    public static int SECTION_TYPE_NOTEPLAY = 103;
 
 
     //----课程下载相关-------------------------------------------------------------------------------------------
