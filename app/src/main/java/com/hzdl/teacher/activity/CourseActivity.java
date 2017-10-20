@@ -121,16 +121,23 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
         }, 3000);
 
-        //testX();
     }
 
     int testInt = 21;
     private void testX() {
-        initPlaySection();
+        //initPlaySection();
         //MelodyU.getInstance().setNoteAndKey(this, includeScore, 1, false, 1, false);
 
-//        mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(testInt,true,true));
-//        testInt++;
+        //mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(testInt,true,true));
+        //testInt++;
+
+        final float[] time_c_14 = {5.272f,30.000f};
+        final float[] dur1 = { 1, 0.5f, 4, 0.2f, 0.2f, 00.2f, 0.2f, 0.2f };
+        final int[] color1 = { 1, 1, 1, 1, 0, 0, 0, 0};
+        final int[] index1 = { 39, 39, 39, 39, 39, 39, 39, 39 };
+
+        new TempleThread(mOutputDevice,time_c_14,dur1,color1,index1).start();
+
     }
 
     @Override
@@ -230,164 +237,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     //-----------------------------------------------------------视频相关-----------------------------------------------------------------
-
-
-    //------------教师端课程逻辑----------------------------------------------------------------------------------------------------------------
-    /**
-     * 开始上课
-     */
-    private void action() {
-
-        if (cellIndex + 1 > les.getSectionsList().size()) {
-            //课程结束
-            setUIType(R.id.include_course_finish);
-            stopVideo();
-            return;
-        }
-
-        if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
-            //视频
-            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName());
-        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
-            //音乐
-
-
-        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_NOTEPLAY) {
-            //画谱
-            sendSynAction(ActionProtocol.ACTION_COURSE_NOTE + "|" + les.getSection(cellIndex).getSourceName());
-        }
-
-        setCellIndex(++cellIndex);
-    }
-
-    //------------公共课程逻辑start----------------------------------------------------------------------------------------------------------------
-
-    /**
-     * 消息入口
-     *
-     * @param action
-     */
-    @Override
-    protected void handleMsg(Message action) {
-        doAction((String) action.obj);
-    }
-
-    /**
-     * 处理消息逻辑 如下课，切换视频等逻辑
-     */
-    private ActionBean ab;
-
-    private void doAction(String str) {
-        ab = ActionResolver.getInstance().resolve(str);
-        if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
-            if (ab.getCodeByPositon(2) == 0) {
-                CourseActivity.this.finish();
-            }
-        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
-            initVedioSection();
-        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
-            stopVideo();
-            initPlaySection();
-        }
-    }
-
-    private void stopVideo(){
-        vv.stopPlayback();
-    }
-
-    /***
-     * 播放视频
-     */
-    public void initVedioSection() {
-        COURSE_TYPE = TYPE_VEDIO;
-        setUIType(R.id.rl_video);
-        if (ActionProtocol.CODE_VEDIO_ON == ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF == ab.getCodeByPositon(2)) {
-            playOrPause();
-        } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
-            swichPlayScr(ab.getStringByPositon(3));
-        }
-    }
-
-    /**
-     * 准备曲谱， 判断钢琴输入对错
-     */
-    public void initPlaySection() {
-        COURSE_TYPE = TYPE_PLAY;
-        setUIType(R.id.include_score);
-
-        //定位资源
-        replaceLayout(rlTop, R.layout.view_score_top);
-        replaceLayout(rlBottom, R.layout.view_score_bottom);
-
-    }
-
-    /**
-     * 增加伴奏音乐
-     */
-    public void initMusicSection() {
-        COURSE_TYPE = TYPE_MUSIC;
-
-    }
-
-    /**
-     * 根据课程动态选择 布局文件
-     *
-     * @param fu
-     * @param zi
-     */
-    private void replaceLayout(ViewGroup fu, int resId) {
-
-        fu.removeAllViews();
-        ViewGroup vg = (ViewGroup) LayoutInflater.from(this).inflate(resId, fu);
-
-    }
-
-    int currentPlayIndex = 0;
-    private void checkInput(int note){
-        Toast.makeText(this,note+"",0).show();
-        NoteInfo nextInfo = null;
-        if((nextInfo=MelodyU.checkInputX(note,currentPlayIndex,-1))!=null){
-            //输入正确，进行下一个音符的UI显示
-            MelodyU.getInstance().setNoteAndKey(this, includeScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
-            //亮灯显示
-            doLight(nextInfo);
-
-            currentPlayIndex++;
-        }
-    }
-
-    private void doLight(NoteInfo nextInfo){
-        for(int i=21; i<109;i++){
-            mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(i,true,false));
-            mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(i,false,false));
-        }
-        mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(nextInfo.getNote() + 21,nextInfo.isIdNoteRed(),true));
-    }
-
-
-    //note 21 -108 序号  钢琴按键排序从1开始
-    @Override
-    public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
-        super.onMidiNoteOff(sender, cable, channel, note, velocity);
-        if(COURSE_TYPE == TYPE_PLAY){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    checkInput(note-21);
-                }
-            });
-
-        }
-    }
-
-    @Override
-    public void onMidiOutputDeviceAttached(@NonNull MidiOutputDevice midiOutputDevice) {
-        super.onMidiOutputDeviceAttached(midiOutputDevice);
-        mOutputDevice = getMidiOutputDevice();
-    }
-    //------------公共逻辑end----------------------------------------------------------------------------------------------------------------
-
-
 
     private BasePopupWindow popupWindow;
 
@@ -497,7 +346,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 break;
             case R.id.tv_menu:
                 showButtonPop();
-
                 break;
 
             case R.id.iv_backmain:
@@ -505,7 +353,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 break;
         }
     }
-
 
     class CCAdapter extends RecyclerView.Adapter<CCAdapter.MyViewHolder> {
         private OnItemClickLitener mOnItemClickLitener;
@@ -572,6 +419,206 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void setCellIndex(int index) {
         this.cellIndex = index;
     }
+
+    
+
+
+    //------------教师端课程逻辑----------------------------------------------------------------------------------------------------------------
+    /**
+     * 开始上课
+     */
+    private void action() {
+
+        if (cellIndex + 1 > les.getSectionsList().size()) {
+            //课程结束
+            setUIType(R.id.include_course_finish);
+            stopVideo();
+            return;
+        }
+
+        if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
+            //视频
+            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName());
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
+            //音乐
+
+
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_NOTEPLAY) {
+            //画谱
+            sendSynAction(ActionProtocol.ACTION_COURSE_NOTE + "|" + les.getSection(cellIndex).getSourceName());
+        }
+
+        setCellIndex(++cellIndex);
+    }
+
+
+    //------------公共课程逻辑start----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * 消息入口
+     *
+     * @param action
+     */
+    @Override
+    protected void handleMsg(Message action) {
+        doAction((String) action.obj);
+    }
+
+    /**
+     * 处理消息逻辑 如下课，切换视频等逻辑
+     */
+    private ActionBean ab;
+
+    private void doAction(String str) {
+        ab = ActionResolver.getInstance().resolve(str);
+        if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
+            if (ab.getCodeByPositon(2) == 0) {
+                CourseActivity.this.finish();
+            }
+        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
+            initVedioSection();
+            //testX();
+        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
+            stopVideo();
+            initPlaySection();
+        }
+    }
+
+    private void stopVideo(){
+        vv.stopPlayback();
+    }
+
+    /***
+     * 播放视频
+     */
+    public void initVedioSection() {
+        COURSE_TYPE = TYPE_VEDIO;
+        setUIType(R.id.rl_video);
+        if (ActionProtocol.CODE_VEDIO_ON == ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF == ab.getCodeByPositon(2)) {
+            playOrPause();
+        } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
+            swichPlayScr(ab.getStringByPositon(3));
+        }
+    }
+
+    /**
+     * 准备曲谱， 判断钢琴输入对错
+     */
+    public void initPlaySection() {
+        COURSE_TYPE = TYPE_PLAY;
+        setUIType(R.id.include_score);
+
+        //定位资源
+        replaceLayout(rlTop, R.layout.view_score_top);
+        replaceLayout(rlBottom, R.layout.view_score_bottom);
+
+    }
+
+    /**
+     * 增加伴奏音乐
+     */
+    public void initMusicSection() {
+        COURSE_TYPE = TYPE_MUSIC;
+
+    }
+
+    /**
+     * 根据课程动态选择 布局文件
+     *
+     * @param fu
+     * @param zi
+     */
+    private void replaceLayout(ViewGroup fu, int resId) {
+
+        fu.removeAllViews();
+        ViewGroup vg = (ViewGroup) LayoutInflater.from(this).inflate(resId, fu);
+
+    }
+
+    int currentPlayIndex = 0;
+    private void checkInput(int note){
+        Toast.makeText(this,note+"",0).show();
+        NoteInfo nextInfo = null;
+        if((nextInfo=MelodyU.checkInputX(note,currentPlayIndex,-1))!=null){
+            //输入正确，进行下一个音符的UI显示
+            MelodyU.getInstance().setNoteAndKey(this, includeScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
+            //亮灯显示
+            doLight(nextInfo);
+
+            currentPlayIndex++;
+        }
+    }
+
+    private void doLight(NoteInfo nextInfo){
+        for(int i=21; i<109;i++){
+            mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(i,true,false));
+            mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(i,false,false));
+        }
+        mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(nextInfo.getNote() + 21,nextInfo.isIdNoteRed(),true));
+    }
+
+
+    //note 21 -108 序号  钢琴按键排序从1开始
+    @Override
+    public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
+        super.onMidiNoteOff(sender, cable, channel, note, velocity);
+        if(COURSE_TYPE == TYPE_PLAY){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    checkInput(note-21);
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onMidiOutputDeviceAttached(@NonNull MidiOutputDevice midiOutputDevice) {
+        super.onMidiOutputDeviceAttached(midiOutputDevice);
+        mOutputDevice = getMidiOutputDevice();
+    }
+
+    /* 跟灯 */
+    class TempleThread extends Thread{
+        MidiOutputDevice md;
+        float[] delay = null; //时间延迟执行
+        float[] dur = null;   //亮灯时间
+        int[] color = null;
+        int[] index = null;   //亮灯位置
+        public TempleThread(MidiOutputDevice mod,float[] mDelays,float[] mdur,int[] mcolor,int[] mindex) {
+            md = mod;
+            delay = mDelays;
+            dur = mdur;
+            color = mcolor;
+            index = mindex;
+        }
+        @Override
+        public void run() {
+            int xunhuan = 0;
+            try {
+                while(true){
+                    if(xunhuan>delay.length-1){
+                        return;
+                    }
+                    if(vv!=null){
+                        int curTime = (int) vv.getCurrentPosition();
+                        if(curTime>(delay[xunhuan]*1000)){
+                            MelodyU.getInstance().lightTempo(md,dur,color,index);
+                            xunhuan++;
+                        }
+                    }
+                }
+            }catch (Exception e){
+            }
+        }
+    }
+
+
+    //------------公共逻辑end----------------------------------------------------------------------------------------------------------------
+
+
+
 }
 
 
