@@ -46,6 +46,8 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
+import static com.hzdl.teacher.core.MelodyU.course_1;
+
 
 /**
  * 上课主界面
@@ -420,7 +422,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         this.cellIndex = index;
     }
 
-    
+
 
 
     //------------教师端课程逻辑----------------------------------------------------------------------------------------------------------------
@@ -453,6 +455,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
 
     //------------公共课程逻辑start----------------------------------------------------------------------------------------------------------------
+
+    private int currentPlayIndex = 0;
 
     /**
      * 消息入口
@@ -506,12 +510,31 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
      */
     public void initPlaySection() {
         COURSE_TYPE = TYPE_PLAY;
+        currentPlayIndex = 0;
         setUIType(R.id.include_score);
 
         //定位资源
-        replaceLayout(rlTop, R.layout.view_score_top);
+        //replaceLayout(rlTop, R.layout.view_score_top);
+        showTopLayout((currentPlayIndex+1)+"");
         replaceLayout(rlBottom, R.layout.view_score_bottom);
 
+    }
+
+    private void showTopLayout(String tag) {
+        //遍历viewgroup
+        ViewGroup vg = null;
+        int[] ls = MelodyU.getInstance().getPlayLayouts(-1);
+        for(int i=0;i<ls.length;i++){
+            vg = (ViewGroup)getLayoutInflater().inflate(ls[i],null);
+            for(int n =0; n<vg.getChildCount(); n++){
+                if(tag.equals((String) vg.getChildAt(n).getTag())){
+                    Toast.makeText(this,tag+":  ",0).show();
+                    rlTop.removeAllViews();
+                    rlTop.addView(vg);
+                    return;
+                }
+            }
+        }
     }
 
     /**
@@ -535,17 +558,24 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    int currentPlayIndex = 0;
     private void checkInput(int note){
-        Toast.makeText(this,note+"",0).show();
         NoteInfo nextInfo = null;
+            //判断对错
         if((nextInfo=MelodyU.checkInputX(note,currentPlayIndex,-1))!=null){
-            //输入正确，进行下一个音符的UI显示
+
+            if (currentPlayIndex == (MelodyU.course_1.size() - 1)) {
+                currentPlayIndex = 0;
+            } else {
+                currentPlayIndex++;
+            }
+
+            //处理多页面
+            showTopLayout((currentPlayIndex+1)+"");
+            //下一个音符的UI显示
             MelodyU.getInstance().setNoteAndKey(this, includeScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
             //亮灯显示
             doLight(nextInfo);
 
-            currentPlayIndex++;
         }
     }
 

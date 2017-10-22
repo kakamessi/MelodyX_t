@@ -8,6 +8,8 @@
     tools:context="com.hzdl.teacher.activity.CourseActivity">
 
     <RelativeLayout
+        android:layout_gravity="center"
+        android:gravity="center"
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -25,8 +25,8 @@ public class MelodyU {
 
     //-----数据段start---------------------------------------------------------------------------------------------
 
-    public static int[] note_1 = {38, 39, 41, 43, 44, 46, 48, 50};
-    public static int[] color_1 = {1, 1, 1, 1, 1, 1, 1, 1};
+    public static int[] note_1 = {38, 39, 41, 43, 44, 46, 48, 50,39,39};
+    public static int[] color_1 = {1, 1, 1, 1, 1, 1, 1, 1,1,1};
 
 
     public static ArrayList<NoteInfo> course_1 = new ArrayList<>();
@@ -71,19 +71,11 @@ public class MelodyU {
     }
 
     /**
-     * 动态操作UI元素
-     * <p>
-     * 根据跟奏[数据] 设置对应的音符，琴键界面变化
-     * 音符位置，音符颜色
-     * <p>
-     * 音符Tag从左至右升序排列 0 - 10  上下都有的序号相同
-     * <p>
-     * <p>
-     * 音符蓝色背景 R.mipmap.kc_blue_puzi_bg 无背景 0
-     * <p>
-     * ((ImageView) whiteKeyLl2.getChildAt(i - 1)).setImageDrawable(getTintPic(this, R.mipmap.kc_white_key, 0xFFFB5555));
-     * ((ImageView) whiteKeyLl2.getChildAt(i - 1)).setImageDrawable(getTintPic(this, R.mipmap.kc_white_key, 0xFF34B4FF));
-     * ((ImageView) whiteKeyLl2.getChildAt(i - 1)).setImageDrawable(getTintPic(this, R.mipmap.kc_white_key, Color.WHITE));
+     *      动态操作UI元素
+     *
+     *      音符部分： 找到对应TAG,进行相关操作
+     *      琴键部分：
+     *
      */
     private ArrayList<ImageView> noteList = null;
 
@@ -197,6 +189,17 @@ public class MelodyU {
             e.printStackTrace();
         }
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,false));
+    }
+
+    /**
+     * 返回对应课程布局
+     * @return
+     */
+    public int[] getPlayLayouts(int id){
+
+        int[] ls = {R.layout.view_score_top,R.layout.view_score_top2};
+        return ls;
+
     }
 
     /**
