@@ -71,6 +71,23 @@ public class MelodyU {
     }
 
     /**
+     * 根据课程id找资源
+     * @param id
+     * @return
+     */
+    public ArrayList<NoteInfo> getCourseById(int id){
+        ArrayList<NoteInfo> list = null;
+        switch(id) {
+            case 1:
+                list = course_1;
+                break;
+            case 2:
+                break;
+        }
+        return list;
+    }
+
+    /**
      *      动态操作UI元素
      *
      *      音符部分： 找到对应TAG,进行相关操作
