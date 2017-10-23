@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.hzdl.mex.usb.UsbDeviceInfo;
+import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
 
 import java.util.ArrayList;
@@ -206,6 +207,7 @@ public class MelodyU {
             e.printStackTrace();
         }
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,false));
+
     }
 
     /**

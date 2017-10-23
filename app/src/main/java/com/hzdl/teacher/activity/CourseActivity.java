@@ -123,6 +123,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
         }, 3000);
 
+        //testX();
     }
 
     int testInt = 21;
@@ -138,15 +139,17 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         final int[] color1 = { 1, 1, 1, 1, 0, 0, 0, 0};
         final int[] index1 = { 39, 39, 39, 39, 39, 39, 39, 39 };
 
-        new TempleThread(mOutputDevice,time_c_14,dur1,color1,index1).start();
+        tt = new TempleThread(mOutputDevice,time_c_14,dur1,color1,index1);
+        tt.start();
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        vv.stopPlayback();
+        stopVideo();
         closeView();
+        stopTempleLight();
 
     }
 
@@ -348,6 +351,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 break;
             case R.id.tv_menu:
                 showButtonPop();
+
                 break;
 
             case R.id.iv_backmain:
@@ -609,6 +613,14 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         mOutputDevice = getMidiOutputDevice();
     }
 
+    private TempleThread tt;
+    private void stopTempleLight(){
+        if(tt!=null){
+            tt.interrupt();
+            tt = null;
+        }
+    }
+
     /* 跟灯 */
     class TempleThread extends Thread{
         MidiOutputDevice md;
@@ -629,6 +641,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             try {
                 while(true){
                     if(xunhuan>delay.length-1){
+                        if(tt!=null){
+                            tt = null;
+                        }
                         return;
                     }
                     if(vv!=null){
