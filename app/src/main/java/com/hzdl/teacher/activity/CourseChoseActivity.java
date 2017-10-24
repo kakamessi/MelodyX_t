@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseActivity;
-import com.hzdl.teacher.bean.ActionBean;
+import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 

@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.base.Constant;
-import com.hzdl.teacher.bean.ActionBean;
+import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.bean.lesson.LessonInfo;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;

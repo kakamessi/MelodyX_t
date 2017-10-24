@@ -11,7 +11,7 @@ import com.hzdl.mex.socket.SocketParams;
 import com.hzdl.mex.socket.teacher.AbsReceiver;
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.socket.teacher.udp.UdpClient;
-import com.hzdl.teacher.bean.ActionBean;
+import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionDispatcher;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
