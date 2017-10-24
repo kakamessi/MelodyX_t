@@ -277,16 +277,20 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         tv_pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
-                popBtns.dismiss();
+                if(COURSE_TYPE == TYPE_VEDIO) {
+                    sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
+                    popBtns.dismiss();
+                }
             }
         });
 
         tv_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
-                popBtns.dismiss();
+                if(COURSE_TYPE == TYPE_VEDIO) {
+                    sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
+                    popBtns.dismiss();
+                }
             }
         });
 
