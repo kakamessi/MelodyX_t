@@ -1,4 +1,4 @@
-package com.hzdl.teacher.bean;
+package com.hzdl.teacher.core;
 
 /**
  * Created by DELL on 2017/5/17.
