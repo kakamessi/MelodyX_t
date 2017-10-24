@@ -26,8 +26,12 @@ public class MelodyU {
 
     //-----数据段start---------------------------------------------------------------------------------------------
 
-    public static int[] note_1 = {38, 39, 41, 43, 44, 46, 48, 50,39,39};
-    public static int[] color_1 = {1, 1, 1, 1, 1, 1, 1, 1,1,1};
+    public static int[] note_1 = {39,40,41,42,43,44,45,6,
+                                  47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
+                                  47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
+    public static int[] color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
+                                   1, 1, 1, 1, 1, 1, 1, 1,1,
+                                   1, 1, 1, 1, 1, 1, 1, 1,1};
 
 
     public static ArrayList<NoteInfo> course_1 = new ArrayList<>();
@@ -216,7 +220,7 @@ public class MelodyU {
      */
     public int[] getPlayLayouts(int id){
 
-        int[] ls = {R.layout.view_score_top,R.layout.view_score_top2};
+        int[] ls = {R.layout.view_score_top};
         return ls;
 
     }
