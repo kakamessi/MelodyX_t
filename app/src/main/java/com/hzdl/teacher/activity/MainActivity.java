@@ -133,6 +133,8 @@ public class MainActivity extends BaseMidiActivity {
 
             case R.id.iv_start:
                 netLessonKit();
+                showLoadingDialog();
+
                 break;
 
             case R.id.iv_exit:

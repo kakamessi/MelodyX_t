@@ -6,10 +6,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.core.ActionDispatcher;
+import com.hzdl.teacher.view.UniversalLoadingView;
 
 public abstract class BaseActivity extends FragmentActivity {
 
@@ -62,11 +64,16 @@ public abstract class BaseActivity extends FragmentActivity {
 
 
 
-
+    private UniversalLoadingView uv;
     /**
      * 加载过程中显示旋转圈
      */
     public void showLoadingDialog() {
+
+        ViewGroup vg = getWindow().getDecorView().findViewById(android.R.id.content);
+        uv = new UniversalLoadingView(this);
+        uv.postLoadState(UniversalLoadingView.State.LOADING);
+        vg.addView(uv);
 
     }
 
