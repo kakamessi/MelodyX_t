@@ -75,11 +75,13 @@ public class MainActivity extends BaseMidiActivity {
                 } else {
 
                 }
+
+                hideLoadingDialog();
             }
 
             @Override
             public void onFailure(Call<CrouseListBean1017> call, Throwable t) {
-
+                hideLoadingDialog();
             }
 
         });
@@ -132,14 +134,16 @@ public class MainActivity extends BaseMidiActivity {
         switch (view.getId()) {
 
             case R.id.iv_start:
-                netLessonKit();
+
                 showLoadingDialog();
+                netLessonKit();
 
                 break;
 
             case R.id.iv_exit:
                 Intent in = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(in);
+
                 break;
         }
     }

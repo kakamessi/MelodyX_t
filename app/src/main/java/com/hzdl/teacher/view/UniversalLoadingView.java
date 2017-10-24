@@ -84,7 +84,7 @@ public class UniversalLoadingView extends ViewGroup {
             circleWidth = t.getDimensionPixelSize(R.styleable.MaterialCircleView_circleWidth,
                     10);
             radius = t.getDimensionPixelSize(R.styleable.MaterialCircleView_radius,
-                    MaterialCircleView.dpToPx(80, getResources()));
+                    MaterialCircleView.dpToPx(50, getResources()));
         } finally {
             if (t != null) {
                 t.recycle();
