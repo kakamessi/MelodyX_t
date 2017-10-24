@@ -46,8 +46,6 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
-import static com.hzdl.teacher.core.MelodyU.course_1;
-
 
 /**
  * 上课主界面
@@ -75,13 +73,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     FrameLayout fl_root;
     @BindView(R.id.tv_menu)
     TextView tvMenu;
-    @BindView(R.id.rl_top)
-    RelativeLayout rlTop;
-    @BindView(R.id.rl_bottom)
-    RelativeLayout rlBottom;
-    @BindView(R.id.include_score)
-    LinearLayout includeScore;
-
+    @BindView(R.id.rl_score)
+    RelativeLayout rlScore;
 
     public static int COURSE_TYPE = -1;
     public static final int TYPE_VEDIO = 1;
@@ -127,6 +120,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     int testInt = 21;
+
     private void testX() {
         //initPlaySection();
         //MelodyU.getInstance().setNoteAndKey(this, includeScore, 1, false, 1, false);
@@ -134,12 +128,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         //mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(testInt,true,true));
         //testInt++;
 
-        final float[] time_c_14 = {5.272f,30.000f};
-        final float[] dur1 = { 1, 0.5f, 4, 0.2f, 0.2f, 00.2f, 0.2f, 0.2f };
-        final int[] color1 = { 1, 1, 1, 1, 0, 0, 0, 0};
-        final int[] index1 = { 39, 39, 39, 39, 39, 39, 39, 39 };
+        final float[] time_c_14 = {5.272f, 30.000f};
+        final float[] dur1 = {1, 0.5f, 4, 0.2f, 0.2f, 00.2f, 0.2f, 0.2f};
+        final int[] color1 = {1, 1, 1, 1, 0, 0, 0, 0};
+        final int[] index1 = {39, 39, 39, 39, 39, 39, 39, 39};
 
-        tt = new TempleThread(mOutputDevice,time_c_14,dur1,color1,index1);
+        tt = new TempleThread(mOutputDevice, time_c_14, dur1, color1, index1);
         tt.start();
 
     }
@@ -299,7 +293,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         popBtns = new BasePopupWindow(this);
         popBtns.setContentView(vv);
         popBtns.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        popBtns.showAsDropDown(tvMenu, 0, -Utils.dip2px(this,tvMenu.getHeight()));
+        popBtns.showAsDropDown(tvMenu, 0, -Utils.dip2px(this, tvMenu.getHeight()));
 
 
     }
@@ -427,9 +421,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
 
-
-
     //------------教师端课程逻辑----------------------------------------------------------------------------------------------------------------
+
     /**
      * 开始上课
      */
@@ -492,7 +485,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
     }
 
-    private void stopVideo(){
+    private void stopVideo() {
         vv.stopPlayback();
     }
 
@@ -515,26 +508,23 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void initPlaySection() {
         COURSE_TYPE = TYPE_PLAY;
         currentPlayIndex = 0;
-        setUIType(R.id.include_score);
+        setUIType(R.id.rl_score);
 
         //定位资源
-        //replaceLayout(rlTop, R.layout.view_score_top);
-        showTopLayout((currentPlayIndex+1)+"");
-        replaceLayout(rlBottom, R.layout.view_score_bottom);
+        showTopLayout((currentPlayIndex + 1) + "");
 
     }
 
     private void showTopLayout(String tag) {
         //遍历viewgroup
-        ViewGroup vg = null;
+        LinearLayout vg = null;
         int[] ls = MelodyU.getInstance().getPlayLayouts(-1);
-        for(int i=0;i<ls.length;i++){
-            vg = (ViewGroup)getLayoutInflater().inflate(ls[i],null);
-            for(int n =0; n<vg.getChildCount(); n++){
-                if(tag.equals((String) vg.getChildAt(n).getTag())){
-                    Toast.makeText(this,tag+":  ",0).show();
-                    rlTop.removeAllViews();
-                    rlTop.addView(vg);
+        for (int i = 0; i < ls.length; i++) {
+            vg = (LinearLayout) getLayoutInflater().inflate(ls[i], null);
+            ViewGroup vgTop = vg.findViewById(R.id.rl_top);
+            for (int n = 0; n < vgTop.getChildCount(); n++) {
+                if (tag.equals((String) vgTop.getChildAt(n).getTag())) {
+                    replaceLayout(rlScore,ls[i]);
                     return;
                 }
             }
@@ -562,10 +552,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    private void checkInput(int note){
+    private void checkInput(int note) {
         NoteInfo nextInfo = null;
-            //判断对错
-        if((nextInfo=MelodyU.checkInputX(note,currentPlayIndex,-1))!=null){
+        //判断对错
+        if ((nextInfo = MelodyU.checkInputX(note, currentPlayIndex, -1)) != null) {
 
             if (currentPlayIndex == (MelodyU.course_1.size() - 1)) {
                 currentPlayIndex = 0;
@@ -574,21 +564,21 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
 
             //处理多页面
-            showTopLayout((currentPlayIndex+1)+"");
+            showTopLayout((currentPlayIndex + 1) + "");
             //下一个音符的UI显示
-            MelodyU.getInstance().setNoteAndKey(this, includeScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
+            MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
             //亮灯显示
             doLight(nextInfo);
 
         }
     }
 
-    private void doLight(NoteInfo nextInfo){
-        for(int i=21; i<109;i++){
-            mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(i,true,false));
-            mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(i,false,false));
+    private void doLight(NoteInfo nextInfo) {
+        for (int i = 21; i < 109; i++) {
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
         }
-        mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(nextInfo.getNote() + 21,nextInfo.isIdNoteRed(),true));
+        mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
     }
 
 
@@ -596,11 +586,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @Override
     public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
         super.onMidiNoteOff(sender, cable, channel, note, velocity);
-        if(COURSE_TYPE == TYPE_PLAY){
+        if (COURSE_TYPE == TYPE_PLAY) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    checkInput(note-21);
+                    checkInput(note - 21);
                 }
             });
 
@@ -614,54 +604,56 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     private TempleThread tt;
-    private void stopTempleLight(){
-        if(tt!=null){
+
+    private void stopTempleLight() {
+        if (tt != null) {
             tt.interrupt();
             tt = null;
         }
     }
 
     /* 跟灯 */
-    class TempleThread extends Thread{
+    class TempleThread extends Thread {
         MidiOutputDevice md;
         float[] delay = null; //时间延迟执行
         float[] dur = null;   //亮灯时间
         int[] color = null;
         int[] index = null;   //亮灯位置
-        public TempleThread(MidiOutputDevice mod,float[] mDelays,float[] mdur,int[] mcolor,int[] mindex) {
+
+        public TempleThread(MidiOutputDevice mod, float[] mDelays, float[] mdur, int[] mcolor, int[] mindex) {
             md = mod;
             delay = mDelays;
             dur = mdur;
             color = mcolor;
             index = mindex;
         }
+
         @Override
         public void run() {
             int xunhuan = 0;
             try {
-                while(true){
-                    if(xunhuan>delay.length-1){
-                        if(tt!=null){
+                while (true) {
+                    if (xunhuan > delay.length - 1) {
+                        if (tt != null) {
                             tt = null;
                         }
                         return;
                     }
-                    if(vv!=null){
+                    if (vv != null) {
                         int curTime = (int) vv.getCurrentPosition();
-                        if(curTime>(delay[xunhuan]*1000)){
-                            MelodyU.getInstance().lightTempo(md,dur,color,index);
+                        if (curTime > (delay[xunhuan] * 1000)) {
+                            MelodyU.getInstance().lightTempo(md, dur, color, index);
                             xunhuan++;
                         }
                     }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
             }
         }
     }
 
 
     //------------公共逻辑end----------------------------------------------------------------------------------------------------------------
-
 
 
 }

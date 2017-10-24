@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hzdl.teacher.activity.CourseActivity">
+
+        <ImageView
+            android:id="@+id/iv_puzi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/mx_1_1"/>
+
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id1"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id2"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id3"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id4"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id5"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id6"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id7"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id8"
+            style="@style/puziyinfu_bg_02" />
+
+
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id9"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id10"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id11"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id12"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id13"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id14"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id15"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id16"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id17"
+            style="@style/puziyinfu_bg_02" />
+
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id18"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id19"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id20"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id21"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id22"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id23"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id24"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id25"
+            style="@style/puziyinfu_bg_02" />
+        <ImageView
+            android:tag="8"
+            android:id="@+id/id26"
+            style="@style/puziyinfu_bg_02" />
+
+</RelativeLayout>

@@ -220,7 +220,7 @@ public class MelodyU {
      */
     public int[] getPlayLayouts(int id){
 
-        int[] ls = {R.layout.view_score_top};
+        int[] ls = {R.layout.include_score};
         return ls;
 
     }
