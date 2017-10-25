@@ -26,10 +26,16 @@ public class MelodyU {
 
     //-----数据段start---------------------------------------------------------------------------------------------
 
-    public static int[] note_1 = {39,40,41,42,43,44,45,46,
+    public static long[] d_starttime_1 = {5000};
+
+    public static long[] d_duringtime_1 = {2000,2000,2000,2000,2000,2000,2000,2000,
+            2000,2000,2000,2000,2000*4,2000,2000,2000,2000,
+            2000,2000,2000,2000,2000,2000,2000,2000,2000*4,};
+
+    public static int[] d_note_1 = {39,40,41,42,43,44,45,46,
                                   47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
                                   47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
-    public static int[] color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
+    public static int[] d_color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
                                    1, 1, 1, 1, 1, 1, 1, 1,1,
                                    1, 1, 1, 1, 1, 1, 1, 1,1};
 
@@ -38,7 +44,7 @@ public class MelodyU {
     public static ArrayList<NoteInfo> course_2 = new ArrayList<>();
 
     static {
-        course_1.addAll(setNoteList(note_1, color_1));
+        course_1.addAll(setNoteList(d_note_1, d_color_1));
     }
 
     //-----数据段end---------------------------------------------------------------------------------------------
@@ -136,10 +142,10 @@ public class MelodyU {
         }
 
         //改变黑键键的颜色
-        LinearLayout gg = (LinearLayout) vg.findViewById(R.id.black_keys);
-        for (int i = 0; i < gg.getChildCount(); i++) {
-            ImageView iv = (ImageView) gg.getChildAt(i);
-            if (keyIndex  - 14 - 1 == i) {
+        LinearLayout bk = (LinearLayout) vg.findViewById(R.id.black_keys);
+        for (int i = 0; i < bk.getChildCount(); i++) {
+            ImageView iv = (ImageView) bk.getChildAt(i);
+            if (keyIndex  - 1015 - 1 == i) {
                 if (isKeyRed) {
                     iv.setImageDrawable(context.getResources().getDrawable(R.mipmap.key_red_right));
                 } else {
@@ -195,30 +201,31 @@ public class MelodyU {
      * @param index
      * @throws InterruptedException
      */
-    public void lightTempo(MidiOutputDevice outPut,float[] dur, int[] color, int[] index) throws InterruptedException {
+    public void lightTempo(MidiOutputDevice outPut,long[] dur, int[] color, int[] index) throws InterruptedException {
         this.mOutputDevice = outPut;
-        final float[] idur = dur;      //音符间隔       音符个数
+        final long[] idur = dur;      //音符间隔       音符个数
         final int[] icolor = color;   //色值判断
         final int[] iindex = index;  //亮灯位置
         for (int n = 0; n < idur.length; n++) {
-            Thread.sleep(2);
+
             if (iindex[n] != -1) {
                 //每个音符亮灯时长
                 if (icolor[n] == 1) {
-                    beat(iindex[n], true, (long) (idur[n] * 1000));// 0 0 4 4
+                    beat(iindex[n], true, idur[n]);
                 } else if (icolor[n] == 0) {
-                    beat(iindex[n], false, (long) (idur[n] * 1000));
+                    beat(iindex[n], false, idur[n]);
                 }
                 //和下个音符间隔时长
-                Thread.sleep((long) (idur[n] * 1000));
+                Thread.sleep(2);
             } else {
-                Thread.sleep((long) (idur[n] * 1000));
+                Thread.sleep(1000);
             }
         }
     }
 
     //闪烁一次灯
     public void beat(int index, final boolean isRed, final long time) {
+        index = index + 21;
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,true));
         try {
             Thread.sleep(time);
@@ -315,38 +322,40 @@ public class MelodyU {
             case 50:
                 result = 14;
                 break;
-
+            case 51:
+                result = 15;
+                break;
 
 
             case 28:
-                result = 15;
+                result = 1016;
                 break;
             case 30:
-                result = 16;
+                result = 1017;
                 break;
             case 33:
-                result = 17;
+                result = 1018;
                 break;
             case 35:
-                result = 18;
+                result = 1019;
                 break;
             case 37:
-                result = 19;
+                result = 1020;
                 break;
             case 40:
-                result = 20;
+                result = 1021;
                 break;
             case 42:
-                result = 21;
+                result = 1022;
                 break;
             case 45:
-                result = 22;
+                result = 1023;
                 break;
             case 47:
-                result = 23;
+                result = 1024;
                 break;
             case 49:
-                result = 24;
+                result = 1025;
                 break;
 
 

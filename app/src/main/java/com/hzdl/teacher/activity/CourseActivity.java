@@ -46,6 +46,11 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
+import static com.hzdl.teacher.core.MelodyU.d_color_1;
+import static com.hzdl.teacher.core.MelodyU.d_duringtime_1;
+import static com.hzdl.teacher.core.MelodyU.d_note_1;
+import static com.hzdl.teacher.core.MelodyU.d_starttime_1;
+
 
 /**
  * 上课主界面
@@ -116,7 +121,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
         }, 3000);
 
-        //testX();
     }
 
     int testInt = 21;
@@ -128,12 +132,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         //mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(testInt,true,true));
         //testInt++;
 
-        final float[] time_c_14 = {5.272f, 30.000f};
-        final float[] dur1 = {1, 0.5f, 4, 0.2f, 0.2f, 00.2f, 0.2f, 0.2f};
-        final int[] color1 = {1, 1, 1, 1, 0, 0, 0, 0};
-        final int[] index1 = {39, 39, 39, 39, 39, 39, 39, 39};
-
-        tt = new TempleThread(mOutputDevice, time_c_14, dur1, color1, index1);
+        tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
         tt.start();
 
     }
@@ -482,7 +481,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
             initVedioSection();
-            //testX();
+            testX();
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
             stopVideo();
             initPlaySection();
@@ -619,12 +618,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     /* 跟灯 */
     class TempleThread extends Thread {
         MidiOutputDevice md;
-        float[] delay = null; //时间延迟执行
-        float[] dur = null;   //亮灯时间
+        long[] delay = null; //时间延迟执行
+        long[] dur = null;   //亮灯时间
         int[] color = null;
         int[] index = null;   //亮灯位置
 
-        public TempleThread(MidiOutputDevice mod, float[] mDelays, float[] mdur, int[] mcolor, int[] mindex) {
+        public TempleThread(MidiOutputDevice mod, long[] mDelays, long[] mdur, int[] mcolor, int[] mindex) {
             md = mod;
             delay = mDelays;
             dur = mdur;
@@ -645,7 +644,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                     }
                     if (vv != null) {
                         int curTime = (int) vv.getCurrentPosition();
-                        if (curTime > (delay[xunhuan] * 1000)) {
+                        if ( curTime > delay[xunhuan] ) {
                             MelodyU.getInstance().lightTempo(md, dur, color, index);
                             xunhuan++;
                         }
