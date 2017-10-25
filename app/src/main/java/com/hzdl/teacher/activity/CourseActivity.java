@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.base.Constant;
@@ -131,9 +132,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         //mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(testInt,true,true));
         //testInt++;
-
-        tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
-        tt.start();
 
     }
 
@@ -440,7 +438,15 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
             //视频
-            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName());
+            String addStr = "";
+            if(1==les.getSection(cellIndex).getLightCode()){
+                addStr = "|1";
+            }else{
+                addStr = "|0";
+            }
+            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
+
+
         } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
             //音乐
 
@@ -474,6 +480,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     private ActionBean ab;
 
     private void doAction(String str) {
+
+        resetStatus();
+
+        Log.e("kaka","----------action code------- " + str);
         ab = ActionResolver.getInstance().resolve(str);
         if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
             if (ab.getCodeByPositon(2) == 0) {
@@ -486,6 +496,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             stopVideo();
             initPlaySection();
         }
+    }
+
+    private void resetStatus(){
+        //MelodyU.getInstance().offAllLight(mOutputDevice);
     }
 
     private void stopVideo() {
@@ -502,6 +516,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             playOrPause();
         } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
             swichPlayScr(ab.getStringByPositon(3));
+            //是否亮灯
+            if(1==ab.getCodeByPositon(4)){
+                startTemple();
+            }
         }
     }
 
@@ -613,6 +631,15 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             tt.interrupt();
             tt = null;
         }
+    }
+
+    private void startTemple(){
+        if(tt!=null){
+            tt.interrupt();
+            tt = null;
+        }
+        tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
+        tt.start();
     }
 
     /* 跟灯 */

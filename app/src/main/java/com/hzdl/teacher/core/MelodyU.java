@@ -159,6 +159,15 @@ public class MelodyU {
         noteList = null;
     }
 
+    public void offAllLight(MidiOutputDevice mOutputDevice){
+        if(mOutputDevice!=null){
+            for (int i = 21; i < 109; i++) {
+                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
+                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
+            }
+        }
+    }
+
     /**
      * F0 4D 4C 4C 45 15 01 F7    键盘左起第一键对应的红灯亮
      * F0 4D 4C 4C 45 15 00 F7    键盘左起第一键对应的红灯熄灭

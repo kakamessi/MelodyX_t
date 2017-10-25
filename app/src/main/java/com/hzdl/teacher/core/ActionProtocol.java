@@ -11,7 +11,7 @@ public class ActionProtocol {
     //--下课
     public static final String ACTION_COURSE_STOP = "1|1|0";
 
-    //  1|2 视频类型|3 切换视频| "haha".mp4 视频名称
+    //  1|2 视频类型|3 切换视频| "haha".mp4 视频名称 | 是否亮灯
     //--播放视频
     public static final String ACTION_VEDIO_ON = "1|2|1";
     //--暂停视频
