@@ -14,6 +14,8 @@ public class SimpleSection {
     private String showName;
     //资源名称
     private String sourceName;
+    //亮灯信号
+    private int lightCode;
 
     public String getGroupName() {
         return groupName;
@@ -45,5 +47,13 @@ public class SimpleSection {
 
     public void setSourceName(String sourceName) {
         this.sourceName = sourceName;
+    }
+
+    public int getLightCode() {
+        return lightCode;
+    }
+
+    public void setLightCode(int lightCode) {
+        this.lightCode = lightCode;
     }
 }

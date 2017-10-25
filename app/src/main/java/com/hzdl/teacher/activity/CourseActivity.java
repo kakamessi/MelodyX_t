@@ -481,7 +481,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
             initVedioSection();
-            testX();
+
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
             stopVideo();
             initPlaySection();
