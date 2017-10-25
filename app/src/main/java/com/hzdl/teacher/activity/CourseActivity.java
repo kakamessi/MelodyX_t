@@ -500,6 +500,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     private void resetStatus(){
         MelodyU.getInstance().offAllLight(mOutputDevice);
+        stopTempleLight();
     }
 
     private void stopVideo() {
