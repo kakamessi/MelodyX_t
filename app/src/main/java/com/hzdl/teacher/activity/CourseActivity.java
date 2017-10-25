@@ -499,7 +499,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     private void resetStatus(){
-        //MelodyU.getInstance().offAllLight(mOutputDevice);
+        MelodyU.getInstance().offAllLight(mOutputDevice);
     }
 
     private void stopVideo() {
@@ -634,6 +634,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     private void startTemple(){
+        if(mOutputDevice==null){
+            return;
+        }
         if(tt!=null){
             tt.interrupt();
             tt = null;
