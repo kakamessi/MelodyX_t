@@ -26,7 +26,7 @@ public class MelodyU {
 
     //-----数据段start---------------------------------------------------------------------------------------------
 
-    public static int[] note_1 = {39,40,41,42,43,44,45,6,
+    public static int[] note_1 = {39,40,41,42,43,44,45,46,
                                   47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
                                   47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
     public static int[] color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
@@ -132,6 +132,21 @@ public class MelodyU {
                 }
             } else {
                 iv.setImageDrawable(getTintPic(context, R.mipmap.kc_white_key, Color.WHITE));
+            }
+        }
+
+        //改变黑键键的颜色
+        LinearLayout gg = (LinearLayout) vg.findViewById(R.id.black_keys);
+        for (int i = 0; i < gg.getChildCount(); i++) {
+            ImageView iv = (ImageView) gg.getChildAt(i);
+            if (keyIndex  - 14 - 1 == i) {
+                if (isKeyRed) {
+                    iv.setImageDrawable(context.getResources().getDrawable(R.mipmap.key_red_right));
+                } else {
+                    iv.setImageDrawable(context.getResources().getDrawable(R.mipmap.key_blue_left));
+                }
+            } else {
+                iv.setImageDrawable(context.getResources().getDrawable(R.mipmap.kc_black_key));
             }
         }
 
@@ -300,6 +315,42 @@ public class MelodyU {
             case 50:
                 result = 14;
                 break;
+
+
+
+            case 28:
+                result = 15;
+                break;
+            case 30:
+                result = 16;
+                break;
+            case 33:
+                result = 17;
+                break;
+            case 35:
+                result = 18;
+                break;
+            case 37:
+                result = 19;
+                break;
+            case 40:
+                result = 20;
+                break;
+            case 42:
+                result = 21;
+                break;
+            case 45:
+                result = 22;
+                break;
+            case 47:
+                result = 23;
+                break;
+            case 49:
+                result = 24;
+                break;
+
+
+
         }
         return result;
     }
