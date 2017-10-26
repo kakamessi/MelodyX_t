@@ -49,20 +49,13 @@
 
     </FrameLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="match_parent">
-        <TextView
-            android:text="菜单"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/tv_menu"
-            android:textColor="#FFFFFF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40sp" />
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/tv_menu"
+        android:layout_marginRight="20dp"
+        android:visibility="invisible"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/btn_c_menu" />
 
 </RelativeLayout>

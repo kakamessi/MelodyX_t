@@ -11,8 +11,8 @@
         android:gravity="center_horizontal"
         android:background="@drawable/shape_login_bg"
         android:layout_marginTop="100dp"
-        android:layout_width="770dp"
-        android:layout_height="666dp">
+        android:layout_width="670dp"
+        android:layout_height="600dp">
 
         <TextView
             android:layout_width="wrap_content"

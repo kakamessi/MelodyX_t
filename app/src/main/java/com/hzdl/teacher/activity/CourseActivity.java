@@ -47,6 +47,7 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
+import static com.hzdl.teacher.R.id.tv_pause;
 import static com.hzdl.teacher.core.MelodyU.d_color_1;
 import static com.hzdl.teacher.core.MelodyU.d_duringtime_1;
 import static com.hzdl.teacher.core.MelodyU.d_note_1;
@@ -78,7 +79,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @BindView(R.id.fl_one)
     FrameLayout fl_root;
     @BindView(R.id.tv_menu)
-    TextView tvMenu;
+    ImageView tvMenu;
     @BindView(R.id.rl_score)
     RelativeLayout rlScore;
 
@@ -119,6 +120,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             @Override
             public void run() {
                 action();
+                tvMenu.setVisibility(View.VISIBLE);
             }
         }, 3000);
 
@@ -241,14 +243,22 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     public void showButtonPop() {
 
-        View vv = getLayoutInflater().inflate(R.layout.pop_button_menu, null);
-        ImageView tv1 = vv.findViewById(R.id.tv_select);
-        ImageView tv_next = vv.findViewById(R.id.tv_next);
-        ImageView tv3 = vv.findViewById(R.id.tv_over);
-        ImageView tv_pause = vv.findViewById(R.id.tv_pause);
-        ImageView tv_play = vv.findViewById(R.id.tv_play);
+        View menup = getLayoutInflater().inflate(R.layout.pop_button_menu, null);
+        ImageView tv_select = menup.findViewById(R.id.tv_select);
+        ImageView tv_next = menup.findViewById(R.id.tv_next);
+        ImageView tv_over = menup.findViewById(R.id.tv_over);
+        ImageView tv_xueshengping = menup.findViewById(R.id.tv_xueshengping);
+        ImageView tv_pause = menup.findViewById(R.id.tv_pause);
 
-        tv1.setOnClickListener(new View.OnClickListener() {
+        if (vv != null) {
+            if (vv.isPlaying()) {
+                tv_pause.setImageResource(R.mipmap.btn_pause);
+            } else {
+                tv_pause.setImageResource(R.mipmap.btn_play);
+            }
+        }
+
+        tv_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPop();
@@ -264,11 +274,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
         });
 
-        tv3.setOnClickListener(new View.OnClickListener() {
+        tv_xueshengping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSynAction(ActionProtocol.ACTION_COURSE_STOP);
-                popBtns.dismiss();
+
             }
         });
 
@@ -276,24 +285,28 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             @Override
             public void onClick(View view) {
                 if(COURSE_TYPE == TYPE_VEDIO) {
-                    sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
+                    if (vv != null) {
+                        if (vv.isPlaying()) {
+                            sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
+                        } else {
+                            sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
+                        }
+                    }
                     popBtns.dismiss();
                 }
             }
         });
 
-        tv_play.setOnClickListener(new View.OnClickListener() {
+        tv_over.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(COURSE_TYPE == TYPE_VEDIO) {
-                    sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
-                    popBtns.dismiss();
-                }
+                sendSynAction(ActionProtocol.ACTION_COURSE_STOP);
+                popBtns.dismiss();
             }
         });
 
         popBtns = new BasePopupWindow(this);
-        popBtns.setContentView(vv);
+        popBtns.setContentView(menup);
         popBtns.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         popBtns.showAsDropDown(tvMenu, 0, -Utils.dip2px(this, tvMenu.getHeight()));
 
