@@ -162,6 +162,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         MediaController mc = new MediaController(this);
         mc.setVisibility(View.INVISIBLE);
         vv.setMediaController(mc);
+        vv.setVideoChroma(MediaPlayer.VIDEOCHROMA_RGB565);
         vv.setOnPreparedListener(this);
         vv.setOnErrorListener(this);
         vv.setOnCompletionListener(this);
