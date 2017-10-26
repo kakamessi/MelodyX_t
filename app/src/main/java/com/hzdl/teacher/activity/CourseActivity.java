@@ -249,6 +249,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         ImageView tv_over = menup.findViewById(R.id.tv_over);
         ImageView tv_xueshengping = menup.findViewById(R.id.tv_xueshengping);
         ImageView tv_pause = menup.findViewById(R.id.tv_pause);
+        ImageView tv_replay = menup.findViewById(R.id.tv_replay);
 
         if (vv != null) {
             if (vv.isPlaying()) {
@@ -271,6 +272,16 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             public void onClick(View view) {
                 action();
                 popBtns.dismiss();
+            }
+        });
+
+        tv_replay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //重放
+                if(COURSE_TYPE == TYPE_VEDIO) {
+                    sendVideoAction();
+                }
             }
         });
 
@@ -454,14 +465,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
             //视频
-            String addStr = "";
-            if(1==les.getSection(cellIndex).getLightCode()){
-                addStr = "|1";
-            }else{
-                addStr = "|0";
-            }
-            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
-
+            sendVideoAction();
 
         } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
             //音乐
@@ -474,6 +478,15 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
+    private void sendVideoAction(){
+        String addStr = "";
+        if(1==les.getSection(cellIndex).getLightCode()){
+            addStr = "|1";
+        }else{
+            addStr = "|0";
+        }
+        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
+    }
 
     //------------公共课程逻辑start----------------------------------------------------------------------------------------------------------------
 

@@ -32,6 +32,14 @@
         android:src="@mipmap/btn_pause"/>
 
     <ImageView
+        android:id="@+id/tv_replay"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:src="@mipmap/btn_replay"/>
+
+    <ImageView
         android:id="@+id/tv_xueshengping"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
