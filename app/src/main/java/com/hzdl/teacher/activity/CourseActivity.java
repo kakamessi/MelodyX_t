@@ -91,7 +91,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     //课程数据
     private LessonInfo les = null;
     //当前小节
-    private int cellIndex = 0;
+    private int cellIndex = -1;
 
     private MidiOutputDevice mOutputDevice;
     //当前消息
@@ -329,7 +329,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         cc.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                setCellIndex(position);
+                setCellIndex(position-1);
                 action();
                 popupWindow.dismiss();
             }
@@ -443,6 +443,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
      */
     private void action() {
 
+        setCellIndex(++cellIndex);
+
         if (cellIndex + 1 > les.getSectionsList().size()) {
             //课程结束
             setUIType(R.id.include_course_finish);
@@ -470,7 +472,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             sendSynAction(ActionProtocol.ACTION_COURSE_NOTE + "|" + les.getSection(cellIndex).getSourceName());
         }
 
-        setCellIndex(++cellIndex);
     }
 
 
