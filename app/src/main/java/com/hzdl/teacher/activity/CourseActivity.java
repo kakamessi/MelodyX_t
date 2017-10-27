@@ -47,7 +47,6 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
-import static com.hzdl.teacher.R.id.tv_pause;
 import static com.hzdl.teacher.core.MelodyU.d_color_1;
 import static com.hzdl.teacher.core.MelodyU.d_duringtime_1;
 import static com.hzdl.teacher.core.MelodyU.d_note_1;
@@ -281,6 +280,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 //重放
                 if(COURSE_TYPE == TYPE_VEDIO) {
                     sendVideoAction();
+                    popBtns.dismiss();
                 }
             }
         });
@@ -456,10 +456,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         setCellIndex(++cellIndex);
 
-        if (cellIndex + 1 > les.getSectionsList().size()) {
+        if (checkIndexOut()) {
             //课程结束
             setUIType(R.id.include_course_finish);
             stopVideo();
+            --cellIndex;
             return;
         }
 
@@ -486,6 +487,14 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             addStr = "|0";
         }
         sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
+    }
+
+    private boolean checkIndexOut(){
+        boolean result = false;
+        if (cellIndex + 1 > les.getSectionsList().size()) {
+            result = true;
+        }
+        return result;
     }
 
     //------------公共课程逻辑start----------------------------------------------------------------------------------------------------------------
