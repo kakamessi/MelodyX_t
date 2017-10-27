@@ -9,7 +9,7 @@
         <LinearLayout
             android:id="@+id/white_keys"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="270dp"
             android:layout_alignParentBottom="true"
             android:background="@mipmap/kc_keyboard_bg"
             android:orientation="horizontal">
@@ -84,58 +84,58 @@
                 <ImageView
                     android:id="@+id/iv_black_key1"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="71dp"/>
+                    android:layout_marginLeft="60dp"/>
 
                 <ImageView
                     android:id="@+id/iv_black_key2"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="45dp"/>
+                    android:layout_marginLeft="38dp"/>
 
                 <ImageView
                     android:id="@+id/iv_black_key3"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="141dp"
+                    android:layout_marginLeft="120dp"
                     />
 
                 <ImageView
                     android:id="@+id/iv_black_key4"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="45dp"/>
+                    android:layout_marginLeft="38dp"/>
 
                 <ImageView
                     android:id="@+id/iv_black_key5"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="45dp"
+                    android:layout_marginLeft="38dp"
                     />
 
                 <ImageView
                     android:id="@+id/iv_black_key6"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="141dp"
+                    android:layout_marginLeft="118dp"
                     />
 
                 <ImageView
                     android:id="@+id/iv_black_key7"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="45dp"
+                    android:layout_marginLeft="38dp"
                     />
 
                 <ImageView
                     android:id="@+id/iv_black_key8"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="141dp"
+                    android:layout_marginLeft="118dp"
                     />
 
                 <ImageView
                     android:id="@+id/iv_black_key9"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="46dp"
+                    android:layout_marginLeft="38dp"
                     />
 
                 <ImageView
                     android:id="@+id/iv_black_key10"
                     style="@style/black_key_style"
-                    android:layout_marginLeft="46dp" />
+                    android:layout_marginLeft="38dp" />
         </LinearLayout>
 
 </RelativeLayout>
