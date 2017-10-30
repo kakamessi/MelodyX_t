@@ -19,6 +19,7 @@ import com.hzdl.teacher.base.BaseActivity;
 import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
+import com.hzdl.teacher.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +90,8 @@ public class CourseChoseActivity extends BaseActivity {
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             View v = LayoutInflater.from(CourseChoseActivity.this).inflate(R.layout.item_c_c, parent, false);
+            v.setFocusable(true);
+            Utils.setOnFocusBG(v,R.drawable.shape_strock,-1);
             final MyViewHolder holder = new MyViewHolder(v);
 
             if (mOnItemClickLitener != null) {

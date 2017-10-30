@@ -19,8 +19,6 @@ import com.hzdl.teacher.utils.Utils;
 import java.io.File;
 import java.util.List;
 
-import io.netty.bootstrap.Bootstrap;
-
 /**
  * Created by wangshuai on 2017/9/15.
  */
@@ -49,12 +47,6 @@ public class App extends Application {
         initOkHttp();
         initRetrofit();
         //initCrash();
-        testGit();
-    }
-
-    private void testGit() {
-
-        Bootstrap b = new Bootstrap();
 
     }
 

@@ -4,22 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.base.Constant;
-import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.bean.lesson.CrouseListBean1025;
 import com.hzdl.teacher.bean.lesson.LessonInfo;
 import com.hzdl.teacher.bean.lesson.SimpleGroup;
 import com.hzdl.teacher.bean.lesson.SimpleSection;
+import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.net.ITeacher;
+import com.hzdl.teacher.utils.Utils;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -31,12 +34,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends BaseMidiActivity {
 
 
+    @BindView(R.id.iv_start)
+    ImageView ivStart;
+    @BindView(R.id.iv_exit)
+    ImageView ivExit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initMidi();
+        initView();
+    }
+
+    private void initView() {
+
+        Utils.setOnFocusBG(ivStart,R.drawable.shape_strock,-1);
+        Utils.setOnFocusBG(ivExit,R.drawable.shape_strock,-1);
 
     }
 
@@ -141,8 +156,9 @@ public class MainActivity extends BaseMidiActivity {
                 break;
 
             case R.id.iv_exit:
-                Intent in = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(in);
+/*                Intent in = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(in);*/
+                this.finish();
 
                 break;
         }

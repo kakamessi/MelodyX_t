@@ -47,5 +47,5 @@ dependencies {
     compile 'com.wang.avi:library:1.0.2'
     compile 'com.nineoldandroids:library:2.4.0'
 
-    compile 'io.netty:netty-all:4.1.6.Final'
+/*    compile 'io.netty:netty-all:4.1.6.Final'*/
 }

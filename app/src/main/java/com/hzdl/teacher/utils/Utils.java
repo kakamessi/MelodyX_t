@@ -3,11 +3,13 @@ package com.hzdl.teacher.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.view.View;
 
 import com.hzdl.teacher.base.Constant;
 
@@ -138,6 +140,24 @@ public class Utils {
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static void setOnFocusBG(View v, final int onResId, final int offResId){
+
+        final Drawable dd = v.getBackground();
+        v.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 获取焦点时操作，常见的有放大、加边框等
+                    v.setBackgroundResource(onResId);
+                } else {
+                    v.setBackground(dd);
+                    // 失去焦点时操作，恢复默认状态
+                }
+            }
+        });
+
     }
 
 }

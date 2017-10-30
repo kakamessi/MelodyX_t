@@ -50,13 +50,14 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/btn_login"
             android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:onClick="login"
             android:textColor="#6eccba"
             android:background="@drawable/shape_btn_login"
             android:text="@string/login"
+            android:focusable="true"
             android:textSize="18sp" />
     </LinearLayout>
 
