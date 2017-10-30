@@ -27,8 +27,8 @@ import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.base.Constant;
-import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.bean.lesson.LessonInfo;
+import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 import com.hzdl.teacher.core.MelodyU;
@@ -81,6 +81,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     ImageView tvMenu;
     @BindView(R.id.rl_score)
     RelativeLayout rlScore;
+    @BindView(R.id.iv_backmain)
+    ImageView ivBackmain;
 
     public static int COURSE_TYPE = -1;
     public static final int TYPE_VEDIO = 1;
@@ -103,6 +105,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         setContentView(R.layout.activity_course);
 
         ButterKnife.bind(this);
+        initView();
         initVitamio();
         initMidi();
         mOutputDevice = getMidiOutputDevice();
@@ -123,6 +126,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
         }, 3000);
 
+    }
+
+    private void initView() {
+        Utils.setOnFocusBG(tvMenu, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(ivBackmain, R.drawable.shape_strock, -1);
     }
 
     int testInt = 21;
@@ -250,6 +258,14 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         ImageView tv_pause = menup.findViewById(R.id.tv_pause);
         ImageView tv_replay = menup.findViewById(R.id.tv_replay);
 
+        Utils.setOnFocusBG(tv_select,R.drawable.shape_strock,-1);
+        Utils.setOnFocusBG(tv_next,R.drawable.shape_strock,-1);
+        Utils.setOnFocusBG(tv_over,R.drawable.shape_strock,-1);
+        Utils.setOnFocusBG(tv_xueshengping,R.drawable.shape_strock,-1);
+        Utils.setOnFocusBG(tv_pause,R.drawable.shape_strock,-1);
+        Utils.setOnFocusBG(tv_replay,R.drawable.shape_strock,-1);
+        tv_select.requestFocus();
+
         if (vv != null) {
             if (vv.isPlaying()) {
                 tv_pause.setImageResource(R.mipmap.btn_pause);
@@ -261,7 +277,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         tv_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPop();
+                showCoursePop();
                 popBtns.dismiss();
             }
         });
@@ -278,7 +294,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             @Override
             public void onClick(View view) {
                 //重放
-                if(COURSE_TYPE == TYPE_VEDIO) {
+                if (COURSE_TYPE == TYPE_VEDIO) {
                     sendVideoAction();
                     popBtns.dismiss();
                 }
@@ -295,7 +311,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         tv_pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(COURSE_TYPE == TYPE_VEDIO) {
+                if (COURSE_TYPE == TYPE_VEDIO) {
                     if (vv != null) {
                         if (vv.isPlaying()) {
                             sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
@@ -324,7 +340,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    public void showPop() {
+    public void showCoursePop() {
 
         DisplayMetrics dm = new DisplayMetrics();
         WindowManager wmManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -340,7 +356,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         cc.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                setCellIndex(position-1);
+                setCellIndex(position - 1);
                 action();
                 popupWindow.dismiss();
             }
@@ -390,6 +406,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(CourseActivity.this).inflate(R.layout.item_pop_list, parent, false);
+            Utils.setOnFocusBG(v,R.drawable.shape_strock,-1);
+
             final MyViewHolder holder = new MyViewHolder(v);
             if (mOnItemClickLitener != null) {
                 v.setOnClickListener(new View.OnClickListener() {
@@ -479,17 +497,17 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    private void sendVideoAction(){
+    private void sendVideoAction() {
         String addStr = "";
-        if(1==les.getSection(cellIndex).getLightCode()){
+        if (1 == les.getSection(cellIndex).getLightCode()) {
             addStr = "|1";
-        }else{
+        } else {
             addStr = "|0";
         }
         sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
     }
 
-    private boolean checkIndexOut(){
+    private boolean checkIndexOut() {
         boolean result = false;
         if (cellIndex + 1 > les.getSectionsList().size()) {
             result = true;
@@ -520,7 +538,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         resetStatus();
 
-        Log.e("kaka","----------action code------- " + str);
+        Log.e("kaka", "----------action code------- " + str);
         ab = ActionResolver.getInstance().resolve(str);
         if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
             if (ab.getCodeByPositon(2) == 0) {
@@ -535,7 +553,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
     }
 
-    private void resetStatus(){
+    private void resetStatus() {
         MelodyU.getInstance().offAllLight(mOutputDevice);
         stopTempleLight();
     }
@@ -555,7 +573,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
             swichPlayScr(ab.getStringByPositon(3));
             //是否亮灯
-            if(1==ab.getCodeByPositon(4)){
+            if (1 == ab.getCodeByPositon(4)) {
                 startTemple();
             }
         }
@@ -583,7 +601,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             ViewGroup vgTop = vg.findViewById(R.id.rl_top);
             for (int n = 0; n < vgTop.getChildCount(); n++) {
                 if (tag.equals((String) vgTop.getChildAt(n).getTag())) {
-                    replaceLayout(rlScore,ls[i]);
+                    replaceLayout(rlScore, ls[i]);
                     return;
                 }
             }
@@ -671,11 +689,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
     }
 
-    private void startTemple(){
-        if(mOutputDevice==null){
+    private void startTemple() {
+        if (mOutputDevice == null) {
             return;
         }
-        if(tt!=null){
+        if (tt != null) {
             tt.interrupt();
             tt = null;
         }
@@ -712,7 +730,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                     }
                     if (vv != null) {
                         int curTime = (int) vv.getCurrentPosition();
-                        if ( curTime > delay[xunhuan] ) {
+                        if (curTime > delay[xunhuan]) {
                             MelodyU.getInstance().lightTempo(md, dur, color, index);
                             xunhuan++;
                         }
