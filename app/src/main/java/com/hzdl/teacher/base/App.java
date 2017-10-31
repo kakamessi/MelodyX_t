@@ -38,6 +38,9 @@ public class App extends Application {
     private List<LessonInfo> li = null;
     private int IndexLessonOn = -1;
 
+    //0是电视， 1是手机
+    private int deviceType = -1;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,7 +50,28 @@ public class App extends Application {
         initOkHttp();
         initRetrofit();
         //initCrash();
+        initDevice();
+    }
 
+    /***
+     * 确定设备源
+     */
+    private void initDevice() {
+        String bul = android.os.Build.MODEL;
+        if(bul.contains("TV") || bul.contains("tv")){
+            deviceType = 1;
+        }else{
+            deviceType = 0;
+        }
+
+    }
+
+    public int getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(int deviceType) {
+        this.deviceType = deviceType;
     }
 
     private void initRetrofit() {

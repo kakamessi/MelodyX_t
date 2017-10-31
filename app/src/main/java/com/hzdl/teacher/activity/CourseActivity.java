@@ -12,6 +12,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,29 +103,31 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course);
 
-        ButterKnife.bind(this);
-        initView();
-        initVitamio();
-        initMidi();
-        mOutputDevice = getMidiOutputDevice();
-
+        //获取数据
         les = mBaseApp.getLi().get(mBaseApp.getIndexLessonOn());
         if (les == null) {
             this.finish();
             return;
         }
 
-        setUIType(R.id.rl_loading);
+        setContentView(R.layout.activity_course);
+        ButterKnife.bind(this);
+        initView();
+        initVitamio();
+        initMidi();
+        mOutputDevice = getMidiOutputDevice();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 action();
-                tvMenu.setVisibility(View.VISIBLE);
+                if(mBaseApp.getDeviceType()==0){
+                    tvMenu.setVisibility(View.VISIBLE);
+                }
             }
         }, 3000);
+        setUIType(R.id.rl_loading);
 
     }
 
@@ -242,6 +245,62 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void onPrepared(MediaPlayer mp) {
     }
 
+    /**
+     *
+     * 遥控器控制
+     * @param keyCode
+     * @param event
+     * @return
+     *
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+
+        if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+            // 这种情况就是当按下遥控器返回键时
+
+            return true;
+        }else if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN ){
+
+            return true;
+        }else if(keyCode == KeyEvent.KEYCODE_DPAD_LEFT ){
+            if (COURSE_TYPE == TYPE_VEDIO) {
+                sendVideoAction();
+            }
+
+            return true;
+        }else if(keyCode == KeyEvent.KEYCODE_DPAD_RIGHT ){
+            action();
+            return true;
+
+        }else if(keyCode == KeyEvent.KEYCODE_MENU ){
+            showCoursePop();
+            return true;
+
+        }else if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER){
+
+            if (COURSE_TYPE == TYPE_VEDIO) {
+                if (vv != null) {
+                    if (vv.isPlaying()) {
+                        sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
+                    } else {
+                        sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
+                    }
+                }
+            }
+            return true;
+
+        }else if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            sendSynAction(ActionProtocol.ACTION_COURSE_STOP);
+            return true;
+        }
+
+
+        return false;
+    }
+
+
     //-----------------------------------------------------------视频相关-----------------------------------------------------------------
 
     private BasePopupWindow popupWindow;
@@ -341,6 +400,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     public void showCoursePop() {
+
+        if(popupWindow!=null && popupWindow.isShowing()){
+            popupWindow.dismiss();
+            return;
+        }
 
         DisplayMetrics dm = new DisplayMetrics();
         WindowManager wmManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);

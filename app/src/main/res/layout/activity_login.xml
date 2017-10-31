@@ -11,22 +11,22 @@
         android:gravity="center_horizontal"
         android:background="@drawable/shape_login_bg"
         android:layout_marginTop="100dp"
-        android:layout_width="670dp"
-        android:layout_height="600dp">
+        android:layout_width="@dimen/activity_login_inputwith"
+        android:layout_height="@dimen/activity_login_inputheight">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="68sp"
+            android:textSize="@dimen/activity_login_inputtextsize"
             android:textColor="#6eccba"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="@dimen/activity_login_extsizemtop"
             android:text="智慧音乐课堂" />
 
         <EditText
             android:layout_marginTop="30dp"
             android:drawableLeft="@mipmap/login_id"
             android:id="@+id/username"
-            android:layout_width="440dp"
+            android:layout_width="@dimen/activity_login_idwidth"
             android:textColorHint="#cbcbcb"
             android:layout_height="60dp"
             android:drawablePadding="20dp"
@@ -38,7 +38,7 @@
         <EditText
             android:id="@+id/password"
             android:drawableLeft="@mipmap/login_psw"
-            android:layout_width="440dp"
+            android:layout_width="@dimen/activity_login_pswidth"
             android:layout_height="60dp"
             android:textColorHint="#cbcbcb"
             android:drawablePadding="20dp"
@@ -51,7 +51,7 @@
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="450dp"
+            android:layout_width="@dimen/activity_login_btnwidth"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:textColor="#6eccba"
