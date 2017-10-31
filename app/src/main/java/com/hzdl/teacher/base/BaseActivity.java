@@ -61,7 +61,9 @@ public abstract class BaseActivity extends FragmentActivity {
         ActionDispatcher.getInstance().dispatch(action);
     }
 
-
+    protected void sendTeacherAction(String action){
+        ActionDispatcher.getInstance().dispatch(action);
+    }
 
 
     private UniversalLoadingView uv;

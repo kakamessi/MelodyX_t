@@ -10,7 +10,7 @@ import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.base.Constant;
-import com.hzdl.teacher.bean.lesson.CrouseListBean1025;
+import com.hzdl.teacher.bean.lesson.CrouseListBean1031;
 import com.hzdl.teacher.bean.lesson.LessonInfo;
 import com.hzdl.teacher.bean.lesson.SimpleGroup;
 import com.hzdl.teacher.bean.lesson.SimpleSection;
@@ -75,15 +75,15 @@ public class MainActivity extends BaseMidiActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ITeacher userBiz = retrofit.create(ITeacher.class);
-        Call<CrouseListBean1025> call = userBiz.getCrouseList();
-        call.enqueue(new Callback<CrouseListBean1025>() {
+        Call<CrouseListBean1031> call = userBiz.getCrouseList();
+        call.enqueue(new Callback<CrouseListBean1031>() {
             @Override
-            public void onResponse(Call<CrouseListBean1025> call, Response<CrouseListBean1025> response) {
+            public void onResponse(Call<CrouseListBean1031> call, Response<CrouseListBean1031> response) {
                 if (response == null || response.body() == null)
                     return;
                 if (200 == response.body().getCode()) {
 
-                    CrouseListBean1025 clb = response.body();
+                    CrouseListBean1031 clb = response.body();
                     fillData(clb);
                     Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
                     startActivity(intent);
@@ -96,24 +96,24 @@ public class MainActivity extends BaseMidiActivity {
             }
 
             @Override
-            public void onFailure(Call<CrouseListBean1025> call, Throwable t) {
+            public void onFailure(Call<CrouseListBean1031> call, Throwable t) {
                 hideLoadingDialog();
             }
 
         });
     }
 
-    private void fillData(CrouseListBean1025 clb) {
+    private void fillData(CrouseListBean1031 clb) {
         ArrayList<LessonInfo> list = new ArrayList<LessonInfo>();
 
-        for (CrouseListBean1025.DetailLoginBean dlb : clb.getDetail()) {
+        for (CrouseListBean1031.DetailLoginBean dlb : clb.getDetail()) {
             LessonInfo li = new LessonInfo();
 
             if (dlb.getChildrenPart() != null) {
                 ArrayList<SimpleGroup> listSG = new ArrayList<SimpleGroup>();
 
                 //小节
-                for (CrouseListBean1025.DetailLoginBean.ChildrenPartLoginBeanX cpb : dlb.getChildrenPart()) {
+                for (CrouseListBean1031.DetailLoginBean.ChildrenPartLoginBeanX cpb : dlb.getChildrenPart()) {
 
                     SimpleGroup sg = new SimpleGroup();
                     sg.setName(cpb.getName());
@@ -122,11 +122,12 @@ public class MainActivity extends BaseMidiActivity {
 
                         //单元
                         ArrayList<SimpleSection> listSS = new ArrayList<SimpleSection>();
-                        for (CrouseListBean1025.DetailLoginBean.ChildrenPartLoginBeanX.ChildrenPartLoginBean cpbb : cpb.getChildrenPart()) {
+                        for (CrouseListBean1031.DetailLoginBean.ChildrenPartLoginBeanX.ChildrenPartLoginBean cpbb : cpb.getChildrenPart()) {
                             SimpleSection ss = new SimpleSection();
                             ss.setType(cpbb.getType());
                             ss.setShowName(cpbb.getName());
                             ss.setSourceName(cpbb.getSourceName());
+                            ss.setSyncScreen(cpbb.getIs_screen());
                             ss.setLightCode(cpbb.getIs_light());
                             listSS.add(ss);
                         }
@@ -159,7 +160,7 @@ public class MainActivity extends BaseMidiActivity {
             case R.id.iv_exit:
 /*                Intent in = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(in);*/
-                this.finish();
+                //this.finish();
 
                 break;
         }

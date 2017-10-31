@@ -16,6 +16,8 @@ public class SimpleSection {
     private String sourceName;
     //亮灯信号
     private int lightCode;
+    //是否投学生屏幕
+    private int syncScreen;
 
     public String getGroupName() {
         return groupName;
@@ -55,5 +57,13 @@ public class SimpleSection {
 
     public void setLightCode(int lightCode) {
         this.lightCode = lightCode;
+    }
+
+    public int getSyncScreen() {
+        return syncScreen;
+    }
+
+    public void setSyncScreen(int syncScreen) {
+        this.syncScreen = syncScreen;
     }
 }

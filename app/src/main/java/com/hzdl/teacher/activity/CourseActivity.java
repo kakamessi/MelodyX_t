@@ -85,6 +85,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @BindView(R.id.iv_backmain)
     ImageView ivBackmain;
 
+
+
     public static int COURSE_TYPE = -1;
     public static final int TYPE_VEDIO = 1;
     public static final int TYPE_PLAY = 2;
@@ -532,7 +534,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     //------------教师端课程逻辑----------------------------------------------------------------------------------------------------------------
 
     /**
-     * 开始上课
+     * 开始上课   下一节课  下一节课
      */
     private void action() {
 
@@ -543,17 +545,15 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             setUIType(R.id.include_course_finish);
             stopVideo();
             --cellIndex;
+            ivBackmain.requestFocus();
             return;
         }
 
         if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
             //视频
             sendVideoAction();
-
         } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
             //音乐
-
-
         } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_NOTEPLAY) {
             //画谱
             sendSynAction(ActionProtocol.ACTION_COURSE_NOTE + "|" + les.getSection(cellIndex).getSourceName());
@@ -568,7 +568,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         } else {
             addStr = "|0";
         }
-        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
+
+        if(les.getSection(cellIndex).getSyncScreen()==1) {
+            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
+        }else{
+            sendTeacherAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
+        }
+
     }
 
     private boolean checkIndexOut() {
