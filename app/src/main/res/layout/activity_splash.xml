@@ -11,14 +11,14 @@
             android:id="@+id/tv_logo"
             android:layout_width="300dp"
             android:layout_marginTop="100dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="@dimen/activity_sp_mR1"
             android:layout_height="300dp"
             android:background="@mipmap/logox" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="130dp"
+            android:layout_marginLeft="@dimen/activity_sp_mR2"
             android:layout_marginTop="40dp"
             android:layout_below="@+id/tv_logo"
             android:background="@mipmap/slogan" />

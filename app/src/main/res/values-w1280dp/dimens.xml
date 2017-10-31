@@ -10,5 +10,15 @@
     <dimen name="activity_login_pswidth">440dp</dimen>
     <dimen name="activity_login_btnwidth">450dp</dimen>
 
+    <!--主界面-->
+    <dimen name="activity_main_mtop1">40dp</dimen>
+    <dimen name="activity_main_mtop2">100dp</dimen>
+    <dimen name="activity_main_mtop3">40dp</dimen>
+    <dimen name="activity_main_mtop4">20dp</dimen>
+
+    <!--启动屏-->
+    <dimen name="activity_sp_mR1">150dp</dimen>
+    <dimen name="activity_sp_mR2">130dp</dimen>
+
 
 </resources>

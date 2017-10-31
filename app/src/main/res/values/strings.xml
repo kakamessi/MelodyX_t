@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">teacher</string>
+    <string name="app_name">天赋</string>
     <string name="title_activity_base">BaseActivity</string>
 
     <string name="user_name">用户名</string>

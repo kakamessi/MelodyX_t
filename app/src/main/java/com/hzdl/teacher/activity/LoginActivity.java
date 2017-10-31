@@ -14,6 +14,7 @@ import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.bean.LoginBean;
 import com.hzdl.teacher.net.ITeacher;
 import com.hzdl.teacher.utils.Md5Util;
+import com.hzdl.teacher.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,6 +108,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.btn_login:
                 netLogin();
+                //Utils.showScreen(this);
                 break;
         }
     }

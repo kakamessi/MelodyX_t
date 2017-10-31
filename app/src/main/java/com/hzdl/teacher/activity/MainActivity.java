@@ -46,6 +46,7 @@ public class MainActivity extends BaseMidiActivity {
         ButterKnife.bind(this);
         initMidi();
         initView();
+
     }
 
     private void initView() {
