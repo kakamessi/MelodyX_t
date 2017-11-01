@@ -84,7 +84,11 @@ public class MainActivity extends BaseMidiActivity {
                 if (200 == response.body().getCode()) {
 
                     CrouseListBean1031 clb = response.body();
-                    fillData(clb);
+
+                    ArrayList<LessonInfo> data = new ArrayList<LessonInfo>();
+                    fillData(data,clb);
+                    App.getApplication().setLi(data);
+
                     Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
                     startActivity(intent);
 
@@ -103,8 +107,9 @@ public class MainActivity extends BaseMidiActivity {
         });
     }
 
-    private void fillData(CrouseListBean1031 clb) {
-        ArrayList<LessonInfo> list = new ArrayList<LessonInfo>();
+    private void fillData(ArrayList<LessonInfo> data, CrouseListBean1031 clb) {
+
+        ArrayList<LessonInfo> list = data;
 
         for (CrouseListBean1031.DetailLoginBean dlb : clb.getDetail()) {
             LessonInfo li = new LessonInfo();
@@ -142,9 +147,7 @@ public class MainActivity extends BaseMidiActivity {
 
             list.add(li);
         }
-        App.getApplication().setLi(list);
     }
-
 
     @OnClick({R.id.iv_start, R.id.iv_exit})
     public void onClick(View view) {

@@ -261,7 +261,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
 
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-
+            if (COURSE_TYPE == TYPE_VEDIO) {
+                les.getSection(cellIndex).setSyncScreen(1);
+                sendVideoAction();
+            }
             return true;
         }else if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN ){
 
@@ -365,7 +368,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         tv_xueshengping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (COURSE_TYPE == TYPE_VEDIO) {
+                    les.getSection(cellIndex).setSyncScreen(1);
+                    sendVideoAction();
+                    popBtns.dismiss();
+                }
             }
         });
 
@@ -534,7 +541,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     //------------教师端课程逻辑----------------------------------------------------------------------------------------------------------------
 
     /**
-     * 开始上课   下一节课  下一节课
+     * 切换小节   下一节课  下一节课
      */
     private void action() {
 
