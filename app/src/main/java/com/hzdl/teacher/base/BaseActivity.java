@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.teacher.R;
+import com.hzdl.teacher.bean.lesson.SimpleSection;
 import com.hzdl.teacher.core.ActionDispatcher;
 import com.hzdl.teacher.view.UniversalLoadingView;
 
@@ -55,6 +56,14 @@ public abstract class BaseActivity extends FragmentActivity {
     //****处理通信命令
     protected abstract void handleMsg(Message msg);
 
+    protected void sendSynAction(String action, SimpleSection ss){
+        if(ss.getSyncScreen()==1){
+            TeacherClient.getInstance().sendMsgToAll(action);
+            ActionDispatcher.getInstance().dispatch(action);
+        }else {
+            ActionDispatcher.getInstance().dispatch(action);
+        }
+    }
 
     protected void sendSynAction(String action){
         TeacherClient.getInstance().sendMsgToAll(action);

@@ -55,15 +55,16 @@ import static com.hzdl.teacher.core.MelodyU.d_starttime_1;
 
 
 /**
- * 上课主界面
- * 1--视频播放逻辑
- * <p>
- * <p>
- * 操作： 1，随机选择单元
- * 2，下一步单元
- * 3，投学生屏幕
- * <p>
- * <p>
+ *
+ *      1， 当前处于哪个小节   cellIndex
+ *          只有点击下一步， 选择课程 会改变cellIndex
+ *
+ *      2， 发送同步消息   发送本地消息
+ *
+ *
+ *      3， 接收端：  界面操作，播放视频，与钢琴通信
+ *          发送端：  服务器数据
+ *
  * //    loadPlay(Utils.getVideoPath()+"hehe.mp4");
  * //    MidiOutputDevice midiOutputDevice = getMidiOutputDevice();
  * //    midiOutputDevice.sendMidiNoteOn(0, 0x90, 0x40, 0x7f);
@@ -85,21 +86,21 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @BindView(R.id.iv_backmain)
     ImageView ivBackmain;
 
-
-
     public static int COURSE_TYPE = -1;
     public static final int TYPE_VEDIO = 1;
     public static final int TYPE_PLAY = 2;
     public static final int TYPE_MUSIC = 3;
+
+    private MidiOutputDevice mOutputDevice;
+    //当前消息
+    private String actionMsg;
+
 
     //课程数据
     private LessonInfo les = null;
     //当前小节
     private int cellIndex = -1;
 
-    private MidiOutputDevice mOutputDevice;
-    //当前消息
-    private String actionMsg;
 
 
     @Override
@@ -152,7 +153,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopVideo();
+        vv.stopPlayback();
         closeView();
         stopTempleLight();
 
@@ -260,7 +261,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
 
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-            // 这种情况就是当按下遥控器返回键时
 
             return true;
         }else if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN ){
@@ -375,9 +375,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 if (COURSE_TYPE == TYPE_VEDIO) {
                     if (vv != null) {
                         if (vv.isPlaying()) {
-                            sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
+                                sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE,les.getSection(cellIndex));
                         } else {
-                            sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
+                                sendSynAction(ActionProtocol.ACTION_VEDIO_ON,les.getSection(cellIndex));
                         }
                     }
                     popBtns.dismiss();
@@ -543,7 +543,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         if (checkIndexOut()) {
             //课程结束
             setUIType(R.id.include_course_finish);
-            stopVideo();
+            vv.pause();
             --cellIndex;
             ivBackmain.requestFocus();
             return;
@@ -568,13 +568,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         } else {
             addStr = "|0";
         }
-
-        if(les.getSection(cellIndex).getSyncScreen()==1) {
-            sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
-        }else{
-            sendTeacherAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr);
-        }
-
+        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr,
+                les.getSection(cellIndex));
     }
 
     private boolean checkIndexOut() {
@@ -589,23 +584,19 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     private int currentPlayIndex = 0;
 
-    /**
-     * 消息入口
-     *
-     * @param action
-     */
+    /****** 消息入口 ******/
     @Override
     protected void handleMsg(Message action) {
         doAction((String) action.obj);
     }
 
-    /**
-     * 处理消息逻辑 如下课，切换视频等逻辑
-     */
+
+    /****** 1|2|3  消息体封装类 ******/
     private ActionBean ab;
 
     private void doAction(String str) {
 
+        /****** 开始新的一节， 重置各种状态 ******/
         resetStatus();
 
         Log.e("kaka", "----------action code------- " + str);
@@ -618,23 +609,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             initVedioSection();
 
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
-            stopVideo();
             initPlaySection();
         }
     }
 
-    private void resetStatus() {
-        MelodyU.getInstance().offAllLight(mOutputDevice);
-        stopTempleLight();
-    }
-
-    private void stopVideo() {
-        vv.stopPlayback();
-    }
-
-    /***
-     * 播放视频
-     */
+    /****** 启动视频  是否跟灯 ******/
     public void initVedioSection() {
         COURSE_TYPE = TYPE_VEDIO;
         setUIType(R.id.rl_video);
@@ -649,19 +628,16 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
     }
 
-    /**
-     * 准备曲谱， 判断钢琴输入对错
-     */
+    /****** 显示指定图谱   ******/
     public void initPlaySection() {
         COURSE_TYPE = TYPE_PLAY;
         currentPlayIndex = 0;
         setUIType(R.id.rl_score);
-
-        //定位资源
         showTopLayout((currentPlayIndex + 1) + "");
 
     }
 
+    /****** 显示指定图谱 ******/
     private void showTopLayout(String tag) {
         //遍历viewgroup
         LinearLayout vg = null;
@@ -678,6 +654,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
     }
 
+    /****** 替换布局 ******/
+    private void replaceLayout(ViewGroup fu, int resId) {
+        fu.removeAllViews();
+        ViewGroup vg = (ViewGroup) LayoutInflater.from(this).inflate(resId, fu);
+    }
+
     /**
      * 增加伴奏音乐
      */
@@ -686,31 +668,20 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
-    /**
-     * 根据课程动态选择 布局文件
-     *
-     * @param fu
-     * @param zi
-     */
-    private void replaceLayout(ViewGroup fu, int resId) {
-
-        fu.removeAllViews();
-        ViewGroup vg = (ViewGroup) LayoutInflater.from(this).inflate(resId, fu);
-
-    }
-
+    /****** 输入检测  正确则返回下一个音符信息 ******/
     private void checkInput(int note) {
         NoteInfo nextInfo = null;
         //判断对错
         if ((nextInfo = MelodyU.checkInputX(note, currentPlayIndex, -1)) != null) {
 
+            /****** 循环判断 ******/
             if (currentPlayIndex == (MelodyU.course_1.size() - 1)) {
                 currentPlayIndex = 0;
             } else {
                 currentPlayIndex++;
             }
 
-            //处理多页面
+            //处理多页面 加载正确的页面
             showTopLayout((currentPlayIndex + 1) + "");
             //下一个音符的UI显示
             MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
@@ -719,15 +690,29 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         }
     }
-
+    /******  点亮某一个灯 ******/
     private void doLight(NoteInfo nextInfo) {
-        for (int i = 21; i < 109; i++) {
-            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
-            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
-        }
+        MelodyU.getInstance().offAllLight(mOutputDevice);
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
     }
 
+    private void resetStatus() {
+        MelodyU.getInstance().offAllLight(mOutputDevice);
+        stopTempleLight();
+        vv.pause();
+    }
+
+    private void startTemple() {
+        if (mOutputDevice == null) {
+            return;
+        }
+        if (tt != null) {
+            tt.interrupt();
+            tt = null;
+        }
+        tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
+        tt.start();
+    }
 
     //note 21 -108 序号  钢琴按键排序从1开始
     @Override
@@ -747,6 +732,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @Override
     public void onMidiOutputDeviceAttached(@NonNull MidiOutputDevice midiOutputDevice) {
         super.onMidiOutputDeviceAttached(midiOutputDevice);
+        Toast.makeText(this,"钢琴已连接",0).show();
         mOutputDevice = getMidiOutputDevice();
     }
 
@@ -757,18 +743,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             tt.interrupt();
             tt = null;
         }
-    }
-
-    private void startTemple() {
-        if (mOutputDevice == null) {
-            return;
-        }
-        if (tt != null) {
-            tt.interrupt();
-            tt = null;
-        }
-        tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
-        tt.start();
     }
 
     /* 跟灯 */
