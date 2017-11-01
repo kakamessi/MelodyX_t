@@ -283,7 +283,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             showCoursePop();
             return true;
 
-        }else if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER){
+        }else if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER){
 
             if (COURSE_TYPE == TYPE_VEDIO) {
                 if (vv != null) {
@@ -616,6 +616,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             initVedioSection();
 
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
+            vv.pause();
             initPlaySection();
         }
     }
@@ -706,7 +707,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     private void resetStatus() {
         MelodyU.getInstance().offAllLight(mOutputDevice);
         stopTempleLight();
-        vv.pause();
+
+        //这里暂停 会出现异常情况
+        //vv.pause();
     }
 
     private void startTemple() {
