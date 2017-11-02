@@ -94,6 +94,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     private MidiOutputDevice mOutputDevice;
     //当前消息
     private String actionMsg;
+    private boolean allow_btn = false;
 
 
     //课程数据
@@ -125,6 +126,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             @Override
             public void run() {
                 action();
+                allow_btn = true;
+
                 if(mBaseApp.getDeviceType()==0){
                     tvMenu.setVisibility(View.VISIBLE);
                 }
@@ -259,6 +262,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        if(!allow_btn){
+            return false;
+        }
 
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
             if (COURSE_TYPE == TYPE_VEDIO) {
@@ -731,7 +737,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         //这里暂停 会出现异常情况
         if(vv.isPlaying()){
-            vv.pause();
+            vv.stopPlayback();
         }
     }
 
