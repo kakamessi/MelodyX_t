@@ -569,14 +569,21 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     private void sendVideoAction() {
-        String addStr = "";
+        String code_light = "";
+        String code_Screen = "";
         if (1 == les.getSection(cellIndex).getLightCode()) {
-            addStr = "|1";
+            code_light = "|1";
         } else {
-            addStr = "|0";
+            code_light = "|0";
         }
-        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + addStr,
-                les.getSection(cellIndex));
+
+        if (1 == les.getSection(cellIndex).getSyncScreen()) {
+            code_Screen = "|1";
+        } else {
+            code_Screen = "|0";
+        }
+
+        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + code_light + code_Screen);
     }
 
     private boolean checkIndexOut() {
@@ -616,7 +623,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             initVedioSection();
 
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
-            vv.pause();
             initPlaySection();
         }
     }
@@ -628,11 +634,26 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         if (ActionProtocol.CODE_VEDIO_ON == ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF == ab.getCodeByPositon(2)) {
             playOrPause();
         } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
+
+            /******  学生端  ******/
+            //是否投屏
+/*            if(ActionProtocol.CODE_1 == ab.getCodeByPositon(5)) {
+                swichPlayScr(ab.getStringByPositon(3));
+                //是否亮灯
+                if (1 == ab.getCodeByPositon(4)) {
+                    startTemple();
+                }
+            }else{
+                setUIType(R.id.rl_loading);
+            }*/
+
+            /******  教师端  ******/
             swichPlayScr(ab.getStringByPositon(3));
             //是否亮灯
             if (1 == ab.getCodeByPositon(4)) {
                 startTemple();
             }
+
         }
     }
 
@@ -709,7 +730,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         stopTempleLight();
 
         //这里暂停 会出现异常情况
-        //vv.pause();
+        if(vv.isPlaying()){
+            vv.pause();
+        }
     }
 
     private void startTemple() {
