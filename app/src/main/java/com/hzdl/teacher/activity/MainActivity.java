@@ -51,8 +51,8 @@ public class MainActivity extends BaseMidiActivity {
 
     private void initView() {
 
-        Utils.setOnFocusBG(ivStart,R.drawable.shape_strock,-1);
-        Utils.setOnFocusBG(ivExit,R.drawable.shape_strock,-1);
+        Utils.setOnFocusBG(ivStart, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(ivExit, R.drawable.shape_strock, -1);
 
     }
 
@@ -86,7 +86,7 @@ public class MainActivity extends BaseMidiActivity {
                     CrouseListBean1031 clb = response.body();
 
                     ArrayList<LessonInfo> data = new ArrayList<LessonInfo>();
-                    fillData(data,clb);
+                    fillData(data, clb);
                     App.getApplication().setLi(data);
 
                     Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
@@ -149,7 +149,7 @@ public class MainActivity extends BaseMidiActivity {
         }
     }
 
-    @OnClick({R.id.iv_start, R.id.iv_exit})
+    @OnClick({R.id.iv_start, R.id.iv_exit,R.id.iv_my})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -161,11 +161,16 @@ public class MainActivity extends BaseMidiActivity {
                 break;
 
             case R.id.iv_exit:
-/*                Intent in = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(in);*/
-                //this.finish();
+                this.finish();
 
                 break;
+
+            case R.id.iv_my:
+                Intent in = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(in);
+                break;
+
         }
     }
+
 }

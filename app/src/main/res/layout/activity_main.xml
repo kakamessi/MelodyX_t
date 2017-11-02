@@ -8,6 +8,15 @@
     android:background="@mipmap/bg_main"
     tools:context="com.hzdl.teacher.activity.MainActivity">
 
+    <ImageView
+        android:layout_marginTop="@dimen/activity_main_mtop1"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/main_my"
+        android:id="@+id/iv_my" />
+
 
     <ImageView
         android:layout_marginTop="@dimen/activity_main_mtop1"
