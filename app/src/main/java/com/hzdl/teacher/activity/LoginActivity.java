@@ -47,8 +47,8 @@ public class LoginActivity extends BaseActivity {
 
     private void initView() {
 
-        usernameEditText.setText("13700000001");
-        passwordEditText.setText("123456");
+//        usernameEditText.setText("13700000001");
+//        passwordEditText.setText("123456");
         btnLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
