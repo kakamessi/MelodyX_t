@@ -37,7 +37,9 @@ public class Constant {
 
     //----持久化相关-------------------------------------------------------------------------------------------
 
+    public static final String KEY_REMENBER_TAG = "KEY_REMENBER_TAG";
     public static final String KEY_LOGIN_PHONE = "KEY_LOGIN_PHONE";
+    public static final String KEY_LOGIN_PSD = "KEY_LOGIN_PSD";
     public static final String KEY_SCHOOL_ID = "KEY_SCHOOL_ID";
 
 

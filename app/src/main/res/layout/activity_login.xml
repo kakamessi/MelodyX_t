@@ -49,6 +49,12 @@
             android:singleLine="true"
             android:textSize="15sp" />
 
+        <CheckBox
+            android:text="记住密码"
+            android:id="@+id/cb_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/btn_login"
             android:layout_width="@dimen/activity_login_btnwidth"

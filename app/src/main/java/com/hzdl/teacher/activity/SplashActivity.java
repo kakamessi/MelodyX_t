@@ -6,10 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 
-import com.hzdl.mex.utils.SPUtils;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseActivity;
-import com.hzdl.teacher.base.Constant;
 
 public class SplashActivity extends BaseActivity {
 
@@ -28,12 +26,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
 
-                Intent intent = null;
-                if(SPUtils.contains(SplashActivity.this, Constant.KEY_LOGIN_PHONE)) {
-                    intent = new Intent(SplashActivity.this, MainActivity.class);
-                }else{
-                    intent = new Intent(SplashActivity.this, LoginActivity.class);
-                }
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 SplashActivity.this.startActivity(intent);
                 SplashActivity.this.finish();
 

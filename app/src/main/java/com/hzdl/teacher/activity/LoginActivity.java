@@ -5,16 +5,18 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hzdl.mex.utils.SPUtils;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseActivity;
 import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.bean.LoginBean;
 import com.hzdl.teacher.net.ITeacher;
 import com.hzdl.teacher.utils.Md5Util;
-import com.hzdl.teacher.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +35,10 @@ public class LoginActivity extends BaseActivity {
     EditText passwordEditText;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.cb_login)
+    CheckBox cbLogin;
 
+    private boolean getPsd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +52,19 @@ public class LoginActivity extends BaseActivity {
 
     private void initView() {
 
-//        usernameEditText.setText("13700000001");
-//        passwordEditText.setText("123456");
+        int tag = (int) SPUtils.get(this,Constant.KEY_REMENBER_TAG,0);
+        if(tag==1){
+            cbLogin.setChecked(true);
+            String id = (String) SPUtils.get(this,Constant.KEY_LOGIN_PHONE,"");
+            String psd = (String) SPUtils.get(this,Constant.KEY_LOGIN_PSD,"");
+            usernameEditText.setText(id);
+            passwordEditText.setText(psd);
+        }else{
+            cbLogin.setChecked(false);
+            SPUtils.remove(this,Constant.KEY_LOGIN_PHONE);
+            SPUtils.remove(this,Constant.KEY_LOGIN_PSD);
+        }
+
         btnLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -62,6 +78,18 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        cbLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    getPsd = true;
+                    SPUtils.put(LoginActivity.this,Constant.KEY_REMENBER_TAG,1);
+                }else{
+                    getPsd = false;
+                    SPUtils.put(LoginActivity.this,Constant.KEY_REMENBER_TAG,0);
+                }
+            }
+        });
     }
 
 
@@ -107,11 +135,21 @@ public class LoginActivity extends BaseActivity {
             case R.id.password:
                 break;
             case R.id.btn_login:
+                setPsd();
                 netLogin();
                 //Utils.showScreen(this);
                 break;
         }
     }
+
+    private void setPsd() {
+        if(getPsd){
+            SPUtils.put(this,Constant.KEY_LOGIN_PHONE,usernameEditText.getText().toString());
+            SPUtils.put(this,Constant.KEY_LOGIN_PSD,passwordEditText.getText().toString());
+        }
+    }
+
+
 }
 
 
