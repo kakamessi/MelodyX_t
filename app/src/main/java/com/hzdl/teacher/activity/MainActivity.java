@@ -169,7 +169,7 @@ public class MainActivity extends BaseMidiActivity {
             case R.id.iv_down:
                 Intent in = new Intent(MainActivity.this, DownloadActivity.class);
                 startActivity(in);
-                this.finish();
+                finish();
 
                 break;
 

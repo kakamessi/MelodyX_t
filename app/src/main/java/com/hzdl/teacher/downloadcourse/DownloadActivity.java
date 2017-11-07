@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 import static com.hzdl.teacher.downloadcourse.okhttp.annotation.CacheLevel.FIRST_LEVEL;
 
 /**
@@ -115,7 +116,8 @@ public class DownloadActivity extends BaseActivity {
         ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DownloadActivity.this, MainActivity.class));
+                Intent intent = new Intent(DownloadActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
