@@ -17,6 +17,7 @@ import com.hzdl.teacher.bean.lesson.SimpleSection;
 import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
+import com.hzdl.teacher.downloadcourse.DownloadActivity;
 import com.hzdl.teacher.net.ITeacher;
 import com.hzdl.teacher.utils.Utils;
 
@@ -149,7 +150,7 @@ public class MainActivity extends BaseMidiActivity {
         }
     }
 
-    @OnClick({R.id.iv_start, R.id.iv_exit,R.id.iv_my})
+    @OnClick({R.id.iv_start, R.id.iv_exit, R.id.iv_my,R.id.iv_down})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -165,9 +166,15 @@ public class MainActivity extends BaseMidiActivity {
 
                 break;
 
-            case R.id.iv_my:
-                Intent in = new Intent(MainActivity.this, ProfileActivity.class);
+            case R.id.iv_down:
+                Intent in = new Intent(MainActivity.this, DownloadActivity.class);
                 startActivity(in);
+
+                break;
+
+            case R.id.iv_my:
+                Intent inp = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(inp);
                 break;
 
         }

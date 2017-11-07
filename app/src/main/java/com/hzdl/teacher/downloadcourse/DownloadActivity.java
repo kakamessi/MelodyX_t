@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,7 @@ public class DownloadActivity extends BaseActivity {
 
     //--------------------------------------------
     public ListView lvCourse;
+    private ImageButton ib_back;
     private DownloadNewAdapter adapter;
     //下载标识  1-显示全部下载，2,3
     private int downLoadType = -1;
@@ -109,7 +111,13 @@ public class DownloadActivity extends BaseActivity {
     private void initView() {
 
         lvCourse = (ListView) findViewById(R.id.lv_course);
-
+        ib_back = (ImageButton) findViewById(R.id.ib_back);
+        ib_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DownloadActivity.this, MainActivity.class));
+            }
+        });
 
 
         adapter = new DownloadNewAdapter(this);
@@ -253,7 +261,7 @@ public class DownloadActivity extends BaseActivity {
         if(schoolId.equals("-1")){
             return;
         }
-        String domainNameRequest = Constant.DOWNLOAD_ROOT;
+        String domainNameRequest = Constant.URL_ROOT;
         String courseInfoJson = Constant.DOWNLOAD_PATH;
 
         OkHttpUtilInterface okHttpUtil = OkHttpUtil.Builder()
@@ -329,4 +337,11 @@ public class DownloadActivity extends BaseActivity {
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK) {
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
