@@ -162,13 +162,14 @@ public class MainActivity extends BaseMidiActivity {
                 break;
 
             case R.id.iv_exit:
-                this.finish();
+                mBaseApp.finishAllActivity();
 
                 break;
 
             case R.id.iv_down:
                 Intent in = new Intent(MainActivity.this, DownloadActivity.class);
                 startActivity(in);
+                this.finish();
 
                 break;
 

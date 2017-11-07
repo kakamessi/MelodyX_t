@@ -34,6 +34,7 @@ public abstract class BaseActivity extends FragmentActivity {
         hideBottomUIMenu();
 
         mBaseApp = App.getApplication();
+        mBaseApp.addActivity(this);
         ActionDispatcher.getInstance().register(TAG, actionHandler);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);

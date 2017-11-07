@@ -1,5 +1,6 @@
 package com.hzdl.teacher.base;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Environment;
@@ -17,6 +18,7 @@ import com.hzdl.teacher.service.Mservice;
 import com.hzdl.teacher.utils.Utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +42,8 @@ public class App extends Application {
 
     //0是电视， 1是手机
     private int deviceType = -1;
+
+    private List<Activity> activityStack = new ArrayList<Activity>();
 
     @Override
     public void onCreate() {
@@ -78,6 +82,26 @@ public class App extends Application {
 
 
 
+    }
+
+    public void addActivity(Activity aty) {
+        activityStack.add(aty);
+    }
+
+    public void removeActivity(Activity aty) {
+        activityStack.remove(aty);
+    }
+
+    /**
+     * 结束所有Activity
+     */
+    public void finishAllActivity() {
+        for (int i = 0, size = activityStack.size(); i < size; i++) {
+            if (null != activityStack.get(i)) {
+                activityStack.get(i).finish();
+            }
+        }
+        activityStack.clear();
     }
 
     //初始化网络框架
