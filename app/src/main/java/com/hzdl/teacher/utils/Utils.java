@@ -10,15 +10,21 @@ import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
+import android.os.Parcel;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Toast;
 
+import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.bean.lesson.CrouseListBean1031;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -208,6 +214,48 @@ public class Utils {
                 return info.processName;//返回包名
         }
         return "";
+    }
+
+    public static void saveParce(Context con,CrouseListBean1031 bean) {
+        FileOutputStream fos;
+        try {
+
+            fos = new FileOutputStream(Utils.getVideoPath() + "demox");
+            //fos = con.getApplicationContext().openFileOutput("", Context.MODE_WORLD_WRITEABLE);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            Parcel parcel = Parcel.obtain();
+            parcel.writeParcelable(bean, 0);
+
+            bos.write(parcel.marshall());
+            bos.flush();
+            bos.close();
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static CrouseListBean1031 loadDemoParce(Context con) {
+
+        CrouseListBean1031 data = null;
+        InputStream fis;
+        try {
+            fis = con.getResources().openRawResource(R.raw.demox);
+            byte[] bytes = new byte[fis.available()];
+            fis.read(bytes);
+            Parcel parcel = Parcel.obtain();
+            parcel.unmarshall(bytes, 0, bytes.length);
+            parcel.setDataPosition(0);
+
+            data = parcel.readParcelable(CrouseListBean1031.class.getClassLoader());
+            fis.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
     }
 
 }

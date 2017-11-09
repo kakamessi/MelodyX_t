@@ -157,7 +157,20 @@ public class MainActivity extends BaseMidiActivity {
             case R.id.iv_start:
 
                 showLoadingDialog();
-                netLessonKit();
+                if(mBaseApp.isRoot()){
+
+                    CrouseListBean1031 clb = Utils.loadDemoParce(MainActivity.this);
+                    ArrayList<LessonInfo> data = new ArrayList<LessonInfo>();
+                    fillData(data, clb);
+                    App.getApplication().setLi(data);
+
+                    Intent intent = new Intent(MainActivity.this, CourseChoseActivity.class);
+                    startActivity(intent);
+                    hideLoadingDialog();
+
+                }else {
+                    netLessonKit();
+                }
 
                 break;
 

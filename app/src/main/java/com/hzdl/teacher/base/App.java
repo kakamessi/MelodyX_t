@@ -39,6 +39,7 @@ public class App extends Application {
     //公共数据区
     private List<LessonInfo> li = null;
     private int IndexLessonOn = -1;
+    private boolean root;
 
     //0是电视， 1是手机
     private int deviceType = -1;
@@ -157,5 +158,13 @@ public class App extends Application {
 
     public void setIndexLessonOn(int indexLessonOn) {
         IndexLessonOn = indexLessonOn;
+    }
+
+    public boolean isRoot() {
+        return root;
+    }
+
+    public void setRoot(boolean root) {
+        this.root = root;
     }
 }

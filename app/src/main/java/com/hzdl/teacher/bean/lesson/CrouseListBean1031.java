@@ -1,12 +1,16 @@
 package com.hzdl.teacher.bean.lesson;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by wangshuai on 2017/10/25.
  */
 
-public class CrouseListBean1031 {
+public class CrouseListBean1031 implements Parcelable {
 
 
     /**
@@ -43,7 +47,7 @@ public class CrouseListBean1031 {
         this.detail = detail;
     }
 
-    public static class DetailLoginBean {
+    public static class DetailLoginBean implements Parcelable {
         /**
          * course_id : 1
          * part_sort : 1
@@ -168,7 +172,7 @@ public class CrouseListBean1031 {
             this.childrenPart = childrenPart;
         }
 
-        public static class ChildrenPartLoginBeanX {
+        public static class ChildrenPartLoginBeanX implements Parcelable {
             /**
              * course_id : 1
              * part_sort : 1
@@ -313,7 +317,7 @@ public class CrouseListBean1031 {
                 this.childrenPart = childrenPart;
             }
 
-            public static class ChildrenPartLoginBean {
+            public static class ChildrenPartLoginBean implements Parcelable {
                 /**
                  * course_id : 1
                  * part_sort : 1
@@ -339,7 +343,6 @@ public class CrouseListBean1031 {
                 private int type;
                 private int is_screen;
                 private String path;
-                private Object childrenPart;
                 private String name;
                 private int id;
                 private int state;
@@ -410,14 +413,6 @@ public class CrouseListBean1031 {
                     this.path = path;
                 }
 
-                public Object getChildrenPart() {
-                    return childrenPart;
-                }
-
-                public void setChildrenPart(Object childrenPart) {
-                    this.childrenPart = childrenPart;
-                }
-
                 public String getName() {
                     return name;
                 }
@@ -457,7 +452,202 @@ public class CrouseListBean1031 {
                 public void setSourcePath(String sourcePath) {
                     this.sourcePath = sourcePath;
                 }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeInt(this.course_id);
+                    dest.writeInt(this.part_sort);
+                    dest.writeInt(this.is_light);
+                    dest.writeInt(this.pid);
+                    dest.writeInt(this.has_source);
+                    dest.writeInt(this.type);
+                    dest.writeInt(this.is_screen);
+                    dest.writeString(this.path);
+                    dest.writeString(this.name);
+                    dest.writeInt(this.id);
+                    dest.writeInt(this.state);
+                    dest.writeString(this.sourceName);
+                    dest.writeString(this.sourcePath);
+                }
+
+                public ChildrenPartLoginBean() {
+                }
+
+                protected ChildrenPartLoginBean(Parcel in) {
+                    this.course_id = in.readInt();
+                    this.part_sort = in.readInt();
+                    this.is_light = in.readInt();
+                    this.pid = in.readInt();
+                    this.has_source = in.readInt();
+                    this.type = in.readInt();
+                    this.is_screen = in.readInt();
+                    this.path = in.readString();
+                    this.name = in.readString();
+                    this.id = in.readInt();
+                    this.state = in.readInt();
+                    this.sourceName = in.readString();
+                    this.sourcePath = in.readString();
+                }
+
+                public static final Creator<ChildrenPartLoginBean> CREATOR = new Creator<ChildrenPartLoginBean>() {
+                    @Override
+                    public ChildrenPartLoginBean createFromParcel(Parcel source) {
+                        return new ChildrenPartLoginBean(source);
+                    }
+
+                    @Override
+                    public ChildrenPartLoginBean[] newArray(int size) {
+                        return new ChildrenPartLoginBean[size];
+                    }
+                };
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.course_id);
+                dest.writeInt(this.part_sort);
+                dest.writeInt(this.is_light);
+                dest.writeInt(this.pid);
+                dest.writeInt(this.has_source);
+                dest.writeInt(this.type);
+                dest.writeInt(this.is_screen);
+                dest.writeString(this.path);
+                dest.writeString(this.name);
+                dest.writeInt(this.id);
+                dest.writeInt(this.state);
+                dest.writeString(this.sourceName);
+                dest.writeString(this.sourcePath);
+                dest.writeList(this.childrenPart);
+            }
+
+            public ChildrenPartLoginBeanX() {
+            }
+
+            protected ChildrenPartLoginBeanX(Parcel in) {
+                this.course_id = in.readInt();
+                this.part_sort = in.readInt();
+                this.is_light = in.readInt();
+                this.pid = in.readInt();
+                this.has_source = in.readInt();
+                this.type = in.readInt();
+                this.is_screen = in.readInt();
+                this.path = in.readString();
+                this.name = in.readString();
+                this.id = in.readInt();
+                this.state = in.readInt();
+                this.sourceName = in.readString();
+                this.sourcePath = in.readString();
+                this.childrenPart = new ArrayList<ChildrenPartLoginBean>();
+                in.readList(this.childrenPart, ChildrenPartLoginBean.class.getClassLoader());
+            }
+
+            public static final Creator<ChildrenPartLoginBeanX> CREATOR = new Creator<ChildrenPartLoginBeanX>() {
+                @Override
+                public ChildrenPartLoginBeanX createFromParcel(Parcel source) {
+                    return new ChildrenPartLoginBeanX(source);
+                }
+
+                @Override
+                public ChildrenPartLoginBeanX[] newArray(int size) {
+                    return new ChildrenPartLoginBeanX[size];
+                }
+            };
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.course_id);
+            dest.writeInt(this.part_sort);
+            dest.writeString(this.path);
+            dest.writeInt(this.is_light);
+            dest.writeString(this.name);
+            dest.writeInt(this.pid);
+            dest.writeInt(this.id);
+            dest.writeInt(this.has_source);
+            dest.writeInt(this.state);
+            dest.writeInt(this.type);
+            dest.writeInt(this.is_screen);
+            dest.writeList(this.childrenPart);
+        }
+
+        public DetailLoginBean() {
+        }
+
+        protected DetailLoginBean(Parcel in) {
+            this.course_id = in.readInt();
+            this.part_sort = in.readInt();
+            this.path = in.readString();
+            this.is_light = in.readInt();
+            this.name = in.readString();
+            this.pid = in.readInt();
+            this.id = in.readInt();
+            this.has_source = in.readInt();
+            this.state = in.readInt();
+            this.type = in.readInt();
+            this.is_screen = in.readInt();
+            this.childrenPart = new ArrayList<ChildrenPartLoginBeanX>();
+            in.readList(this.childrenPart, ChildrenPartLoginBeanX.class.getClassLoader());
+        }
+
+        public static final Creator<DetailLoginBean> CREATOR = new Creator<DetailLoginBean>() {
+            @Override
+            public DetailLoginBean createFromParcel(Parcel source) {
+                return new DetailLoginBean(source);
+            }
+
+            @Override
+            public DetailLoginBean[] newArray(int size) {
+                return new DetailLoginBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.code);
+        dest.writeString(this.description);
+        dest.writeList(this.detail);
+    }
+
+    public CrouseListBean1031() {
+    }
+
+    protected CrouseListBean1031(Parcel in) {
+        this.code = in.readInt();
+        this.description = in.readString();
+        this.detail = new ArrayList<DetailLoginBean>();
+        in.readList(this.detail, DetailLoginBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<CrouseListBean1031> CREATOR = new Parcelable.Creator<CrouseListBean1031>() {
+        @Override
+        public CrouseListBean1031 createFromParcel(Parcel source) {
+            return new CrouseListBean1031(source);
+        }
+
+        @Override
+        public CrouseListBean1031[] newArray(int size) {
+            return new CrouseListBean1031[size];
+        }
+    };
 }
