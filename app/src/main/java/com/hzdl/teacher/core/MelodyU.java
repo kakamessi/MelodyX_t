@@ -24,6 +24,13 @@ import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
 public class MelodyU {
 
+    //----钢琴指令-------------------------------------------------------------------------------------------
+    //开启静音协议
+    public static byte[] ACTION_MUTE ={ 0x1b, (byte)0xbF, 0x07, 0x00};
+    //关闭静音
+    public static byte[] ACTION_UNMUTE = { 0x1b, (byte)0xbF, 0x07, 0x7f };
+
+
     //-----数据段start---------------------------------------------------------------------------------------------
 
     public static long[] d_starttime_1 = {5000};
