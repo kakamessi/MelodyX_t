@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.hzdl.mex.usb.UsbDeviceInfo;
 import com.hzdl.mex.utils.Log;
@@ -29,7 +30,17 @@ public class MelodyU {
     public static byte[] ACTION_MUTE ={ 0x1b, (byte)0xbF, 0x07, 0x00};
     //关闭静音
     public static byte[] ACTION_UNMUTE = { 0x1b, (byte)0xbF, 0x07, 0x7f };
+    /*开启打击乐*/
+    public static byte[] open_djy = { 0x04, (byte)0xf0, 0x4d, 0x4c, 0x04, 0x4c, 0x53, 0x01, 0x06, 0x00, 0x00, (byte)0xf7 };
+    /*关闭打击乐*/
+    public static byte[] close_djy = { 0x04, (byte)0xf0, 0x4d, 0x4c, 0x04, 0x4c, 0x53, 0x00, 0x06, 0x00, 0x00, (byte)0xf7 };
 
+
+    //-----图片名称---------------------------------------------------------------------------------------------
+    public static final String PIC_NAME_1 = "1-1-3-4.png";
+    public static final String PIC_NAME_2 = "1-2-3-5.png";
+    public static final String PIC_NAME_3 = "1-3-3-2.png";
+    public static final String PIC_NAME_4 = "1-4-3-2.png";
 
     //-----数据段start---------------------------------------------------------------------------------------------
 
@@ -47,11 +58,32 @@ public class MelodyU {
                                    1, 1, 1, 1, 1, 1, 1, 1,1};
 
 
+    public static long[] d_starttime_2 = {6720};
+    public static long[] d_duringtime_2 = {697,697,697*2, 697,697,697*2, 697,697,697*2, 697,697,697*2,};
+    public static int[] d_note_2 = {39,43,46,   43,43,46,   43,39,43,  46,43,39};
+    public static int[] d_color_2 = {1, 1, 1,    1,1,1,  1,1,1,  1,1,1};
+
+    public static long[] d_starttime_3 = {20000,36760};
+    public static long[] d_duringtime_3 = {697,697,697, 697,697*4,    697, 697,697,697, 697*4};
+    public static int[] d_note_3 = {39,39,46,46,43,   46,46,43,43,39};
+    public static int[] d_color_3 = {1, 1, 1, 1,1,   1, 1, 1,1,1};
+
+    public static long[] d_starttime_4 = {13960,38080,61880};
+    public static long[] d_duringtime_4 = {1000,1000,1000*2, 1000,1000,1000*2, 1000,1000,1000*2, 1000,1000,1000*2,};
+    public static int[] d_note_4 = {39,39,43,43,  43,46,48,46,  43,41,43,39};
+    public static int[] d_color_4 = {1, 1, 1, 1,    1, 1, 1, 1,  1,1,1,1};
+
+
     public static ArrayList<NoteInfo> course_1 = new ArrayList<>();
     public static ArrayList<NoteInfo> course_2 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_3 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_4 = new ArrayList<>();
 
     static {
         course_1.addAll(setNoteList(d_note_1, d_color_1));
+        course_2.addAll(setNoteList(d_note_2, d_color_2));
+        course_3.addAll(setNoteList(d_note_3, d_color_3));
+        course_4.addAll(setNoteList(d_note_4, d_color_4));
     }
 
     //-----数据段end---------------------------------------------------------------------------------------------
@@ -65,44 +97,70 @@ public class MelodyU {
      * @param resId 资源id
      * @return 返回下一个音符信息
      */
-    public static NoteInfo checkInputX(int note, int playIndex, int resId) {
+    public static NoteInfo checkInputX(int note, int playIndex, String resId) {
         NoteInfo result = null;
+        ArrayList<NoteInfo> noteList = searchNotes(resId);
 
-        if (resId == -1) {
-
-            playIndex = playIndex % course_1.size();
+        if (true) {
+            playIndex = playIndex % noteList.size();
 
             //判断正误
-            if (note != course_1.get(playIndex).getNote()) {
+            if (note != noteList.get(playIndex).getNote()) {
                 return null;
             }
 
             //返回下一个
-            if (playIndex == (course_1.size() - 1)) {
+            if (playIndex == (noteList.size() - 1)) {
                 playIndex = 0;
             } else {
                 playIndex++;
             }
-            result = course_1.get(playIndex);
+            result = noteList.get(playIndex);
         }
         return result;
     }
 
     /**
-     * 根据课程id找资源
-     * @param id
+     * 查找对应课程的 弹奏音符集
+     * @param resId
      * @return
      */
-    public ArrayList<NoteInfo> getCourseById(int id){
-        ArrayList<NoteInfo> list = null;
-        switch(id) {
-            case 1:
-                list = course_1;
-                break;
-            case 2:
-                break;
+    private static ArrayList<NoteInfo> searchNotes(String resId) {
+        ArrayList<NoteInfo> result = null;
+        if(PIC_NAME_1.equals(resId)){
+            result = course_1;
+        }else if(PIC_NAME_2.equals(resId)){
+            result = course_2;
+        }else if(PIC_NAME_3.equals(resId)){
+            result = course_3;
+        }else if(PIC_NAME_4.equals(resId)){
+            result = course_4;
         }
-        return list;
+
+        return result;
+    }
+
+    /**
+     * 返回对应课程布局
+     * @return
+     */
+    public int[] getPlayLayouts(String resName){
+        int[] ls = null;
+        if(resName.equals(PIC_NAME_1)){
+            ls = new int[]{R.layout.include_score};
+
+        }else if(resName.equals(PIC_NAME_2)){
+            ls = new int[]{R.layout.score_2_1};
+
+        }else if(resName.equals(PIC_NAME_3)){
+            ls = new int[]{R.layout.score_3_1};
+
+        }else if(resName.equals(PIC_NAME_4)){
+            ls = new int[]{R.layout.score_4_1};
+
+        }
+
+        return ls;
     }
 
     /**
@@ -252,15 +310,12 @@ public class MelodyU {
 
     }
 
-    /**
-     * 返回对应课程布局
-     * @return
-     */
-    public int[] getPlayLayouts(int id){
-
-        int[] ls = {R.layout.include_score};
-        return ls;
-
+    public void open_DJY(MidiOutputDevice outPut,boolean on){
+        if(on){
+            outPut.sendMidiSystemExclusive(0,new byte[]{ (byte)0xf0, 0x4d, 0x4c, 0x4c, (byte) 0xC0, 0x00,     (byte)0xf7 });
+        }else{
+            outPut.sendMidiSystemExclusive(0,new byte[]{ (byte)0xf0, 0x4d, 0x4c, 0x4c, (byte) 0xC0, 0x76,     (byte)0xf7 });
+        }
     }
 
     /**

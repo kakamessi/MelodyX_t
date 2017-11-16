@@ -49,9 +49,21 @@ import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
 import static com.hzdl.teacher.core.MelodyU.d_color_1;
+import static com.hzdl.teacher.core.MelodyU.d_color_2;
+import static com.hzdl.teacher.core.MelodyU.d_color_3;
+import static com.hzdl.teacher.core.MelodyU.d_color_4;
 import static com.hzdl.teacher.core.MelodyU.d_duringtime_1;
+import static com.hzdl.teacher.core.MelodyU.d_duringtime_2;
+import static com.hzdl.teacher.core.MelodyU.d_duringtime_3;
+import static com.hzdl.teacher.core.MelodyU.d_duringtime_4;
 import static com.hzdl.teacher.core.MelodyU.d_note_1;
+import static com.hzdl.teacher.core.MelodyU.d_note_2;
+import static com.hzdl.teacher.core.MelodyU.d_note_3;
+import static com.hzdl.teacher.core.MelodyU.d_note_4;
 import static com.hzdl.teacher.core.MelodyU.d_starttime_1;
+import static com.hzdl.teacher.core.MelodyU.d_starttime_2;
+import static com.hzdl.teacher.core.MelodyU.d_starttime_3;
+import static com.hzdl.teacher.core.MelodyU.d_starttime_4;
 
 
 /**
@@ -589,7 +601,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             code_Screen = "|0";
         }
 
-        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + code_light + code_Screen);
+        String crouseName = "|" + les.getName();
+
+        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + code_light + code_Screen + crouseName);
     }
 
     private boolean checkIndexOut() {
@@ -617,7 +631,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     private void doAction(String str) {
 
         /****** 开始新的一节， 重置各种状态 ******/
-        resetStatus();
+        resetLight();
 
         Log.e("kaka", "----------action code------- " + str);
         ab = ActionResolver.getInstance().resolve(str);
@@ -629,6 +643,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             initVedioSection();
 
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
+            resetVideo();
             initPlaySection();
         }
     }
@@ -676,7 +691,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     private void showTopLayout(String tag) {
         //遍历viewgroup
         LinearLayout vg = null;
-        int[] ls = MelodyU.getInstance().getPlayLayouts(-1);
+        int[] ls = MelodyU.getInstance().getPlayLayouts(ab.getStringByPositon(2));
         for (int i = 0; i < ls.length; i++) {
             vg = (LinearLayout) getLayoutInflater().inflate(ls[i], null);
             ViewGroup vgTop = vg.findViewById(R.id.rl_top);
@@ -707,7 +722,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     private void checkInput(int note) {
         NoteInfo nextInfo = null;
         //判断对错
-        if ((nextInfo = MelodyU.checkInputX(note, currentPlayIndex, -1)) != null) {
+        if ((nextInfo = MelodyU.checkInputX(note, currentPlayIndex, ab.getStringByPositon(2))) != null) {
 
             /****** 循环判断 ******/
             if (currentPlayIndex == (MelodyU.course_1.size() - 1)) {
@@ -731,12 +746,18 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
     }
 
-    private void resetStatus() {
+    private void resetLight() {
         MelodyU.getInstance().offAllLight(mOutputDevice);
         stopTempleLight();
 
         //这里暂停 会出现异常情况
-        vv.stopPlayback();
+        //vv.stopPlayback();
+    }
+
+    private void resetVideo(){
+        if(vv!=null){
+            vv.stopPlayback();
+        }
     }
 
     private void startTemple() {
@@ -747,7 +768,17 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             tt.interrupt();
             tt = null;
         }
-        tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
+
+        if("第一课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
+        }else if("第二课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_2, d_duringtime_2, d_color_2, d_note_2);
+        }else if("第三课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_3, d_duringtime_3, d_color_3, d_note_3);
+        }else if("第四课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+        }
+
         tt.start();
     }
 
