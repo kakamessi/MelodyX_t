@@ -22,7 +22,7 @@
             android:src="@mipmap/a1332"/>
 
         <ImageView
-            android:tag="1"
+            android:tag="8"
             android:id="@+id/id10"
             style="@style/puziyinfu_bg_02"
             android:layout_centerVertical="true"

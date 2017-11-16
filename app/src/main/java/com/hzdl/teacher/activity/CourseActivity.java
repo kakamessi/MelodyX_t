@@ -48,6 +48,11 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
+import static com.hzdl.teacher.base.App.init;
+import static com.hzdl.teacher.core.MelodyU.PIC_NAME_1;
+import static com.hzdl.teacher.core.MelodyU.PIC_NAME_2;
+import static com.hzdl.teacher.core.MelodyU.PIC_NAME_3;
+import static com.hzdl.teacher.core.MelodyU.PIC_NAME_4;
 import static com.hzdl.teacher.core.MelodyU.d_color_1;
 import static com.hzdl.teacher.core.MelodyU.d_color_2;
 import static com.hzdl.teacher.core.MelodyU.d_color_3;
@@ -685,6 +690,30 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         setUIType(R.id.rl_score);
         showTopLayout((currentPlayIndex + 1) + "");
 
+        initNoteAndLight();
+    }
+
+    //初始化音符
+    private void initNoteAndLight() {
+        NoteInfo nextInfo = null;
+
+        if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_1)){
+            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+
+        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_2)){
+            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+
+        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_3)){
+            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+
+        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)){
+            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+
+        }
+
+        MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
+        //亮灯显示
+        doLight(nextInfo);
     }
 
     /****** 显示指定图谱 ******/
@@ -742,6 +771,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
     /******  点亮某一个灯 ******/
     private void doLight(NoteInfo nextInfo) {
+        if(mOutputDevice==null){
+            return;
+        }
         MelodyU.getInstance().offAllLight(mOutputDevice);
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
     }

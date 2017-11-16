@@ -70,7 +70,7 @@ public class MelodyU {
 
     public static long[] d_starttime_4 = {13960,38080,61880};
     public static long[] d_duringtime_4 = {1000,1000,1000*2, 1000,1000,1000*2, 1000,1000,1000*2, 1000,1000,1000*2,};
-    public static int[] d_note_4 = {39,39,43,43,  43,46,48,46,  43,41,43,39};
+    public static int[] d_note_4 = {39,39,43,    43,43,46,    48,46,43,   41,43,39};
     public static int[] d_color_4 = {1, 1, 1, 1,    1, 1, 1, 1,  1,1,1,1};
 
 
@@ -276,6 +276,11 @@ public class MelodyU {
      * @throws InterruptedException
      */
     public void lightTempo(MidiOutputDevice outPut,long[] dur, int[] color, int[] index) throws InterruptedException {
+
+        if(outPut==null) {
+            return;
+        }
+
         this.mOutputDevice = outPut;
         final long[] idur = dur;      //音符间隔       音符个数
         final int[] icolor = color;   //色值判断
@@ -298,7 +303,11 @@ public class MelodyU {
     }
 
     //闪烁一次灯
-    public void beat(int index, final boolean isRed, final long time) {
+    private void beat(int index, final boolean isRed, final long time) {
+        if(mOutputDevice==null){
+            return;
+        }
+
         index = index + 21;
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,true));
         try {
@@ -311,6 +320,9 @@ public class MelodyU {
     }
 
     public void open_DJY(MidiOutputDevice outPut,boolean on){
+        if(outPut==null){
+            return;
+        }
         if(on){
             outPut.sendMidiSystemExclusive(0,new byte[]{ (byte)0xf0, 0x4d, 0x4c, 0x4c, (byte) 0xC0, 0x00,     (byte)0xf7 });
         }else{
