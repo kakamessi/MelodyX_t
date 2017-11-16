@@ -754,7 +754,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         if ((nextInfo = MelodyU.checkInputX(note, currentPlayIndex, ab.getStringByPositon(2))) != null) {
 
             /****** 循环判断 ******/
-            if (currentPlayIndex == (MelodyU.course_1.size() - 1)) {
+            if (currentPlayIndex == (MelodyU.searchNotes(ab.getStringByPositon(2)).size() - 1)) {
                 currentPlayIndex = 0;
             } else {
                 currentPlayIndex++;

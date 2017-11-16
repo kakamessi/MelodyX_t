@@ -125,7 +125,7 @@ public class MelodyU {
      * @param resId
      * @return
      */
-    private static ArrayList<NoteInfo> searchNotes(String resId) {
+    public static ArrayList<NoteInfo> searchNotes(String resId) {
         ArrayList<NoteInfo> result = null;
         if(PIC_NAME_1.equals(resId)){
             result = course_1;
