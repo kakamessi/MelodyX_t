@@ -670,6 +670,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                     startTemple();
                 }
             }else{
+                resetVideo();
                 setUIType(R.id.rl_loading);
             }*/
 
