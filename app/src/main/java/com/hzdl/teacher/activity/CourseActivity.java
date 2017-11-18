@@ -813,6 +813,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
 
         if(tt!=null) {
+            flagV = true;
             tt.start();
         }
     }
@@ -845,10 +846,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         if (tt != null) {
             tt.interrupt();
             tt = null;
+            flagV = false;
         }
     }
 
     /* 跟灯 */
+    private volatile boolean flagV = true;
     class TempleThread extends Thread {
         MidiOutputDevice md;
         long[] delay = null; //时间延迟执行
@@ -868,7 +871,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         public void run() {
             int xunhuan = 0;
             try {
-                while (true) {
+                while (flagV) {
                     if (xunhuan > delay.length - 1) {
                         if (tt != null) {
                             tt = null;
