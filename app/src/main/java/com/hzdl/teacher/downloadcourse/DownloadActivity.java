@@ -47,7 +47,7 @@ public class DownloadActivity extends BaseActivity {
 
     //--------------------------------------------
     public ListView lvCourse;
-    private ImageButton ib_back;
+    private Button ib_back;
     private DownloadNewAdapter adapter;
     //下载标识  1-显示全部下载，2,3
     private int downLoadType = -1;
@@ -112,7 +112,7 @@ public class DownloadActivity extends BaseActivity {
     private void initView() {
 
         lvCourse = (ListView) findViewById(R.id.lv_course);
-        ib_back = (ImageButton) findViewById(R.id.ib_back);
+        ib_back = (Button) findViewById(R.id.ib_back);
         ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,6 +149,8 @@ public class DownloadActivity extends BaseActivity {
         lvCourse.setAdapter(adapter);
         adapter.bindAty(this);
 
+        //Utils.setOnFocusBG(ib_back, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(btn_dload_all, R.drawable.shape_strock, -1);
     }
 
     public void initHeadView(){

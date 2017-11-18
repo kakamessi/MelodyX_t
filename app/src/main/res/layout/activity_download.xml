@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/download_title_bg"/>
 
-        <ImageButton
+        <Button
             android:id="@+id/ib_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,6 +24,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="50dp"
+            android:focusable="true"
             android:layout_marginStart="50dp"
             android:background="@drawable/back_btn_selector"/>
     </RelativeLayout>

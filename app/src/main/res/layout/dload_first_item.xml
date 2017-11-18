@@ -33,6 +33,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
             android:background="@drawable/download_all_btn_selector"
+            android:focusable="true"
             android:gravity="center"
             android:paddingLeft="13dp"
             android:paddingRight="13dp"
