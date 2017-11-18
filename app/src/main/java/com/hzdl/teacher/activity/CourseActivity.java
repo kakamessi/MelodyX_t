@@ -812,7 +812,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         }
 
-        tt.start();
+        if(tt!=null) {
+            tt.start();
+        }
     }
 
     //note 21 -108 序号  钢琴按键排序从1开始
