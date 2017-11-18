@@ -71,6 +71,10 @@ public class App extends Application {
 
     }
 
+    public boolean isTV(){
+        return deviceType == 1;
+    }
+
     public int getDeviceType() {
         return deviceType;
     }

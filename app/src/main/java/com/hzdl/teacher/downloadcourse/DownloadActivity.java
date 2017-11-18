@@ -149,7 +149,27 @@ public class DownloadActivity extends BaseActivity {
         lvCourse.setAdapter(adapter);
         adapter.bindAty(this);
 
-        //Utils.setOnFocusBG(ib_back, R.drawable.shape_strock, -1);
+        if(mBaseApp.isTV()){
+            headView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(downLoadType==1){
+                        adapter.downloadAll(true);
+                        setHeadViewType(2);
+
+                    }else if(downLoadType==2){
+                        adapter.downloadAll(false);
+                        setHeadViewType(1);
+
+                    }else if(downLoadType == 3){
+
+                        showDeleteAll();
+                    }
+                }
+            });
+        }
+
+        Utils.setOnFocusBG(ib_back, R.drawable.shape_strock, -1);
         Utils.setOnFocusBG(btn_dload_all, R.drawable.shape_strock, -1);
     }
 
