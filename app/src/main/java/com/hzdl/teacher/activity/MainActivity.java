@@ -39,6 +39,10 @@ public class MainActivity extends BaseMidiActivity {
     ImageView ivStart;
     @BindView(R.id.iv_exit)
     ImageView ivExit;
+    @BindView(R.id.iv_down)
+    ImageView ivDown;
+    @BindView(R.id.iv_my)
+    ImageView ivMy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,8 @@ public class MainActivity extends BaseMidiActivity {
 
         Utils.setOnFocusBG(ivStart, R.drawable.shape_strock, -1);
         Utils.setOnFocusBG(ivExit, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(ivDown, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(ivMy, R.drawable.shape_strock, -1);
 
     }
 
@@ -150,14 +156,14 @@ public class MainActivity extends BaseMidiActivity {
         }
     }
 
-    @OnClick({R.id.iv_start, R.id.iv_exit, R.id.iv_my,R.id.iv_down})
+    @OnClick({R.id.iv_start, R.id.iv_exit, R.id.iv_my, R.id.iv_down})
     public void onClick(View view) {
         switch (view.getId()) {
 
             case R.id.iv_start:
 
                 showLoadingDialog();
-                if(mBaseApp.isRoot()){
+                if (mBaseApp.isRoot()) {
 
                     CrouseListBean1031 clb = Utils.loadDemoParce(MainActivity.this);
                     ArrayList<LessonInfo> data = new ArrayList<LessonInfo>();
@@ -168,7 +174,7 @@ public class MainActivity extends BaseMidiActivity {
                     startActivity(intent);
                     hideLoadingDialog();
 
-                }else {
+                } else {
                     netLessonKit();
                 }
 

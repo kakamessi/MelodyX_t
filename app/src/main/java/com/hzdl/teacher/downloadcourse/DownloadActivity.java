@@ -342,6 +342,10 @@ public class DownloadActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode==KeyEvent.KEYCODE_BACK) {
+
+            Intent intent = new Intent(DownloadActivity.this, MainActivity.class);
+            startActivity(intent);
+
             return true;
         }
         return super.onKeyDown(keyCode, event);

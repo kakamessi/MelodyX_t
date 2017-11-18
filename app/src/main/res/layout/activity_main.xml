@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/main_btn_download"
+        android:focusable="true"
         android:id="@+id/iv_down" />
 
     <ImageView
@@ -24,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/main_my"
+        android:focusable="true"
         android:id="@+id/iv_my" />
 
 
