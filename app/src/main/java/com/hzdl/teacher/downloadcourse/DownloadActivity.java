@@ -120,54 +120,50 @@ public class DownloadActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
-
         adapter = new DownloadNewAdapter(this);
 
-        headView = LayoutInflater.from(this).inflate(R.layout.dload_first_item, null);
-        btn_dload_all = (Button) headView.findViewById(R.id.btn_dload_all);
+        btn_dload_all = (Button)findViewById(R.id.btn_dload_all);
         btn_dload_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(downLoadType==1){
                     adapter.downloadAll(true);
                     setHeadViewType(2);
-
                 }else if(downLoadType==2){
                     adapter.downloadAll(false);
                     setHeadViewType(1);
-
                 }else if(downLoadType == 3){
-
                     showDeleteAll();
                 }
-
             }
         });
 
+//        headView模块
+//
+//        headView = LayoutInflater.from(this).inflate(R.layout.dload_first_item, null);
+//        btn_dload_all = (Button) headView.findViewById(R.id.btn_dload_all);
+//        btn_dload_all.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                if(downLoadType==1){
+//                    adapter.downloadAll(true);
+//                    setHeadViewType(2);
+//
+//                }else if(downLoadType==2){
+//                    adapter.downloadAll(false);
+//                    setHeadViewType(1);
+//
+//                }else if(downLoadType == 3){
+//
+//                    showDeleteAll();
+//                }
+//
+//            }
+//        });
+
         lvCourse.setAdapter(adapter);
         adapter.bindAty(this);
-
-        if(mBaseApp.isTV()){
-            headView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(downLoadType==1){
-                        adapter.downloadAll(true);
-                        setHeadViewType(2);
-
-                    }else if(downLoadType==2){
-                        adapter.downloadAll(false);
-                        setHeadViewType(1);
-
-                    }else if(downLoadType == 3){
-
-                        showDeleteAll();
-                    }
-                }
-            });
-        }
 
         Utils.setOnFocusBG(ib_back, R.drawable.shape_strock, -1);
         Utils.setOnFocusBG(btn_dload_all, R.drawable.shape_strock, -1);
@@ -302,7 +298,7 @@ public class DownloadActivity extends BaseActivity {
                         final String jsonResult = info.getRetDetail();
                         if (info.isSuccessful()) {
 
-                            lvCourse.addHeaderView(headView);
+                            //lvCourse.addHeaderView(headView);
 
                             new Thread(new Runnable() {
                                 @Override
