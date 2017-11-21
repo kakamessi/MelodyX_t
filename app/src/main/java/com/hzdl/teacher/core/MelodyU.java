@@ -16,6 +16,7 @@ import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
@@ -319,6 +320,16 @@ public class MelodyU {
 
     }
 
+    public void showLight(MidiOutputDevice outPut){
+        Random random = new Random();
+        int max=60;
+        int min=29;
+        for(int i = 0; i<20; i++){
+            int p = random.nextInt(max)%(max-min+1) + min;
+            beat(p,true,500);
+        }
+    }
+
     public void open_DJY(MidiOutputDevice outPut,boolean on){
         if(outPut==null){
             return;
@@ -492,7 +503,6 @@ public class MelodyU {
         }
         return instance;
     }
-
 
 }
 
