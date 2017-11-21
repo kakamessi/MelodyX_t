@@ -6,6 +6,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.hzdl.mex.utils.SPUtils;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseMidiActivity;
@@ -82,7 +83,8 @@ public class MainActivity extends BaseMidiActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ITeacher userBiz = retrofit.create(ITeacher.class);
-        Call<CrouseListBean1031> call = userBiz.getCrouseList();
+        String id = (String) SPUtils.get(MainActivity.this,Constant.KEY_SCHOOL_ID,"-1");
+        Call<CrouseListBean1031> call = userBiz.getCrouseList(id);
         call.enqueue(new Callback<CrouseListBean1031>() {
             @Override
             public void onResponse(Call<CrouseListBean1031> call, Response<CrouseListBean1031> response) {

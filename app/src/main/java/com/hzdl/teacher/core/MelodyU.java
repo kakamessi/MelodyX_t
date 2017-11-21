@@ -9,10 +9,7 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import com.hzdl.mex.usb.UsbDeviceInfo;
-import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
 
 import java.util.ArrayList;
@@ -37,11 +34,15 @@ public class MelodyU {
     public static byte[] close_djy = { 0x04, (byte)0xf0, 0x4d, 0x4c, 0x04, 0x4c, 0x53, 0x00, 0x06, 0x00, 0x00, (byte)0xf7 };
 
 
-    //-----图片名称---------------------------------------------------------------------------------------------
+    //-----服务器返回的图片名称---------------------------------------------------------------------------------------------
     public static final String PIC_NAME_1 = "1-1-3-4.png";
     public static final String PIC_NAME_2 = "1-2-3-5.png";
     public static final String PIC_NAME_3 = "1-3-3-2.png";
     public static final String PIC_NAME_4 = "1-4-3-2.png";
+
+    //示范课
+    public static final String PIC_NAME_D1 = "D1-1-5-1.png";
+
 
     //-----数据段start---------------------------------------------------------------------------------------------
 
@@ -74,17 +75,28 @@ public class MelodyU {
     public static int[] d_note_4 = {39,39,43,    43,43,46,    48,46,43,   41,43,39};
     public static int[] d_color_4 = {1, 1, 1, 1,    1, 1, 1, 1,  1,1,1,1};
 
+    public static int[] d_note_d1 = {39 ,39, 46, 46, 48, 48, 46,   44, 44, 43, 43, 41, 41, 39,
+            46, 46, 44, 44, 43, 43, 41, 46, 46, 44, 44, 43, 43, 41,
+            39, 39, 46, 46, 48, 48, 46,  44, 44, 43, 43, 41, 41, 39};
+    public static int[] d_color_d1 = {1, 1, 1, 1,    1, 1, 1,  1, 1, 1, 1,    1, 1, 1,
+            1, 1, 1, 1,    1, 1, 1,  1, 1, 1, 1,    1, 1, 1,1, 1, 1, 1,    1, 1, 1,  1, 1, 1, 1,    1, 1, 1};
+
 
     public static ArrayList<NoteInfo> course_1 = new ArrayList<>();
     public static ArrayList<NoteInfo> course_2 = new ArrayList<>();
     public static ArrayList<NoteInfo> course_3 = new ArrayList<>();
     public static ArrayList<NoteInfo> course_4 = new ArrayList<>();
 
+
+    public static ArrayList<NoteInfo> course_d1 = new ArrayList<>();
+
     static {
         course_1.addAll(setNoteList(d_note_1, d_color_1));
         course_2.addAll(setNoteList(d_note_2, d_color_2));
         course_3.addAll(setNoteList(d_note_3, d_color_3));
         course_4.addAll(setNoteList(d_note_4, d_color_4));
+
+        course_d1.addAll(setNoteList(d_note_d1, d_color_d1));
     }
 
     //-----数据段end---------------------------------------------------------------------------------------------
@@ -136,6 +148,8 @@ public class MelodyU {
             result = course_3;
         }else if(PIC_NAME_4.equals(resId)){
             result = course_4;
+        }else if(PIC_NAME_D1.equals(resId)){
+            result = course_d1;
         }
 
         return result;
@@ -158,6 +172,9 @@ public class MelodyU {
 
         }else if(resName.equals(PIC_NAME_4)){
             ls = new int[]{R.layout.score_4_1};
+
+        }else if(resName.equals(PIC_NAME_D1)){
+            ls = new int[]{R.layout.score_d_1_1};
 
         }
 

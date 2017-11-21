@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by wangshuai on 2017/9/8.
@@ -33,7 +34,7 @@ public interface ITeacher {
      * @return
      */
     @GET(Constant.URL_COURSE_LIST)
-    Call<CrouseListBean1031> getCrouseList();
+    Call<CrouseListBean1031> getCrouseList(@Query("sid") String schoolId);
 
 
 

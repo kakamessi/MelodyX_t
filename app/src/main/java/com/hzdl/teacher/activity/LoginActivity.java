@@ -116,6 +116,8 @@ public class LoginActivity extends BaseActivity {
                 if (response == null || response.body() == null)
                     return;
                 if (200 == response.body().getCode()) {
+
+                    SPUtils.put(LoginActivity.this,Constant.KEY_SCHOOL_ID, response.body().getDetail().getSchoolId() + "");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     LoginActivity.this.startActivity(intent);
                     LoginActivity.this.finish();
