@@ -662,8 +662,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
 
             /******  学生端  ******/
-            //是否投屏
-/*            if(ActionProtocol.CODE_1 == ab.getCodeByPositon(5)) {
+/*            //是否投屏
+            if(ActionProtocol.CODE_1 == ab.getCodeByPositon(5)) {
                 swichPlayScr(ab.getStringByPositon(3));
                 //是否亮灯
                 if (1 == ab.getCodeByPositon(4)) {
@@ -672,7 +672,14 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }else{
                 resetVideo();
                 setUIType(R.id.rl_loading);
-            }*/
+            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    MelodyU.getInstance().showLight(getMidiOutputDevice());
+                }
+            },3000);*/
+
 
             /******  教师端  ******/
             swichPlayScr(ab.getStringByPositon(3));
