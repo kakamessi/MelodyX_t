@@ -32,14 +32,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
-            android:background="@drawable/download_all_btn_selector"
             android:gravity="center"
             android:paddingLeft="13dp"
             android:paddingRight="13dp"
             android:text="全部下载"
             android:textColor="#ffffff"
             android:textSize="20sp"/>
-
+        <!--android:background="@drawable/download_all_btn_selector"-->
     </RelativeLayout>
 
     <View
