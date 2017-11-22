@@ -33,6 +33,7 @@ import java.util.List;
 
 public class Utils {
 
+    public static final String PACK_NAME = "com.hzdl.teacher";
 
     /**
      * 获取本机ip
@@ -134,6 +135,14 @@ public class Utils {
         }
 
         return pi;
+    }
+
+    public static boolean isTeacherClient(Context context){
+        boolean result = false;
+        if(getPackageInfo(context).packageName.equals(PACK_NAME)){
+            result = true;
+        }
+        return result;
     }
 
     /**

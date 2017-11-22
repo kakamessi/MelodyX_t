@@ -691,9 +691,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public void initPlaySection() {
         COURSE_TYPE = TYPE_PLAY;
         currentPlayIndex = 0;
+
+        if(Utils.isTeacherClient(CourseActivity.this) && mBaseApp.isTV()){
+            setUIType(R.id.rl_teacher_screen);
+            return;
+        }
         setUIType(R.id.rl_score);
         showTopLayout((currentPlayIndex + 1) + "");
-
         initNoteAndLight();
     }
 
