@@ -667,13 +667,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }else{
                 resetVideo();
                 setUIType(R.id.rl_loading);
-            }
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    MelodyU.getInstance().showLight(getMidiOutputDevice());
-                }
-            },3000);*/
+            }*/
 
 
             /******  教师端  ******/
@@ -682,6 +676,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             if (1 == ab.getCodeByPositon(4)) {
                 startTemple();
             }
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    MelodyU.getInstance().showLight(getMidiOutputDevice());
+                }
+            },3000);
 
         }
     }

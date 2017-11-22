@@ -338,6 +338,7 @@ public class MelodyU {
     }
 
     public void showLight(MidiOutputDevice outPut){
+        mOutputDevice = outPut;
         Random random = new Random();
         int max=60;
         int min=29;

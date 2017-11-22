@@ -54,7 +54,7 @@ public class App extends Application {
         initParam();
         initOkHttp();
         initRetrofit();
-        //initCrash();
+        initCrash();
         initDevice();
     }
 
