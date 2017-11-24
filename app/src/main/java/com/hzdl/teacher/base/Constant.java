@@ -29,9 +29,11 @@ public class Constant {
 
     public static final String URL_ROOT = "http://47.104.96.204:8080/";
     //public static final String URL_ROOT = "http://p.w3cstudy.cc/";
+
     public static final String URL_LOGIN = "client/teacherLogin.json";
     public static final String URL_MODIFY_PSW = "/client/resetPass.json";
-    public static final String URL_COURSE_DOWNLOAD = "http://video.angelmusic360.com";
+    public static final String URL_COURSE_DOWNLOAD = "http://video.w3cstudy.cc";
+    //public static final String URL_COURSE_DOWNLOAD = "http://video.angelmusic360.com";
     public static final String URL_CHECK_UPDATE = "/client/version/versionInfo.json?type=1";
     public static final String URL_COURSE_LIST = "client/course/findCoursePart.json";
 
