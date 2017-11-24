@@ -692,10 +692,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         COURSE_TYPE = TYPE_PLAY;
         currentPlayIndex = 0;
 
+        //教师端独有代码，移植学生端需要手动删除
         if(Utils.isTeacherClient(CourseActivity.this) && mBaseApp.isTV()){
             setUIType(R.id.rl_teacher_screen);
             return;
         }
+        
         setUIType(R.id.rl_score);
         showTopLayout((currentPlayIndex + 1) + "");
         initNoteAndLight();
