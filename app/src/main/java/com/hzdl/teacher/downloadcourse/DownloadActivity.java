@@ -276,11 +276,9 @@ public class DownloadActivity extends BaseActivity {
      */
     private void initCourse() {
 
-        String schoolId = (String) SPUtils.get(DownloadActivity.this,Constant.KEY_SCHOOL_ID,"3");
+        String schoolId = (String) SPUtils.get(DownloadActivity.this,Constant.KEY_SCHOOL_ID,"");
         Toast.makeText(this,schoolId,0).show();
-        if(schoolId.equals("-1")){
-            return;
-        }
+
         String domainNameRequest = Constant.URL_ROOT;
         String courseInfoJson = Constant.DOWNLOAD_PATH;
 
@@ -289,7 +287,7 @@ public class DownloadActivity extends BaseActivity {
                 .setConnectTimeout(25).build(this);
         okHttpUtil.doGetAsync(
                 HttpInfo.Builder().setUrl(domainNameRequest + courseInfoJson).addParam
-                        ("schoolId", schoolId)//需要传入课程id参数
+                        ("sid", schoolId)//需要传入课程id参数
                         .build(),
                 new CallbackOk() {
                     @Override

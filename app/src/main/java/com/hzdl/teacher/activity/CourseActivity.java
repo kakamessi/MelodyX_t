@@ -697,7 +697,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             setUIType(R.id.rl_teacher_screen);
             return;
         }
-        
+
         setUIType(R.id.rl_score);
         showTopLayout((currentPlayIndex + 1) + "");
         initNoteAndLight();
