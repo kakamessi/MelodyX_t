@@ -93,6 +93,7 @@ public class MainActivity extends BaseMidiActivity {
                 if (200 == response.body().getCode()) {
 
                     CrouseListBean1031 clb = response.body();
+                    //Utils.saveParce(MainActivity.this,clb);
 
                     ArrayList<LessonInfo> data = new ArrayList<LessonInfo>();
                     fillData(data, clb);

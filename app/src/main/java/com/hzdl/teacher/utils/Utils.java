@@ -229,7 +229,7 @@ public class Utils {
         FileOutputStream fos;
         try {
 
-            fos = new FileOutputStream(Utils.getVideoPath() + "demox");
+            fos = new FileOutputStream(Utils.getVideoPath() + "demox1126");
             //fos = con.getApplicationContext().openFileOutput("", Context.MODE_WORLD_WRITEABLE);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
             Parcel parcel = Parcel.obtain();
@@ -250,7 +250,7 @@ public class Utils {
         CrouseListBean1031 data = null;
         InputStream fis;
         try {
-            fis = con.getResources().openRawResource(R.raw.demox);
+            fis = con.getResources().openRawResource(R.raw.demox1126);
             byte[] bytes = new byte[fis.available()];
             fis.read(bytes);
             Parcel parcel = Parcel.obtain();
