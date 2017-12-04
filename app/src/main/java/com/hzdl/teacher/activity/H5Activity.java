@@ -6,89 +6,50 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
+import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseActivity;
+import com.hzdl.teacher.core.ActionBean;
+import com.hzdl.teacher.core.ActionProtocol;
+import com.hzdl.teacher.core.ActionResolver;
 
-import java.util.HashMap;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class H5Activity extends BaseActivity {
 
-    public static final String URL_ROOT = "file:///android_asset/question/";
-
-    public static final String URL_1 = "question1.html";
-    public static final String URL_2 = "question2.html";
-
+    public static final String URL_ROOT = "file:///android_asset/question-for-teacher1/";
 
     @BindView(R.id.webView1)
     WebView mWebview;
-
     WebSettings mWebSettings;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_h5);
-        ButterKnife.bind(this);
+    private String questionIndex = "";
 
-        init();
+    private void nextQuestionImpl(){
+        mWebview.loadUrl("javascript:switchQuestion('" + questionIndex +"')");
     }
 
     private void init() {
         mWebSettings = mWebview.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        mWebview.addJavascriptInterface(new AndroidtoJs(), "android");
 
-        mWebview.loadUrl("javascript:callJS()");
-        mWebview.loadUrl(URL_ROOT + URL_1);
-        //mWebview.loadUrl(URL_ROOT + URL_1);
-        //设置不用系统浏览器打开,直接显示在当前Webview
-        mWebview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                // 步骤2：根据协议的参数，判断是否是所需要的url
-                // 一般根据scheme（协议格式） & authority（协议名）判断（前两个参数）
-                //假定传入进来的 url = "js://webview?arg1=111&arg2=222"（同时也是约定好的需要拦截的）
-
-                Uri uri = Uri.parse(url);
-                // 如果url的协议 = 预先约定的 js 协议
-                // 就解析往下解析参数
-                if ( uri.getScheme().equals("js")) {
-
-                    // 如果 authority  = 预先约定协议里的 webview，即代表都符合约定的协议
-                    // 所以拦截url,下面JS开始调用Android需要的方法
-                    if (uri.getAuthority().equals("webview")) {
-
-                        //  步骤3：
-                        // 执行JS所需要调用的逻辑
-                        System.out.println("js调用了Android的方法");
-                        // 可以在协议上带有参数并传递到Android上
-                        HashMap<String, String> params = new HashMap<>();
-                        Set<String> collection = uri.getQueryParameterNames();
-
-                    }
-
-                    return true;
-                }
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-        });
+        mWebview.loadUrl(URL_ROOT + "questionForTeacher.html");
         //设置WebChromeClient类
         mWebview.setWebChromeClient(new WebChromeClient() {
             //获取网站标题
             @Override
             public void onReceivedTitle(WebView view, String title) {
-                System.out.println("标题在这里");
-
             }
             //获取加载进度
             @Override
@@ -101,37 +62,8 @@ public class H5Activity extends BaseActivity {
             }
         });
 
-        //设置WebViewClient类
-        mWebview.setWebViewClient(new WebViewClient() {
-            //设置加载前的函数
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
-            }
-            //设置结束加载函数
-            @Override
-            public void onPageFinished(WebView view, String url) {
-            }
-        });
     }
 
-    @Override
-    protected void handleMsg(Message msg) {
-
-    }
-
-
-    //点击返回上一页面而不是退出浏览器
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && mWebview.canGoBack()) {
-            mWebview.goBack();
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
-    
     //销毁Webview
     @Override
     protected void onDestroy() {
@@ -146,5 +78,65 @@ public class H5Activity extends BaseActivity {
         super.onDestroy();
     }
 
+    private ActionBean ab;
+    /**
+     * 收到学生端成绩消息
+     * @param msg
+     */
+    @Override
+    protected void handleMsg(Message action) {
+        doAction((String) action.obj);
+    }
+    private void doAction(String str) {
+        Log.e("kaka", "----------H5Activity code------- " + str);
+        ab = ActionResolver.getInstance().resolve(str);
+        if (ab.getCodeByPositon(0) == 2) {
+            if(ab.getCodeByPositon(1) == 3){
+                questionIndex = ab.getStringByPositon(2);
+                nextQuestionImpl();
+            }else if(ab.getCodeByPositon(1) == 0){
+                finish();
+            }else if(ab.getCodeByPositon(1) == 2){
+                //教师端收到成绩  发送给h5
+                mWebview.loadUrl("javascript:callJS('" + ab.getStringByPositon(2) + "')");
+            }
+        }
+    }
+
+    //---非公共逻辑-----------------------------------------------------------------------------------------------------
+
+    // 继承自Object类
+    public class AndroidtoJs extends Object {
+
+        // 定义JS需要调用的方法
+        // 被JS调用的方法必须加入@JavascriptInterface注解
+        @JavascriptInterface
+        public void next(String index) {
+            //通知学生下一步
+            actionNextQuestion(index);
+        }
+    }
+
+    //教师端控制下一题
+    public void actionNextQuestion(String arg){
+        sendSynAction(ActionProtocol.ACTION_TEST_NUM + "|" + arg);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_h5);
+        ButterKnife.bind(this);
+        init();
+    }
+
+    //点击返回上一页面而不是退出浏览器
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            sendSynAction(ActionProtocol.ACTION_TEST_OFF);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }

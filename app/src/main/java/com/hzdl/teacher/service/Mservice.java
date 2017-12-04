@@ -64,8 +64,13 @@ public class Mservice extends Service {
 
             @Override
             public void receive(byte[] buffer) {
-                ActionDispatcher.getInstance().dispatch(new String(buffer));
+
                 Log.e("kaka", "收到消息:     " + new String(buffer));
+                String[] sourceStrArray = checkData(buffer);
+                for (int i = 0; i < sourceStrArray.length; i++){
+                    ActionDispatcher.getInstance().dispatch(sourceStrArray[i]);
+                }
+
             }
 
             @Override
@@ -73,6 +78,14 @@ public class Mservice extends Service {
                 ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_CONNECTED));
             }
         });
+
+    }
+
+    private String[] checkData(byte[] buffer) {
+
+        String[] sourceStrArray = new String(buffer).split("k_k");
+
+        return sourceStrArray;
 
     }
 

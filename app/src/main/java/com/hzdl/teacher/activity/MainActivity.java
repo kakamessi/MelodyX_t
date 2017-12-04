@@ -198,8 +198,9 @@ public class MainActivity extends BaseMidiActivity {
                 break;
 
             case R.id.iv_test:
-                Intent inTest = new Intent(MainActivity.this, H5Activity.class);
-                startActivity(inTest);
+                sendSynAction(ActionProtocol.ACTION_TEST_ON);
+                Intent h5 = new Intent(MainActivity.this, H5Activity.class);
+                startActivity(h5);
                 break;
 
         }

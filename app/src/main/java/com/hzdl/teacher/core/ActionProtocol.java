@@ -6,6 +6,8 @@ package com.hzdl.teacher.core;
 
 public class ActionProtocol {
 
+    //-公开课环节--------------------------------------------------------------------------------------
+
     //--准备上课
     public static final String ACTION_COURSE_START = "1|1|1";
     //--下课
@@ -21,6 +23,21 @@ public class ActionProtocol {
 
     //--画谱界面
     public static final String ACTION_COURSE_NOTE = "1|3";
+
+    //-测试题环节--------------------------------------------------------------------------------------
+
+    //开始测试
+    public static final String ACTION_TEST_ON = "2|1|-1|-1";
+    //上传成绩  "2|2|小明=C"
+    public static final String ACTION_TEST_QUESTION = "2|2";
+    //下一题  "2|3|题号"
+    public static final String ACTION_TEST_NUM = "2|3";
+    //结束测试
+    public static final String ACTION_TEST_OFF = "2|0|-1|-1";
+
+
+
+
 
 
     //--准备上课
