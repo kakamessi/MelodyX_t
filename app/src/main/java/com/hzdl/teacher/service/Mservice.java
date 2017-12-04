@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.util.Log;
 
 import com.hzdl.mex.socket.SocketParams;
 import com.hzdl.mex.socket.teacher.AbsReceiver;
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.socket.teacher.udp.UdpClient;
+import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionDispatcher;
 import com.hzdl.teacher.core.ActionProtocol;
@@ -35,7 +35,6 @@ public class Mservice extends Service {
     public void onCreate() {
         super.onCreate();
         ActionDispatcher.getInstance().register(this.getClass().getName(), actionHandler);
-        Log.e("kaka","Mservice onCreate");
         initSocket();
         initUdp();
 
@@ -44,7 +43,6 @@ public class Mservice extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("kaka","stop Mservice");
         ActionDispatcher.getInstance().remove(this.getClass().getName());
 
     }
@@ -66,8 +64,10 @@ public class Mservice extends Service {
 
             @Override
             public void receive(byte[] buffer) {
-
+                ActionDispatcher.getInstance().dispatch(new String(buffer));
+                Log.e("kaka", "收到消息:     " + new String(buffer));
             }
+
             @Override
             public void disconnect() {
                 ActionDispatcher.getInstance().dispatch(ActionProtocol.getActionCode(ActionProtocol.CODE_ACTION_CONNECTED));
