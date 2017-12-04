@@ -64,14 +64,11 @@ public class MainActivity extends BaseMidiActivity {
 
     }
 
-    int i = 0;
-
     @Override
     protected void handleMsg(Message msg) {
         ActionBean ab = ActionResolver.getInstance().resolve((String) msg.obj);
         int c1 = Integer.parseInt(ab.getCodes()[0]);
         if (c1 == ActionProtocol.CODE_ACTION_CONNECTED) {
-
             return;
         }
 
@@ -83,7 +80,7 @@ public class MainActivity extends BaseMidiActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ITeacher userBiz = retrofit.create(ITeacher.class);
-        String id = (String) SPUtils.get(MainActivity.this,Constant.KEY_SCHOOL_ID,"-1");
+        String id = (String) SPUtils.get(MainActivity.this, Constant.KEY_SCHOOL_ID, "-1");
         Call<CrouseListBean1031> call = userBiz.getCrouseList(id);
         call.enqueue(new Callback<CrouseListBean1031>() {
             @Override
@@ -159,7 +156,7 @@ public class MainActivity extends BaseMidiActivity {
         }
     }
 
-    @OnClick({R.id.iv_start, R.id.iv_exit, R.id.iv_my, R.id.iv_down})
+    @OnClick({R.id.iv_start, R.id.iv_exit, R.id.iv_my, R.id.iv_down,R.id.iv_test})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -198,6 +195,11 @@ public class MainActivity extends BaseMidiActivity {
             case R.id.iv_my:
                 Intent inp = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(inp);
+                break;
+
+            case R.id.iv_test:
+                Intent inTest = new Intent(MainActivity.this, H5Activity.class);
+                startActivity(inTest);
                 break;
 
         }
