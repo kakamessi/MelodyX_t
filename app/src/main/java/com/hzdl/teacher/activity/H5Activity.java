@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseActivity;
@@ -23,6 +24,10 @@ import com.hzdl.teacher.core.ActionResolver;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.hzdl.teacher.R.id.vv;
+import static com.hzdl.teacher.activity.CourseActivity.COURSE_TYPE;
+import static com.hzdl.teacher.activity.CourseActivity.TYPE_VEDIO;
 
 public class H5Activity extends BaseActivity {
 
@@ -119,7 +124,8 @@ public class H5Activity extends BaseActivity {
 
     //教师端控制下一题
     public void actionNextQuestion(String arg){
-        sendSynAction(ActionProtocol.ACTION_TEST_NUM + "|" + arg);
+        //sendSynAction(ActionProtocol.ACTION_TEST_NUM + "|" + arg);
+        TeacherClient.getInstance().sendMsgToAll(ActionProtocol.ACTION_TEST_NUM + "|" + arg);
     }
 
     @Override
@@ -135,8 +141,12 @@ public class H5Activity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             sendSynAction(ActionProtocol.ACTION_TEST_OFF);
+        }else if(keyCode == KeyEvent.KEYCODE_MENU ){
+            mWebview.loadUrl("javascript:getQuestionList()");
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
 }
