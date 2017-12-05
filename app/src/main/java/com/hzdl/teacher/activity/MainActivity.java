@@ -44,6 +44,8 @@ public class MainActivity extends BaseMidiActivity {
     ImageView ivDown;
     @BindView(R.id.iv_my)
     ImageView ivMy;
+    @BindView(R.id.iv_test)
+    ImageView ivTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class MainActivity extends BaseMidiActivity {
         Utils.setOnFocusBG(ivExit, R.drawable.shape_strock, -1);
         Utils.setOnFocusBG(ivDown, R.drawable.shape_strock, -1);
         Utils.setOnFocusBG(ivMy, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(ivTest, R.drawable.shape_strock, -1);
 
     }
 
@@ -156,7 +159,7 @@ public class MainActivity extends BaseMidiActivity {
         }
     }
 
-    @OnClick({R.id.iv_start, R.id.iv_exit, R.id.iv_my, R.id.iv_down,R.id.iv_test})
+    @OnClick({R.id.iv_start, R.id.iv_exit, R.id.iv_my, R.id.iv_down, R.id.iv_test})
     public void onClick(View view) {
         switch (view.getId()) {
 
