@@ -27,13 +27,13 @@ public class ActionProtocol {
     //-测试题环节--------------------------------------------------------------------------------------
 
     //开始测试
-    public static final String ACTION_TEST_ON = "2|1|-1|-1";
+    public static final String ACTION_TEST_ON = "2|1|-10|-10";
     //上传成绩  "2|2|小明=C"
-    public static final String ACTION_TEST_QUESTION = "2|2";
+    public static final String ACTION_TEST_QUESTION = "2|2|-10|-10";
     //下一题  "2|3|题号"
-    public static final String ACTION_TEST_NUM = "2|3";
+    public static final String ACTION_TEST_NUM = "2|3|-10|-10";
     //结束测试
-    public static final String ACTION_TEST_OFF = "2|0|-1|-1";
+    public static final String ACTION_TEST_OFF = "2|0|-10|-10";
 
 
 
