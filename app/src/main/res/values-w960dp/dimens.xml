@@ -12,9 +12,9 @@
 
     <!--主界面-->
     <dimen name="activity_main_mtop1">20dp</dimen>
-    <dimen name="activity_main_mtop2">40dp</dimen>
-    <dimen name="activity_main_mtop3">10dp</dimen>
-    <dimen name="activity_main_mtop4">10dp</dimen>
+    <dimen name="activity_main_mtop2">20dp</dimen>
+    <dimen name="activity_main_mtop3">5dp</dimen>
+    <dimen name="activity_main_mtop4">5dp</dimen>
 
     <!--启动屏-->
     <dimen name="activity_sp_mR1">80dp</dimen>

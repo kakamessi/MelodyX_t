@@ -65,14 +65,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_main_mtop3"
-            android:src="@mipmap/main_start"
+            android:src="@mipmap/main_lianxi"
             android:focusable="true"
             android:id="@+id/iv_test" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_main_mtop4"
+            android:layout_marginTop="@dimen/activity_main_mtop3"
             android:focusable="true"
             android:src="@mipmap/main_exit"
             android:id="@+id/iv_exit" />
