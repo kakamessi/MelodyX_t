@@ -243,12 +243,12 @@ public class MelodyU {
     }
 
     public void offAllLight(MidiOutputDevice mOutputDevice){
-        if(mOutputDevice!=null){
-            for (int i = 21; i < 109; i++) {
-                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
-                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
-            }
-        }
+//        if(mOutputDevice!=null){
+//            for (int i = 21; i < 109; i++) {
+//                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
+//                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
+//            }
+//        }
     }
 
     /**

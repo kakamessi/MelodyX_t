@@ -729,6 +729,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
         //亮灯显示
         doLight(nextInfo);
+
+        preInfo = nextInfo;
     }
 
     /****** 显示指定图谱 ******/
@@ -762,6 +764,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
+    //上一个亮灯
+    private NoteInfo preInfo = null;
     /****** 输入检测  正确则返回下一个音符信息 ******/
     private void checkInput(int note) {
         NoteInfo nextInfo = null;
@@ -779,9 +783,14 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             showTopLayout((currentPlayIndex + 1) + "");
             //下一个音符的UI显示
             MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
-            //亮灯显示
+
+            if(preInfo!=null){
+                offLight(preInfo);
+            }
             doLight(nextInfo);
 
+
+            preInfo = nextInfo;
         }
     }
     /******  点亮某一个灯 ******/
@@ -791,6 +800,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
         MelodyU.getInstance().offAllLight(mOutputDevice);
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
+    }
+
+    private void offLight(NoteInfo info) {
+        if(mOutputDevice==null){
+            return;
+        }
+        mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, info.isIdNoteRed(), false));
     }
 
     private void resetLight() {
