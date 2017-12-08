@@ -142,7 +142,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.btn_login:
 
-                if(usernameEditText.getText().toString().equals("..23")){
+                if(usernameEditText.getText().toString().equals("111")){
                     startMain();
                     return;
                 }

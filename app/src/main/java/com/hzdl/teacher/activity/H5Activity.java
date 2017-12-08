@@ -1,7 +1,5 @@
 package com.hzdl.teacher.activity;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.KeyEvent;
@@ -10,8 +8,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.utils.Log;
@@ -21,13 +18,8 @@ import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.hzdl.teacher.R.id.vv;
-import static com.hzdl.teacher.activity.CourseActivity.COURSE_TYPE;
-import static com.hzdl.teacher.activity.CourseActivity.TYPE_VEDIO;
 
 public class H5Activity extends BaseActivity {
 
@@ -50,6 +42,8 @@ public class H5Activity extends BaseActivity {
         mWebview.addJavascriptInterface(new AndroidtoJs(), "android");
 
         mWebview.loadUrl(URL_ROOT + "questionForTeacher.html");
+        //mWebview.loadUrl("http://q.w3cstudy.cc/t/questionForTeacher.html");
+
         //设置WebChromeClient类
         mWebview.setWebChromeClient(new WebChromeClient() {
             //获取网站标题
