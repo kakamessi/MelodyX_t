@@ -40,6 +40,11 @@ public class MelodyU {
     public static final String PIC_NAME_3 = "1-3-3-2.png";
     public static final String PIC_NAME_4 = "1-4-3-2.png";
 
+    public static final String PIC_NAME_5 = "1-5-3-2.png";
+    public static final String PIC_NAME_6 = "1-6-3-2.png";
+    public static final String PIC_NAME_7 = "1-7-3-2.png";
+    public static final String PIC_NAME_8 = "1-8-3-2.png";
+
     //示范课
     public static final String PIC_NAME_D1 = "D1-1-5-1.png";
 
@@ -47,11 +52,9 @@ public class MelodyU {
     //-----数据段start---------------------------------------------------------------------------------------------
 
     public static long[] d_starttime_1 = {5000};
-
     public static long[] d_duringtime_1 = {2000,2000,2000,2000,2000,2000,2000,2000,
             2000,2000,2000,2000,2000*4,2000,2000,2000,2000,
             2000,2000,2000,2000,2000,2000,2000,2000,2000*4,};
-
     public static int[] d_note_1 = {39,40,41,42,43,44,45,46,
                                   47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
                                   47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
@@ -75,6 +78,32 @@ public class MelodyU {
     public static int[] d_note_4 = {39,39,43,    43,43,46,    48,46,43,   41,43,39};
     public static int[] d_color_4 = {1, 1, 1, 1,    1, 1, 1, 1,  1,1,1,1};
 
+    public static long[] d_starttime_5 = {};
+    public static long[] d_duringtime_5 = {};
+    public static int[] d_note_5 = {46, 43, 43, 44, 41, 41,    39, 41, 43, 44, 46, 46, 46,
+            46, 43, 43,  44, 41, 41, 39, 43, 46, 46, 43,
+            41, 41, 41, 41, 41, 43, 44,    43, 43, 43, 43, 43, 44, 46,
+            46, 43, 43,  44, 41, 41, 39, 43, 46, 46, 39};
+    public static int[] d_color_5 = null;
+
+    public static long[] d_starttime_6 = {};
+    public static long[] d_duringtime_6 = {};
+    public static int[] d_note_6 = {39, 39, 46, 46, 48, 48, 46,   44, 44, 43, 43, 41, 41, 39,   46, 46, 44, 44, 43, 43, 41,
+            46, 46, 44, 44, 43, 43, 41,   39, 39, 46, 46, 48, 48, 46,  44, 44, 43, 43, 41, 41, 39};
+    public static int[] d_color_6 = null;
+
+    public static long[] d_starttime_7 = {};
+    public static long[] d_duringtime_7 = {};
+    public static int[] d_note_7 = {46, 46, 46, 46,    46, 44, 43, 41,  39, 39, 41, 41,  43, 44, 46,
+            46, 46, 46, 46,    46, 44, 43, 41,   39, 41, 43, 41,        39};
+    public static int[] d_color_7 = null;
+
+    public static long[] d_starttime_8 = {};
+    public static long[] d_duringtime_8 = {};
+    public static int[] d_note_8 = {39, 41, 43,     41, 43, 44,    48, 46, 46, 48,   43,
+            48, 46, 44,    44, 43, 41,     39, 41, 43, 41,   39};
+    public static int[] d_color_8 = null;
+
     public static int[] d_note_d1 = {39 ,39, 46, 46, 48, 48, 46,   44, 44, 43, 43, 41, 41, 39,
             46, 46, 44, 44, 43, 43, 41, 46, 46, 44, 44, 43, 43, 41,
             39, 39, 46, 46, 48, 48, 46,  44, 44, 43, 43, 41, 41, 39};
@@ -87,16 +116,46 @@ public class MelodyU {
     public static ArrayList<NoteInfo> course_3 = new ArrayList<>();
     public static ArrayList<NoteInfo> course_4 = new ArrayList<>();
 
+    public static ArrayList<NoteInfo> course_5 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_6 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_7 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_8 = new ArrayList<>();
+
 
     public static ArrayList<NoteInfo> course_d1 = new ArrayList<>();
 
     static {
+
+        //左右手
+        d_color_5 = new int[d_note_5.length];
+        d_color_6 = new int[d_note_6.length];
+        d_color_7 = new int[d_note_7.length];
+        d_color_8 = new int[d_note_8.length];
+        for(int i=0; i<d_note_5.length;i++){
+            d_color_5[i] = 1;
+        }
+        for(int i=0; i<d_note_6.length;i++){
+            d_color_6[i] = 1;
+        }
+        for(int i=0; i<d_note_7.length;i++){
+            d_color_7[i] = 1;
+        }
+        for(int i=0; i<d_note_8.length;i++){
+            d_color_8[i] = 1;
+        }
+
         course_1.addAll(setNoteList(d_note_1, d_color_1));
         course_2.addAll(setNoteList(d_note_2, d_color_2));
         course_3.addAll(setNoteList(d_note_3, d_color_3));
         course_4.addAll(setNoteList(d_note_4, d_color_4));
 
+        course_5.addAll(setNoteList(d_note_5, d_color_5));
+        course_6.addAll(setNoteList(d_note_6, d_color_6));
+        course_7.addAll(setNoteList(d_note_7, d_color_7));
+        course_8.addAll(setNoteList(d_note_8, d_color_8));
+
         course_d1.addAll(setNoteList(d_note_d1, d_color_d1));
+
     }
 
     //-----数据段end---------------------------------------------------------------------------------------------
@@ -148,7 +207,17 @@ public class MelodyU {
             result = course_3;
         }else if(PIC_NAME_4.equals(resId)){
             result = course_4;
-        }else if(PIC_NAME_D1.equals(resId)){
+        }else if(PIC_NAME_5.equals(resId)){
+            result = course_5;
+        }else if(PIC_NAME_6.equals(resId)){
+            result = course_6;
+        }else if(PIC_NAME_7.equals(resId)){
+            result = course_7;
+        }else if(PIC_NAME_8.equals(resId)){
+            result = course_8;
+        }
+
+        else if(PIC_NAME_D1.equals(resId)){
             result = course_d1;
         }
 
@@ -173,7 +242,21 @@ public class MelodyU {
         }else if(resName.equals(PIC_NAME_4)){
             ls = new int[]{R.layout.score_4_1};
 
-        }else if(resName.equals(PIC_NAME_D1)){
+        }else if(resName.equals(PIC_NAME_5)){
+            ls = new int[]{R.layout.score_5_1};
+
+        }else if(resName.equals(PIC_NAME_6)){
+            ls = new int[]{R.layout.score_6_1};
+
+        }else if(resName.equals(PIC_NAME_7)){
+            ls = new int[]{R.layout.score_7_1};
+
+        }else if(resName.equals(PIC_NAME_8)){
+            ls = new int[]{R.layout.score_8_1};
+
+        }
+
+        else if(resName.equals(PIC_NAME_D1)){
             ls = new int[]{R.layout.score_d_1_1};
 
         }
