@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.hzdl.teacher.activity.CourseActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/btn_white_normal"
+        android:layout_weight="5"
+        >
+
+        <ImageView
+            android:id="@+id/iv_puzi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/a1832"/>
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id12"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="163dp"
+            android:layout_marginEnd="163dp"
+            android:layout_marginTop="132dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id11"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignBottom="@+id/id12"
+            android:layout_toLeftOf="@+id/id12"
+            android:layout_toStartOf="@+id/id12"
+            android:layout_marginRight="62dp"
+            android:layout_marginEnd="62dp"
+            android:layout_marginBottom="28dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id10"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/id11"
+            android:layout_toLeftOf="@+id/id11"
+            android:layout_toStartOf="@+id/id11"
+            android:layout_marginRight="41dp"
+            android:layout_marginEnd="41dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id9"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/id10"
+            android:layout_toLeftOf="@+id/id10"
+            android:layout_toStartOf="@+id/id10"
+            android:layout_marginRight="44dp"
+            android:layout_marginEnd="44dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id8"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignBottom="@+id/id9"
+            android:layout_toLeftOf="@+id/id9"
+            android:layout_toStartOf="@+id/id9"
+            android:layout_marginRight="47dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="15dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id7"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/id9"
+            android:layout_toLeftOf="@+id/id8"
+            android:layout_toStartOf="@+id/id8"
+            android:layout_marginRight="122dp"
+            android:layout_marginEnd="122dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id6"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/id7"
+            android:layout_toLeftOf="@+id/id7"
+            android:layout_toStartOf="@+id/id7"
+            android:layout_marginRight="39dp"
+            android:layout_marginEnd="39dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id5"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/id12"
+            android:layout_toLeftOf="@+id/id6"
+            android:layout_toStartOf="@+id/id6"
+            android:layout_marginRight="48dp"
+            android:layout_marginEnd="48dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id4"
+            style="@style/puziyinfu_bg_02"
+            android:layout_marginRight="122dp"
+            android:layout_marginEnd="122dp"
+            android:layout_alignTop="@+id/id6"
+            android:layout_toLeftOf="@+id/id5"
+            android:layout_toStartOf="@+id/id5" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id3"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/id4"
+            android:layout_toLeftOf="@+id/id4"
+            android:layout_toStartOf="@+id/id4"
+            android:layout_marginRight="47dp"
+            android:layout_marginEnd="47dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id2"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/id5"
+            android:layout_toLeftOf="@+id/id3"
+            android:layout_toStartOf="@+id/id3"
+            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/id1"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="163dp"
+            android:layout_marginEnd="183dp"
+            android:layout_marginTop="311dp"/>
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a10"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignBottom="@+id/id1"
+            android:layout_alignRight="@+id/id11"
+            android:layout_alignEnd="@+id/id11"
+            android:layout_marginRight="19dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="19dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a9"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a10"
+            android:layout_alignRight="@+id/id10"
+            android:layout_alignEnd="@+id/id10"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a8"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a9"
+            android:layout_alignRight="@+id/id9"
+            android:layout_alignEnd="@+id/id9"
+            android:layout_marginRight="19dp"
+            android:layout_marginEnd="19dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a7"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a8"
+            android:layout_alignRight="@+id/id8"
+            android:layout_alignEnd="@+id/id8"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a6"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a7"
+            android:layout_alignRight="@+id/id7"
+            android:layout_alignEnd="@+id/id7"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a5"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a6"
+            android:layout_alignRight="@+id/id6"
+            android:layout_alignEnd="@+id/id6"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a4"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignBottom="@+id/a5"
+            android:layout_alignRight="@+id/id5"
+            android:layout_alignEnd="@+id/id5"
+            android:layout_marginRight="17dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="17dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a3"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a4"
+            android:layout_alignLeft="@+id/id4"
+            android:layout_alignStart="@+id/id4" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a2"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a3"
+            android:layout_alignLeft="@+id/id3"
+            android:layout_alignStart="@+id/id3" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a1"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a2"
+            android:layout_alignRight="@+id/id2"
+            android:layout_alignEnd="@+id/id2"
+            android:layout_marginRight="18dp"
+            android:layout_marginEnd="18dp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        >
+        <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/view_score_bottom" />
+    </RelativeLayout>
+
+</LinearLayout>
