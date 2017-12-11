@@ -721,7 +721,21 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)){
             nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
 
-        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)){
+        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_5)){
+            nextInfo = new NoteInfo(46,1,MelodyU.getKeyIndex(39),true);
+
+        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
+            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+
+        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)){
+            nextInfo = new NoteInfo(46,1,MelodyU.getKeyIndex(39),true);
+
+        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)){
+            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+
+        }
+
+        else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)){
             nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
 
         }
@@ -839,6 +853,15 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }else if("第三课".equals(ab.getStringByPositon(6))){
             tt = new TempleThread(mOutputDevice, d_starttime_3, d_duringtime_3, d_color_3, d_note_3);
         }else if("第四课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+        }
+        else if("第五课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+        }else if("第六课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+        }else if("第七课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+        }else if("第八课".equals(ab.getStringByPositon(6))){
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         }
 
