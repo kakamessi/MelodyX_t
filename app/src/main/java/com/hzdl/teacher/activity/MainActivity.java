@@ -141,7 +141,11 @@ public class MainActivity extends BaseMidiActivity {
                             SimpleSection ss = new SimpleSection();
                             ss.setType(cpbb.getType());
                             ss.setShowName(cpbb.getName());
-                            ss.setSourceName(cpbb.getSourceName());
+
+                            //处理画谱图片名称
+                            String[] name = cpbb.getSourceName().split(",");
+                            ss.setSourceName(name[0]);
+
                             ss.setSyncScreen(cpbb.getIs_screen());
                             ss.setLightCode(cpbb.getIs_light());
                             listSS.add(ss);
