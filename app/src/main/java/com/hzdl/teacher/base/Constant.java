@@ -27,8 +27,10 @@ public class Constant {
 
     //----网络相关-------------------------------------------------------------------------------------------
 
+    //发布环境
     public static final String URL_ROOT = "http://47.104.96.204:8080/";
-    //public static final String URL_ROOT = "http://p.w3cstudy.cc/";
+    //测试环境
+    //public static final String URL_ROOT = "http://app.w3cstudy.cc";
 
     public static final String URL_LOGIN = "client/teacherLogin.json";
     public static final String URL_MODIFY_PSW = "/client/resetPass.json";

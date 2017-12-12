@@ -38,6 +38,8 @@ import com.hzdl.teacher.interfacex.OnItemClickLitener;
 import com.hzdl.teacher.utils.BasePopupWindow;
 import com.hzdl.teacher.utils.Utils;
 
+import java.io.FileNotFoundException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -621,7 +623,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     /****** 消息入口 ******/
     @Override
     protected void handleMsg(Message action) {
-        doAction((String) action.obj);
+        try {
+            doAction((String) action.obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
