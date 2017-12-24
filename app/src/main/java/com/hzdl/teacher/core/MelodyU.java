@@ -24,6 +24,8 @@ import jp.kshoji.driver.midi.device.MidiOutputDevice;
 public class MelodyU {
 
     //----钢琴指令-------------------------------------------------------------------------------------------
+    //心跳
+    public static byte[] ACTION_KEEP_ALIVE ={(byte) 0xF0, 0x4D, 0x4C, 0x4C, 0x02, 0x00, 0x00, (byte) 0xF7};
     //开启静音协议
     public static byte[] ACTION_MUTE ={ 0x1b, (byte)0xbF, 0x07, 0x00};
     //关闭静音
@@ -56,11 +58,11 @@ public class MelodyU {
             2000,2000,2000,2000,2000*4,2000,2000,2000,2000,
             2000,2000,2000,2000,2000,2000,2000,2000,2000*4,};
     public static int[] d_note_1 = {39,40,41,42,43,44,45,46,
-                                  47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
-                                  47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
+            47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
+            47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
     public static int[] d_color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
-                                   1, 1, 1, 1, 1, 1, 1, 1,1,
-                                   1, 1, 1, 1, 1, 1, 1, 1,1};
+            1, 1, 1, 1, 1, 1, 1, 1,1,
+            1, 1, 1, 1, 1, 1, 1, 1,1};
 
 
     public static long[] d_starttime_2 = {6720};
@@ -376,7 +378,7 @@ public class MelodyU {
      * @param index
      * @throws InterruptedException
      */
-    public void lightTempo(MidiOutputDevice outPut,long[] dur, int[] color, int[] index) throws InterruptedException {
+    public void lightTempo(MidiOutputDevice outPut, long[] dur, int[] color, int[] index) throws InterruptedException {
 
         if(outPut==null) {
             return;
@@ -431,7 +433,7 @@ public class MelodyU {
         }
     }
 
-    public void open_DJY(MidiOutputDevice outPut,boolean on){
+    public void open_DJY(MidiOutputDevice outPut, boolean on){
         if(outPut==null){
             return;
         }
@@ -605,6 +607,47 @@ public class MelodyU {
         return instance;
     }
 
+    public BeatThread bt;
+    public class BeatThread extends Thread{
+        private MidiOutputDevice midi;
+        public BeatThread(MidiOutputDevice mOutputDevice){
+            midi = mOutputDevice;
+        }
+        public volatile boolean exit = false;
+        public void run()
+        {
+            while (!exit){
+                try {
+                    Thread.sleep(2000);
+                    if(midi!=null) {
+                        midi.sendMidiSystemExclusive(0, ACTION_KEEP_ALIVE);
+                        //midi.sendMidiNoteOn(0x1b, (byte)0xbF, 0x07, 0x00);
+                        
+                    }
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void startBeatThread(MidiOutputDevice mO){
+        bt = new BeatThread(mO);
+        bt.start();
+    }
+
+    public void stopBeatThread(MidiOutputDevice mO){
+        if(bt!=null) {
+            bt.exit = true;
+            bt.interrupt();
+            try {
+                bt.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
 
