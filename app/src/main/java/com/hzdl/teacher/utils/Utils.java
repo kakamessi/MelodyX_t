@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -23,6 +25,8 @@ import com.hzdl.teacher.bean.lesson.CrouseListBean1031;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -100,6 +104,22 @@ public class Utils {
     public static String getVideoPath(){
 
         return Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH;
+    }
+
+    public static Bitmap getBitMap(String name){
+
+        String path = getVideoPath() + name;
+        FileInputStream fis = null;
+        Bitmap bitmap = null;
+        try {
+            fis = new FileInputStream(path);
+            bitmap= BitmapFactory.decodeStream(fis);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
     public static boolean isFileExist(String filename){

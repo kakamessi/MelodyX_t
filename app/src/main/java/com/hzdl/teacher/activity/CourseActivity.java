@@ -1,6 +1,8 @@
 package com.hzdl.teacher.activity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,7 +40,7 @@ import com.hzdl.teacher.interfacex.OnItemClickLitener;
 import com.hzdl.teacher.utils.BasePopupWindow;
 import com.hzdl.teacher.utils.Utils;
 
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,16 +71,15 @@ import static com.hzdl.teacher.core.MelodyU.d_starttime_4;
 
 
 /**
- *
- *      1， 当前处于哪个小节   cellIndex
- *          只有点击下一步， 选择课程 会改变cellIndex
- *
- *      2， 发送同步消息   发送本地消息
- *
- *
- *      3， 接收端：  界面操作，播放视频，与钢琴通信
- *          发送端：  服务器数据
- *
+ * 1， 当前处于哪个小节   cellIndex
+ * 只有点击下一步， 选择课程 会改变cellIndex
+ * <p>
+ * 2， 发送同步消息   发送本地消息
+ * <p>
+ * <p>
+ * 3， 接收端：  界面操作，播放视频，与钢琴通信
+ * 发送端：  服务器数据
+ * <p>
  * //    loadPlay(Utils.getVideoPath()+"hehe.mp4");
  * //    MidiOutputDevice midiOutputDevice = getMidiOutputDevice();
  * //    midiOutputDevice.sendMidiNoteOn(0, 0x90, 0x40, 0x7f);
@@ -99,11 +100,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     RelativeLayout rlScore;
     @BindView(R.id.iv_backmain)
     ImageView ivBackmain;
+    @BindView(R.id.rl_teacher_screen)
+    ImageView rlTeacherScreen;
 
     public static int COURSE_TYPE = -1;
     public static final int TYPE_VEDIO = 1;
     public static final int TYPE_PLAY = 2;
-    public static final int TYPE_MUSIC = 3;
+    public static final int TYPE_IMG = 3;
 
     private MidiOutputDevice mOutputDevice;
     //当前消息
@@ -115,7 +118,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     private LessonInfo les = null;
     //当前小节
     private int cellIndex = -1;
-
 
 
     @Override
@@ -142,7 +144,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 action();
                 allow_btn = true;
 
-                if(mBaseApp.getDeviceType()==0){
+                if (mBaseApp.getDeviceType() == 0) {
                     tvMenu.setVisibility(View.VISIBLE);
                 }
             }
@@ -266,17 +268,16 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     /**
-     *
      * 遥控器控制
+     *
      * @param keyCode
      * @param event
      * @return
-     *
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if(!allow_btn){
+        if (!allow_btn) {
             return false;
         }
 
@@ -286,24 +287,24 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 sendVideoAction();
             }
             return true;
-        }else if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN ){
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
 
             return true;
-        }else if(keyCode == KeyEvent.KEYCODE_DPAD_LEFT ){
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
             if (COURSE_TYPE == TYPE_VEDIO) {
                 sendVideoAction();
             }
 
             return true;
-        }else if(keyCode == KeyEvent.KEYCODE_DPAD_RIGHT ){
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
             action();
             return true;
 
-        }else if(keyCode == KeyEvent.KEYCODE_MENU ){
+        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
             showCoursePop();
             return true;
 
-        }else if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER){
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER) {
 
             if (COURSE_TYPE == TYPE_VEDIO) {
                 if (vv != null) {
@@ -316,7 +317,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             }
             return true;
 
-        }else if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+        } else if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             sendSynAction(ActionProtocol.ACTION_COURSE_STOP);
             return true;
         }
@@ -342,12 +343,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         ImageView tv_pause = menup.findViewById(R.id.tv_pause);
         ImageView tv_replay = menup.findViewById(R.id.tv_replay);
 
-        Utils.setOnFocusBG(tv_select,R.drawable.shape_strock,-1);
-        Utils.setOnFocusBG(tv_next,R.drawable.shape_strock,-1);
-        Utils.setOnFocusBG(tv_over,R.drawable.shape_strock,-1);
-        Utils.setOnFocusBG(tv_xueshengping,R.drawable.shape_strock,-1);
-        Utils.setOnFocusBG(tv_pause,R.drawable.shape_strock,-1);
-        Utils.setOnFocusBG(tv_replay,R.drawable.shape_strock,-1);
+        Utils.setOnFocusBG(tv_select, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(tv_next, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(tv_over, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(tv_xueshengping, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(tv_pause, R.drawable.shape_strock, -1);
+        Utils.setOnFocusBG(tv_replay, R.drawable.shape_strock, -1);
         tv_select.requestFocus();
 
         if (vv != null) {
@@ -402,9 +403,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 if (COURSE_TYPE == TYPE_VEDIO) {
                     if (vv != null) {
                         if (vv.isPlaying()) {
-                                sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE,les.getSection(cellIndex));
+                            sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE, les.getSection(cellIndex));
                         } else {
-                                sendSynAction(ActionProtocol.ACTION_VEDIO_ON,les.getSection(cellIndex));
+                            sendSynAction(ActionProtocol.ACTION_VEDIO_ON, les.getSection(cellIndex));
                         }
                     }
                     popBtns.dismiss();
@@ -430,7 +431,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     public void showCoursePop() {
 
-        if(popupWindow!=null && popupWindow.isShowing()){
+        if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
             return;
         }
@@ -499,7 +500,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(CourseActivity.this).inflate(R.layout.item_pop_list, parent, false);
-            Utils.setOnFocusBG(v,R.drawable.shape_strock,-1);
+            Utils.setOnFocusBG(v, R.drawable.shape_strock, -1);
 
             final MyViewHolder holder = new MyViewHolder(v);
             if (mOnItemClickLitener != null) {
@@ -579,8 +580,11 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
             //视频
             sendVideoAction();
-        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_MUSIC) {
-            //音乐
+
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_IMG) {
+            //图片界面
+            sendSynAction(ActionProtocol.ACTION_COURSE_IMG + "|" + les.getSection(cellIndex).getSourceName());
+
         } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_NOTEPLAY) {
             //画谱
             sendSynAction(ActionProtocol.ACTION_COURSE_NOTE + "|" + les.getSection(cellIndex).getSourceName());
@@ -620,7 +624,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     private int currentPlayIndex = 0;
 
-    /****** 消息入口 ******/
+    /******
+     * 消息入口
+     ******/
     @Override
     protected void handleMsg(Message action) {
         try {
@@ -632,7 +638,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
 
-    /****** 1|2|3  消息体封装类 ******/
+    /******
+     * 1|2|3  消息体封装类
+     ******/
     private ActionBean ab;
 
     private void doAction(String str) {
@@ -652,10 +660,18 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
             resetVideo();
             initPlaySection();
+        } else if(ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_IMG){
+            //图片界面
+            resetVideo();
+            initImgSection();
+
         }
+
     }
 
-    /****** 启动视频  是否跟灯 ******/
+    /******
+     * 启动视频  是否跟灯
+     ******/
     public void initVedioSection() {
         COURSE_TYPE = TYPE_VEDIO;
         setUIType(R.id.rl_video);
@@ -684,7 +700,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                 startTemple();
             }
 
-            if("1-1-3-2.mp4".equals(ab.getStringByPositon(3))) {
+            if ("1-1-3-2.mp4".equals(ab.getStringByPositon(3))) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -696,14 +712,26 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
     }
 
-    /****** 显示指定图谱   ******/
+    /**
+     * 增加图片类型
+     */
+    public void initImgSection() {
+        COURSE_TYPE = TYPE_IMG;
+        setUIType(R.id.rl_teacher_screen);
+        rlTeacherScreen.setImageBitmap(Utils.getBitMap(ab.getStringByPositon(2)));
+    }
+
+    /******
+     * 显示指定图谱
+     ******/
     public void initPlaySection() {
         COURSE_TYPE = TYPE_PLAY;
         currentPlayIndex = 0;
 
         //教师端独有代码，移植学生端需要手动删除
-        if(Utils.isTeacherClient(CourseActivity.this) && mBaseApp.isTV()){
+        if (Utils.isTeacherClient(CourseActivity.this) && mBaseApp.isTV()) {
             setUIType(R.id.rl_teacher_screen);
+            rlTeacherScreen.setBackgroundResource(R.mipmap.course_loading);
             return;
         }
 
@@ -716,34 +744,32 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     private void initNoteAndLight() {
         NoteInfo nextInfo = null;
 
-        if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_1)){
-            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+        if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_1)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
 
-        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_2)){
-            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_2)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
 
-        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_3)){
-            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_3)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
 
-        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)){
-            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
 
-        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_5)){
-            nextInfo = new NoteInfo(46,1,MelodyU.getKeyIndex(39),true);
+        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_5)) {
+            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(39), true);
 
-        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
-            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
 
-        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)){
-            nextInfo = new NoteInfo(46,1,MelodyU.getKeyIndex(39),true);
+        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)) {
+            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(39), true);
 
-        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)){
-            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
 
-        }
-
-        else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)){
-            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
 
         }
 
@@ -754,7 +780,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         preInfo = nextInfo;
     }
 
-    /****** 显示指定图谱 ******/
+    /******
+     * 显示指定图谱
+     ******/
     private void showTopLayout(String tag) {
         //遍历viewgroup
         LinearLayout vg = null;
@@ -771,23 +799,20 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
     }
 
-    /****** 替换布局 ******/
+    /******
+     * 替换布局
+     ******/
     private void replaceLayout(ViewGroup fu, int resId) {
         fu.removeAllViews();
         ViewGroup vg = (ViewGroup) LayoutInflater.from(this).inflate(resId, fu);
     }
 
-    /**
-     * 增加伴奏音乐
-     */
-    public void initMusicSection() {
-        COURSE_TYPE = TYPE_MUSIC;
-
-    }
-
     //上一个亮灯
     private NoteInfo preInfo = null;
-    /****** 输入检测  正确则返回下一个音符信息 ******/
+
+    /******
+     * 输入检测  正确则返回下一个音符信息
+     ******/
     private void checkInput(int note) {
         NoteInfo nextInfo = null;
         //判断对错
@@ -805,7 +830,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             //下一个音符的UI显示
             MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
 
-            if(preInfo!=null){
+            if (preInfo != null) {
                 offLight(preInfo);
             }
             doLight(nextInfo);
@@ -814,9 +839,12 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             preInfo = nextInfo;
         }
     }
-    /******  点亮某一个灯 ******/
+
+    /******
+     * 点亮某一个灯
+     ******/
     private void doLight(NoteInfo nextInfo) {
-        if(mOutputDevice==null){
+        if (mOutputDevice == null) {
             return;
         }
         MelodyU.getInstance().offAllLight(mOutputDevice);
@@ -824,7 +852,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     }
 
     private void offLight(NoteInfo info) {
-        if(mOutputDevice==null){
+        if (mOutputDevice == null) {
             return;
         }
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, info.isIdNoteRed(), false));
@@ -838,8 +866,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         //vv.stopPlayback();
     }
 
-    private void resetVideo(){
-        if(vv!=null){
+    private void resetVideo() {
+        if (vv != null) {
             vv.stopPlayback();
         }
     }
@@ -853,26 +881,25 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             tt = null;
         }
 
-        if("第一课".equals(ab.getStringByPositon(6))){
+        if ("第一课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
-        }else if("第二课".equals(ab.getStringByPositon(6))){
+        } else if ("第二课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_2, d_duringtime_2, d_color_2, d_note_2);
-        }else if("第三课".equals(ab.getStringByPositon(6))){
+        } else if ("第三课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_3, d_duringtime_3, d_color_3, d_note_3);
-        }else if("第四课".equals(ab.getStringByPositon(6))){
+        } else if ("第四课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
-        }
-        else if("第五课".equals(ab.getStringByPositon(6))){
+        } else if ("第五课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
-        }else if("第六课".equals(ab.getStringByPositon(6))){
+        } else if ("第六课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
-        }else if("第七课".equals(ab.getStringByPositon(6))){
+        } else if ("第七课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
-        }else if("第八课".equals(ab.getStringByPositon(6))){
+        } else if ("第八课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         }
 
-        if(tt!=null) {
+        if (tt != null) {
             flagV = true;
             tt.start();
         }
@@ -896,7 +923,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     @Override
     public void onMidiOutputDeviceAttached(@NonNull MidiOutputDevice midiOutputDevice) {
         super.onMidiOutputDeviceAttached(midiOutputDevice);
-        Toast.makeText(this,"钢琴已连接",0).show();
+        Toast.makeText(this, "钢琴已连接", 0).show();
         mOutputDevice = getMidiOutputDevice();
     }
 
@@ -912,6 +939,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     /* 跟灯 */
     private volatile boolean flagV = true;
+
     class TempleThread extends Thread {
         MidiOutputDevice md;
         long[] delay = null; //时间延迟执行

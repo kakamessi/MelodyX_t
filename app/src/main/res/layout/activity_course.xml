@@ -38,12 +38,12 @@
                 android:textSize="120sp" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <ImageView
             android:id="@+id/rl_teacher_screen"
-            android:background="@mipmap/course_loading"
+            android:src="@mipmap/course_loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </RelativeLayout>
+        </ImageView>
 
         <RelativeLayout
             android:id="@+id/rl_score"
