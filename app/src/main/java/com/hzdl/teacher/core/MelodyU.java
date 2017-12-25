@@ -622,7 +622,7 @@ public class MelodyU {
                     if(midi!=null) {
                         midi.sendMidiSystemExclusive(0, ACTION_KEEP_ALIVE);
                         //midi.sendMidiNoteOn(0x1b, (byte)0xbF, 0x07, 0x00);
-                        
+
                     }
 
                 } catch (InterruptedException e) {
