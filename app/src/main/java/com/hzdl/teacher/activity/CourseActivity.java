@@ -974,7 +974,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
                         }
                     }
                 }
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
             }
         }
     }

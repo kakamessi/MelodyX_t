@@ -406,18 +406,14 @@ public class MelodyU {
     }
 
     //闪烁一次灯
-    private void beat(int index, final boolean isRed, final long time) {
+    private void beat(int index, final boolean isRed, final long time) throws InterruptedException{
         if(mOutputDevice==null){
             return;
         }
 
         index = index + 21;
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,true));
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(time);
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,false));
 
     }
@@ -427,9 +423,13 @@ public class MelodyU {
         Random random = new Random();
         int max=60;
         int min=29;
-        for(int i = 0; i<20; i++){
-            int p = random.nextInt(max)%(max-min+1) + min;
-            beat(p,true,500);
+        try {
+            for(int i = 0; i<10; i++){
+                int p = random.nextInt(max)%(max-min+1) + min;
+                beat(p,true,600);
+            }
+        }catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
