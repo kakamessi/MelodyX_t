@@ -13,9 +13,8 @@ public class Constant {
     public static String FILE_PATH = "/xmelody/";
 
     public static int SECTION_TYPE_VIDEO = 102;
-    public static int SECTION_TYPE_MUSIC = 102;
     public static int SECTION_TYPE_NOTEPLAY = 103;
-
+    public static int SECTION_TYPE_IMG = 104;
 
     //----课程下载相关-------------------------------------------------------------------------------------------
     public static final String DOWNLOAD_ROOT = "http://newapp.tianshiyinyue.cn";
