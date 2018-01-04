@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.hzdl.teacher.activity.CourseActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/btn_white_normal"
+        android:layout_weight="5"
+        >
+
+        <ImageView
+            android:id="@+id/iv_puzi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ac92"/>
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a10a"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="134dp"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="160dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a9a"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a10a"
+            android:layout_toLeftOf="@+id/a10a"
+            android:layout_toStartOf="@+id/a10a"
+            android:layout_marginRight="93dp"
+            android:layout_marginEnd="93dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a8a"
+            style="@style/puziyinfu_bg_02"
+            android:layout_above="@+id/a9a"
+            android:layout_toLeftOf="@+id/a9a"
+            android:layout_toStartOf="@+id/a9a"
+            android:layout_marginRight="105dp"
+            android:layout_marginEnd="105dp"
+            android:layout_marginBottom="18dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a7a"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a8a"
+            android:layout_toLeftOf="@+id/a8a"
+            android:layout_toStartOf="@+id/a8a"
+            android:layout_marginRight="91dp"
+            android:layout_marginEnd="91dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a6a"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a9a"
+            android:layout_toLeftOf="@+id/a7a"
+            android:layout_toStartOf="@+id/a7a"
+            android:layout_marginRight="123dp"
+            android:layout_marginEnd="123dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a5a"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a6a"
+            android:layout_toLeftOf="@+id/a6a"
+            android:layout_toStartOf="@+id/a6a"
+            android:layout_marginRight="89dp"
+            android:layout_marginEnd="89dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a4a"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a7a"
+            android:layout_toLeftOf="@+id/a5a"
+            android:layout_toStartOf="@+id/a5a"
+            android:layout_marginRight="108dp"
+            android:layout_marginEnd="108dp" />
+
+        <ImageView
+            android:tag="1"
+            android:id="@+id/a3a"
+            style="@style/puziyinfu_bg_02"
+            android:layout_alignTop="@+id/a4a"
+            android:layout_toLeftOf="@+id/a4a"
+            android:layout_toStartOf="@+id/a4a"
+            android:layout_marginRight="92dp"
+            android:layout_marginEnd="92dp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        >
+        <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/view_score_bottom" />
+    </RelativeLayout>
+
+</LinearLayout>
