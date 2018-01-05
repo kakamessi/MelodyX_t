@@ -41,6 +41,8 @@ import com.hzdl.teacher.utils.BasePopupWindow;
 import com.hzdl.teacher.utils.Utils;
 
 import java.io.FileInputStream;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -108,6 +110,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     public static final int TYPE_PLAY = 2;
     public static final int TYPE_IMG = 3;
 
+    public static final int MSG_TYPE_SEDNVIEDO = 100;
+
     private MidiOutputDevice mOutputDevice;
     //当前消息
     private String actionMsg;
@@ -119,6 +123,20 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
     //当前小节
     private int cellIndex = -1;
 
+    private Handler courseHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch(msg.what){
+                case MSG_TYPE_SEDNVIEDO:
+                    sendVideoActionInner();
+                    break;
+
+            }
+        }
+    };
+
+    private Executor mExecutor = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -592,7 +610,18 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     }
 
+    //先解密视频文件，后发送消息
     private void sendVideoAction() {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                sendMsg(MSG_TYPE_SEDNVIEDO);
+            }
+        });
+    }
+
+    private void sendVideoActionInner(){
+
         String code_light = "";
         String code_Screen = "";
         if (1 == les.getSection(cellIndex).getLightCode()) {
@@ -610,6 +639,13 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         String crouseName = "|" + les.getName();
 
         sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + code_light + code_Screen + crouseName);
+
+    }
+
+    private void sendMsg(int actionCode){
+        Message msg = Message.obtain();
+        msg.what = actionCode;
+        courseHandler.sendMessage(msg);
     }
 
     private boolean checkIndexOut() {
