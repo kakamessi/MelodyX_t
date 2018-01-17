@@ -134,6 +134,12 @@ public class App extends Application {
         if (!filePath.exists()) {
             filePath.mkdir();
         }
+
+        String sdDirCache = Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE;
+        File filec = new File(sdDirCache);
+        if (!filec.exists()) {
+            filec.mkdir();
+        }
     }
 
     private void initService() {

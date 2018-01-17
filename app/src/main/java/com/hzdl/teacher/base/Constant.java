@@ -11,6 +11,7 @@ public class Constant {
      */
     //视频文件存储路径
     public static String FILE_PATH = "/xmelody/";
+    public static String FILE_PATH_CACHE = "/xmelodyc/";
 
     public static int SECTION_TYPE_VIDEO = 102;
     public static int SECTION_TYPE_NOTEPLAY = 103;
