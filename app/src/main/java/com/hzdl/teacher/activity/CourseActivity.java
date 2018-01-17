@@ -1,11 +1,10 @@
 package com.hzdl.teacher.activity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -38,9 +37,11 @@ import com.hzdl.teacher.core.MelodyU;
 import com.hzdl.teacher.core.NoteInfo;
 import com.hzdl.teacher.interfacex.OnItemClickLitener;
 import com.hzdl.teacher.utils.BasePopupWindow;
+import com.hzdl.teacher.utils.ButtonUtils;
+import com.hzdl.teacher.utils.Encrypter;
 import com.hzdl.teacher.utils.Utils;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -612,9 +613,21 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     //先解密视频文件，后发送消息
     private void sendVideoAction() {
+
+        if(ButtonUtils.isFastDoubleClick(1)){
+            return;
+        }
+
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
+                //解密文件
+                try {
+                    Encrypter.decode(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + les.getSection(cellIndex).getSourceName()),
+                            new File(Utils.getVideoPath() + les.getSection(cellIndex).getSourceName()),"xmelody");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 sendMsg(MSG_TYPE_SEDNVIEDO);
             }
         });
