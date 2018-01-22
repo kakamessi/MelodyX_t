@@ -9,7 +9,7 @@ import android.util.Log;
 public class ButtonUtils {
 
     private static long lastClickTime = 0;
-    private static long DIFF = 3000;
+    private static long DIFF = 2000;
     private static int lastButtonId = -1;
 
     /**

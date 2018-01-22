@@ -585,6 +585,10 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
      */
     private void action() {
 
+        if(ButtonUtils.isFastDoubleClick(1)){
+            return;
+        }
+
         setCellIndex(++cellIndex);
 
         if (checkIndexOut()) {
@@ -613,10 +617,6 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     //先解密视频文件，后发送消息
     private void sendVideoAction() {
-
-        if(ButtonUtils.isFastDoubleClick(1)){
-            return;
-        }
 
         mExecutor.execute(new Runnable() {
             @Override
