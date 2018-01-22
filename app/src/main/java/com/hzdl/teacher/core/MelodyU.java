@@ -47,6 +47,17 @@ public class MelodyU {
     public static final String PIC_NAME_7 = "1-7-3-2.png";
     public static final String PIC_NAME_8 = "1-8-3-2.png";
 
+    public static final String PIC_NAME_9_1 = "1-9-3-4.png";
+    public static final String PIC_NAME_9_2 = "1-9-3-5.png";
+    public static final String PIC_NAME_10 = "1-10-3-2.png";
+    public static final String PIC_NAME_11 = "1-11-3-3.png";
+    public static final String PIC_NAME_12 = "1-12-3-2.png";
+    public static final String PIC_NAME_13 = "1-13-3-2.png";
+    public static final String PIC_NAME_14 = "1-14-3-3.png";
+    public static final String PIC_NAME_15 = "1-15-3-3.png";
+    public static final String PIC_NAME_16 = ".png";
+
+
     //示范课
     public static final String PIC_NAME_D1 = "D1-1-5-1.png";
 
@@ -106,6 +117,52 @@ public class MelodyU {
             48, 46, 44,    44, 43, 41,     39, 41, 43, 41,   39};
     public static int[] d_color_8 = null;
 
+    public static long[] d_starttime_9_1 = {};
+    public static long[] d_duringtime_9_1 = {};
+    public static int[] d_note_9_1 = {39,39,39,39,  39,39,39,39, 39,39,39,39,  39,39,39,39,};
+    public static int[] d_color_9_1 = {1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0};
+
+    public static long[] d_starttime_9_2 = {};
+    public static long[] d_duringtime_9_2 = {};
+    public static int[] d_note_9_2 = {39,39,39,39,  39,39,39,39,};
+    public static int[] d_color_9_2 = {1,1,0,0,1,1,0,0,};
+
+    public static long[] d_starttime_10 = {};
+    public static long[] d_duringtime_10 = {};
+    public static int[] d_note_10 = {38 ,38 ,38 ,38,  38, 38, 38,      41,41,43,41,39, 43, 43, 44, 43,  48, 46, 43, 38,38,38,43,39 };
+    public static int[] d_color_10 = {0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,};
+
+    public static long[] d_starttime_11 = {};
+    public static long[] d_duringtime_11 = {};
+    public static int[] d_note_11 = {39, 41, 43, 41,39,41,41, 39,  38,  36,  38,  39, 38, 38,
+            39, 41, 43,    41,  39,   39, 41, 43,    41,  39,   43, 41, 39, 41, 43, 39, 39};
+    public static int[] d_color_11 = {1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,};
+
+    public static long[] d_starttime_12 = {};
+    public static long[] d_duringtime_12 = {};
+    public static int[] d_note_12 = {46, 43, 39,  46,   46, 43, 39,  46, 46,43,39,34,46,43,46,43,39};
+    public static int[] d_color_12 = {1,1,1,1,1,1,1,1,1,1,1,  0,1, 1,1,1,1,};
+
+    public static long[] d_starttime_13 = {};
+    public static long[] d_duringtime_13 = {};
+    public static int[] d_note_13 = {39, 41, 43, 39, 41, 43, 44, 34, 36, 38, 34, 36, 38, 39, 39, 41, 43, 39,   43, 44, 46, 34, 36, 38, 34, 36, 38, 39,};
+    public static int[] d_color_13 = {1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,};
+
+    public static long[] d_starttime_14 = {};
+    public static long[] d_duringtime_14 = {};
+    public static int[] d_note_14 = {39, 41, 43, 44,  43, 46,   44, 43, 41, 43,  39, 41, 43,  39, 41, 43, 44,  43, 41,   39, 41, 43, 41,  39, 39, };
+    public static int[] d_color_14 = {1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,};
+
+    public static long[] d_starttime_15 = {};
+    public static long[] d_duringtime_15 = {};
+    public static int[] d_note_15 = {39, 41, 43, 44,    46, 44, 43, 41,    39, 43, 46,   39, 38, 36, 34,   32, 34, 36, 38,    39,  38,  39,};
+    public static int[] d_color_15 = {1,1,1,1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0,0,0,0,};
+
+    public static long[] d_starttime_16 = {};
+    public static long[] d_duringtime_16 = {};
+    public static int[] d_note_16 = {39, 41, 43,   39, 41, 43,   41, 43,  44, 39, 38, 36,   34, 36, 38,   39, 38, 39, };
+    public static int[] d_color_16 = {1,1,1,1,1,1,1,1,1,  0,0,0,0,0,0,0,0,0,};
+
     public static int[] d_note_d1 = {39 ,39, 46, 46, 48, 48, 46,   44, 44, 43, 43, 41, 41, 39,
             46, 46, 44, 44, 43, 43, 41, 46, 46, 44, 44, 43, 43, 41,
             39, 39, 46, 46, 48, 48, 46,  44, 44, 43, 43, 41, 41, 39};
@@ -122,6 +179,16 @@ public class MelodyU {
     public static ArrayList<NoteInfo> course_6 = new ArrayList<>();
     public static ArrayList<NoteInfo> course_7 = new ArrayList<>();
     public static ArrayList<NoteInfo> course_8 = new ArrayList<>();
+
+    public static ArrayList<NoteInfo> course_9_1 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_9_2 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_10 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_11 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_12 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_13 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_14 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_15 = new ArrayList<>();
+    public static ArrayList<NoteInfo> course_16 = new ArrayList<>();
 
 
     public static ArrayList<NoteInfo> course_d1 = new ArrayList<>();
@@ -155,6 +222,16 @@ public class MelodyU {
         course_6.addAll(setNoteList(d_note_6, d_color_6));
         course_7.addAll(setNoteList(d_note_7, d_color_7));
         course_8.addAll(setNoteList(d_note_8, d_color_8));
+
+        course_9_1.addAll(setNoteList(d_note_9_1, d_color_9_1));
+        course_9_2.addAll(setNoteList(d_note_9_2, d_color_9_2));
+        course_10.addAll(setNoteList(d_note_10, d_color_10));
+        course_11.addAll(setNoteList(d_note_11, d_color_11));
+        course_12.addAll(setNoteList(d_note_12, d_color_12));
+        course_13.addAll(setNoteList(d_note_13, d_color_13));
+        course_14.addAll(setNoteList(d_note_14, d_color_14));
+        course_15.addAll(setNoteList(d_note_15, d_color_15));
+        course_16.addAll(setNoteList(d_note_16, d_color_16));
 
         course_d1.addAll(setNoteList(d_note_d1, d_color_d1));
 
@@ -219,6 +296,26 @@ public class MelodyU {
             result = course_8;
         }
 
+        else if(PIC_NAME_9_1.equals(resId)){
+            result = course_9_1;
+        }else if(PIC_NAME_9_2.equals(resId)){
+            result = course_9_2;
+        }else if(PIC_NAME_10.equals(resId)){
+            result = course_10;
+        }else if(PIC_NAME_11.equals(resId)){
+            result = course_11;
+        }else if(PIC_NAME_12.equals(resId)){
+            result = course_12;
+        }else if(PIC_NAME_13.equals(resId)){
+            result = course_13;
+        }else if(PIC_NAME_14.equals(resId)){
+            result = course_14;
+        }else if(PIC_NAME_15.equals(resId)){
+            result = course_15;
+        }else if(PIC_NAME_16.equals(resId)){
+            result = course_16;
+        }
+
         else if(PIC_NAME_D1.equals(resId)){
             result = course_d1;
         }
@@ -255,6 +352,35 @@ public class MelodyU {
 
         }else if(resName.equals(PIC_NAME_8)){
             ls = new int[]{R.layout.score_8_1};
+
+        }
+
+        else if(resName.equals(PIC_NAME_9_1)){
+            ls = new int[]{R.layout.score_9_1};
+
+        }else if(resName.equals(PIC_NAME_9_2)){
+            ls = new int[]{R.layout.score_9_2};
+
+        }else if(resName.equals(PIC_NAME_10)){
+            ls = new int[]{R.layout.score_10_1};
+
+        }else if(resName.equals(PIC_NAME_11)){
+            ls = new int[]{R.layout.score_11_1};
+
+        }else if(resName.equals(PIC_NAME_12)){
+            ls = new int[]{R.layout.score_12_1};
+
+        }else if(resName.equals(PIC_NAME_13)){
+            ls = new int[]{R.layout.score_13_1};
+
+        }else if(resName.equals(PIC_NAME_14)){
+            ls = new int[]{R.layout.score_14_1};
+
+        }else if(resName.equals(PIC_NAME_15)){
+            ls = new int[]{R.layout.score_15_1};
+
+        }else if(resName.equals(PIC_NAME_16)){
+            ls = new int[]{R.layout.score_16_1};
 
         }
 
@@ -447,7 +573,7 @@ public class MelodyU {
     /**
      * 生成 跟奏 需要的乐谱
      *
-     * @param color
+     * @param color   1 上右手红色  0 下左手蓝色
      * @param note
      * @return
      */

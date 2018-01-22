@@ -1,6 +1,8 @@
 package com.hzdl.teacher.activity;
 
+import android.nfc.cardemulation.HostNfcFService;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
@@ -10,9 +12,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.core.MelodyU;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +35,27 @@ public class H5MusicActivity extends BaseMidiActivity {
 
     private MidiOutputDevice mOutputDevice;
 
+    int mNote;
+    Handler hand = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch(msg.what)
+            {
+                case 1:
+                    mWebview.loadUrl( "javascript:backStatusJS('" + mNote + "')" );;
+
+                case 0:
+                    mWebview.loadUrl( "javascript:backKeyUpJs('" + mNote + "')" );
+
+            }
+
+            Log.e("kaka",mNote + "----------------");
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +71,8 @@ public class H5MusicActivity extends BaseMidiActivity {
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         mWebview.addJavascriptInterface(new H5MusicActivity.AndroidForJs(), "android");
 
-        mWebview.loadUrl("http://10.0.0.19:8091");
+        mWebview.loadUrl("http://10.0.0.6:8091");
+        //mWebview.loadUrl("http://192.168.1.135:8091");
         //mWebview.loadUrl("http://q.w3cstudy.cc/t/questionForTeacher.html");
 
         //设置WebChromeClient类
@@ -109,15 +137,25 @@ public class H5MusicActivity extends BaseMidiActivity {
     public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
         super.onMidiNoteOff(sender, cable, channel, note, velocity);
 
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mWebview.loadUrl( "javascript:backStatusJS('" + note + "')" );
-                    Toast.makeText(H5MusicActivity.this,":" + note,0).show();
-                }
-            });
+        mNote = note;
+        hand.sendEmptyMessage(0);
 
+    }
 
+    @Override
+    public void onMidiNoteOn(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
+        super.onMidiNoteOn(sender, cable, channel, note, velocity);
+
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                mWebview.loadUrl( "javascript:backStatusJS('" + note + "')" );
+//                Toast.makeText(H5MusicActivity.this,":" + note,0).show();
+//            }
+//        });
+
+//        mNote = note;
+//        hand.sendEmptyMessage(1);
 
     }
 
