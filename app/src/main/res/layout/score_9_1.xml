@@ -22,7 +22,7 @@
             android:src="@mipmap/ac91"/>
 
         <ImageView
-            android:tag="1"
+            android:tag="15"
             android:id="@+id/a2"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/a3"
@@ -32,7 +32,7 @@
             android:layout_marginEnd="27dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="14"
             android:id="@+id/a1"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/a2"
@@ -42,7 +42,7 @@
             android:layout_marginEnd="24dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="13"
             android:id="@+id/a4"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/a1"
@@ -52,7 +52,7 @@
             android:layout_marginEnd="29dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="12"
             android:id="@+id/id12"
             style="@style/puziyinfu_bg_02"
             android:layout_above="@+id/a4"
@@ -63,7 +63,7 @@
             android:layout_marginBottom="15dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="11"
             android:id="@+id/id11"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id12"
@@ -73,7 +73,7 @@
             android:layout_marginEnd="24dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="10"
             android:id="@+id/id10"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id11"
@@ -83,7 +83,7 @@
             android:layout_marginEnd="28dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="9"
             android:id="@+id/id9"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id10"
@@ -93,7 +93,7 @@
             android:layout_marginEnd="28dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="7"
             android:id="@+id/id7"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id8"
@@ -103,7 +103,7 @@
             android:layout_marginEnd="24dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="6"
             android:id="@+id/id6"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id7"
@@ -113,7 +113,7 @@
             android:layout_marginEnd="27dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="5"
             android:id="@+id/id5"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id6"
@@ -123,7 +123,7 @@
             android:layout_marginEnd="31dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="4"
             android:id="@+id/id4"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id9"
@@ -133,7 +133,7 @@
             android:layout_marginEnd="37dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="3"
             android:id="@+id/id3"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id4"
@@ -143,7 +143,7 @@
             android:layout_marginEnd="31dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="2"
             android:id="@+id/id2"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/id3"
@@ -163,7 +163,7 @@
             android:layout_marginEnd="28dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="16"
             android:id="@+id/a3"
             style="@style/puziyinfu_bg_02"
             android:layout_marginRight="71dp"
@@ -174,7 +174,7 @@
             android:layout_alignParentEnd="true" />
 
         <ImageView
-            android:tag="1"
+            android:tag="8"
             android:id="@+id/id8"
             style="@style/puziyinfu_bg_02"
             android:layout_marginRight="47dp"
