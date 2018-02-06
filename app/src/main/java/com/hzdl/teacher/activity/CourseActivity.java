@@ -898,6 +898,9 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         }
         MelodyU.getInstance().offAllLight(mOutputDevice);
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
+        if(nextInfo.getInfo()!=null){
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getInfo().getNote() + 21, nextInfo.getInfo().isIdNoteRed(), true));
+        }
     }
 
     private void offLight(NoteInfo info) {
