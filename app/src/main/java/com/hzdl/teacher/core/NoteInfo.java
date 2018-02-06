@@ -14,6 +14,28 @@ public class NoteInfo {
     //显示颜色
     private boolean idNoteRed;
 
+
+    //命中次数
+    private int hitCount = -1;
+    //弹奏  低音
+    private NoteInfo info;
+
+    public int getHitCount() {
+        return hitCount;
+    }
+
+    public void setHitCount(int hitCount) {
+        this.hitCount = hitCount;
+    }
+
+    public NoteInfo getInfo() {
+        return info;
+    }
+
+    public void setInfo(NoteInfo info) {
+        this.info = info;
+    }
+
     public NoteInfo() {
     }
 
