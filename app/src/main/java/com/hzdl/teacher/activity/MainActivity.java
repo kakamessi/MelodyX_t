@@ -148,6 +148,7 @@ public class MainActivity extends BaseMidiActivity {
 
                             ss.setSyncScreen(cpbb.getIs_screen());
                             ss.setLightCode(cpbb.getIs_light());
+                            ss.setId(cpbb.getId());
                             listSS.add(ss);
                         }
                         sg.setList(listSS);

@@ -49,8 +49,9 @@ public class BaseH5Activity extends BaseMidiActivity {
         super.onDestroy();
     }
 
-    private void init() {
+    public void initH5() {
 
+        mWebview = findViewById(R.id.webView);
         mWebSettings = mWebview.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);

@@ -18,6 +18,16 @@ public class SimpleSection {
     private int lightCode;
     //是否投学生屏幕
     private int syncScreen;
+    //id
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getGroupName() {
         return groupName;
