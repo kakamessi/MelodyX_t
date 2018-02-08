@@ -13,11 +13,12 @@ public class ActionProtocol {
     //--下课
     public static final String ACTION_COURSE_STOP = "1|1|0";
 
-    //  1|2 视频类型|3 切换视频| "haha".mp4 视频名称 | 是否亮灯 | 是否投屏 | 第几节课
     //--播放视频
     public static final String ACTION_VEDIO_ON = "1|2|1";
     //--暂停视频
     public static final String ACTION_VEDIO_PAUSE = "1|2|0";
+
+    // 1| 2视频类型| 3切换视频 |④ "haha".mp4 视频名称 |⑤ 是否亮灯 |⑥ 是否投屏 |⑦ 第几节课 |⑧  是否进入答题h5
     //--切换视频
     public static final String ACTION_VEDIO_CHANGE = "1|2|3";
 
