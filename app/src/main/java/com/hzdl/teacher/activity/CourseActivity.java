@@ -55,6 +55,7 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
+import static com.hzdl.teacher.base.App.init;
 import static com.hzdl.teacher.core.MelodyU.d_color_1;
 import static com.hzdl.teacher.core.MelodyU.d_color_2;
 import static com.hzdl.teacher.core.MelodyU.d_color_3;
@@ -87,7 +88,7 @@ import static com.hzdl.teacher.core.MelodyU.d_starttime_4;
  * //    MidiOutputDevice midiOutputDevice = getMidiOutputDevice();
  * //    midiOutputDevice.sendMidiNoteOn(0, 0x90, 0x40, 0x7f);
  */
-public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
+public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
     @BindView(R.id.vv)
     VideoView vv;
@@ -155,6 +156,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
         initView();
         initVitamio();
         initMidi();
+        initH5();
+
         mOutputDevice = getMidiOutputDevice();
 
         new Handler().postDelayed(new Runnable() {
@@ -274,6 +277,17 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        //播放完成 跳入答题H5
+        if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
+            setUIType(R.id.webView);
+            loadH5();
+        }
+
+    }
+
+    @Override
+    public void onNext() {
+        action();
     }
 
     @Override
@@ -600,7 +614,8 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             return;
         }
 
-        if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
+        if ((les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) ||
+                (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5)) {
             //视频
             sendVideoAction();
 
@@ -637,6 +652,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
 
         String code_light = "";
         String code_Screen = "";
+        String code_h5 = "";
         if (1 == les.getSection(cellIndex).getLightCode()) {
             code_light = "|1";
         } else {
@@ -649,9 +665,15 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
             code_Screen = "|0";
         }
 
+        if(1 == les.getSection(cellIndex).getCode_h5()){
+            code_h5 = "|1";
+        }else{
+            code_h5 = "|0";
+        }
+
         String crouseName = "|" + les.getName();
 
-        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + code_light + code_Screen + crouseName);
+        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + code_light + code_Screen + crouseName + code_h5);
 
     }
 
@@ -678,6 +700,7 @@ public class CourseActivity extends BaseMidiActivity implements MediaPlayer.OnPr
      ******/
     @Override
     protected void handleMsg(Message action) {
+        super.handleMsg(action);
         try {
             doAction((String) action.obj);
         } catch (Exception e) {
