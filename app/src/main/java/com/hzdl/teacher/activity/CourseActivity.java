@@ -665,7 +665,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
             code_Screen = "|0";
         }
 
-        if(1 == les.getSection(cellIndex).getCode_h5()){
+        if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
             code_h5 = "|1";
         }else{
             code_h5 = "|0";
