@@ -16,6 +16,7 @@ public class Constant {
     public static int SECTION_TYPE_VIDEO = 102;
     public static int SECTION_TYPE_NOTEPLAY = 103;
     public static int SECTION_TYPE_IMG = 104;
+    public static int SECTION_TYPE_VIDEO_H5 = 105;
 
     //----课程下载相关-------------------------------------------------------------------------------------------
     public static final String DOWNLOAD_ROOT = "http://newapp.tianshiyinyue.cn";
