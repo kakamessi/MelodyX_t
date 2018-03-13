@@ -638,11 +638,16 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
             public void run() {
                 //解密文件
                 try {
-                    Encrypter.decode(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + les.getSection(cellIndex).getSourceName()),
-                            new File(Utils.getVideoPath() + les.getSection(cellIndex).getSourceName()),"xmelody");
+
+                    File f1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + les.getSection(cellIndex).getSourceName());
+                    File f2 = new File(Utils.getVideoPath() + les.getSection(cellIndex).getSourceName());
+                    Encrypter.decode(f1,f2,"xmelody");
+
+                    //sendMsg(MSG_TYPE_SEDNVIEDO);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 sendMsg(MSG_TYPE_SEDNVIEDO);
             }
         });
