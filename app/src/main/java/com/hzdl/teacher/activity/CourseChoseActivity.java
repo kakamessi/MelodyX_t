@@ -3,6 +3,7 @@ package com.hzdl.teacher.activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,10 +17,16 @@ import android.widget.TextView;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.App;
 import com.hzdl.teacher.base.BaseActivity;
+import com.hzdl.teacher.base.Constant;
+import com.hzdl.teacher.bean.lesson.LessonInfo;
+import com.hzdl.teacher.bean.lesson.SimpleSection;
 import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
+import com.hzdl.teacher.utils.Encrypter;
 import com.hzdl.teacher.utils.Utils;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +56,9 @@ public class CourseChoseActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
 
                 App.getApplication().setIndexLessonOn(position);
-                sendSynAction(ActionProtocol.ACTION_COURSE_START);
+                //提前解密视频文件
+                String vedioName = "|" + getVNames();
+                sendSynAction(ActionProtocol.ACTION_COURSE_START + vedioName);
                 CourseChoseActivity.this.finish();
 
             }
@@ -64,6 +73,19 @@ public class CourseChoseActivity extends BaseActivity {
         rcy_course.addItemDecoration(new SpaceItemDecoration(50));
 
 
+    }
+
+    private String getVNames() {
+
+        LessonInfo les = mBaseApp.getLi().get(mBaseApp.getIndexLessonOn());
+        StringBuffer sb = new StringBuffer();
+        for(SimpleSection ss : les.getSectionsList()){
+            if(Constant.SECTION_TYPE_VIDEO == ss.getType() || Constant.SECTION_TYPE_VIDEO_H5 == ss.getType()){
+                sb.append(ss.getSourceName() + "_");
+            }
+        }
+
+        return sb.toString();
     }
 
     @OnClick(R.id.iv_back)
@@ -163,11 +185,30 @@ public class CourseChoseActivity extends BaseActivity {
 
         int c2 = Integer.parseInt(ab.getCodes()[1]);
         int c3 = Integer.parseInt(ab.getCodes()[2]);
+        String s4 = ab.getCodes()[3];
 
         if (c2 == ActionProtocol.CODE_ACTION_COURSE) {
             if (c3 == 1) {
+
+                final String[] names = s4.split("_");
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            for(int i =0; i<names.length; i++){
+                                File f1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + names[i]);
+                                File f2 = new File(Utils.getVideoPath() + names[i]);
+                                Encrypter.decode(f1,f2,"xmelody");
+                            }
+                        }catch (Exception e){
+                        }
+                    }
+                }).start();
+
                 Intent intent = new Intent(CourseChoseActivity.this, CourseActivity.class);
                 startActivity(intent);
+
             }
         }
     }

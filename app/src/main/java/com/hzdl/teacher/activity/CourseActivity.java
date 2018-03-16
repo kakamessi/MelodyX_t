@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hzdl.mex.utils.Log;
+import com.hzdl.mex.utils.Util;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.base.Constant;
@@ -198,6 +199,12 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         closeView();
         stopTempleLight();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Utils.clearSonFile(new File(Utils.getVideoPath()));
+            }
+        }).start();
     }
 
     private void closeView() {
@@ -633,24 +640,25 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     //先解密视频文件，后发送消息
     private void sendVideoAction() {
 
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                //解密文件
-                try {
+//        mExecutor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                //解密文件
+//                try {
+//
+//                    File f1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + les.getSection(cellIndex).getSourceName());
+//                    File f2 = new File(Utils.getVideoPath() + les.getSection(cellIndex).getSourceName());
+//                    Encrypter.decode(f1,f2,"xmelody");
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//                sendMsg(MSG_TYPE_SEDNVIEDO);
+//            }
+//        });
 
-                    File f1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + les.getSection(cellIndex).getSourceName());
-                    File f2 = new File(Utils.getVideoPath() + les.getSection(cellIndex).getSourceName());
-                    Encrypter.decode(f1,f2,"xmelody");
-
-                    //sendMsg(MSG_TYPE_SEDNVIEDO);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                sendMsg(MSG_TYPE_SEDNVIEDO);
-            }
-        });
+        sendMsg(MSG_TYPE_SEDNVIEDO);
     }
 
     private void sendVideoActionInner(){
