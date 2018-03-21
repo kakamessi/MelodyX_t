@@ -735,20 +735,24 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
         Log.e("kaka", "----------action code------- " + str);
         ab = ActionResolver.getInstance().resolve(str);
-        if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
-            if (ab.getCodeByPositon(2) == 0) {
-                CourseActivity.this.finish();
-            }
-        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
-            initVedioSection();
+        if(ab.getCodeByPositon(0) == 1) {
 
-        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
-            resetVideo();
-            initPlaySection();
-        } else if(ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_IMG){
-            //图片界面
-            resetVideo();
-            initImgSection();
+            if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
+                if (ab.getCodeByPositon(2) == 0) {
+                    CourseActivity.this.finish();
+                }
+            } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
+                initVedioSection();
+
+            } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
+                resetVideo();
+                initPlaySection();
+            } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_IMG) {
+                //图片界面
+                resetVideo();
+                initImgSection();
+
+            }
 
         }
 
