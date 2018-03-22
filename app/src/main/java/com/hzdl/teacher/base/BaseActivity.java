@@ -67,8 +67,8 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     protected void sendSynAction(String action){
-        TeacherClient.getInstance().sendMsgToAll(action);
         ActionDispatcher.getInstance().dispatch(action);
+        TeacherClient.getInstance().sendMsgToAll(action);
     }
 
     protected void sendTeacherAction(String action){
