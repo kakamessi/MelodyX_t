@@ -1,6 +1,7 @@
 package com.hzdl.teacher.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
@@ -12,14 +13,10 @@ import android.webkit.WebView;
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.utils.Log;
 import com.hzdl.teacher.R;
-import com.hzdl.teacher.base.BaseActivity;
 import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.core.ActionBean;
 import com.hzdl.teacher.core.ActionProtocol;
 import com.hzdl.teacher.core.ActionResolver;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class BaseH5Activity extends BaseMidiActivity {
 
@@ -79,15 +76,14 @@ public class BaseH5Activity extends BaseMidiActivity {
 
     }
 
-    public void nextCourse(){
-        onNext();
-    }
-
-    public void onNext(){
-    }
-
     public void loadH5(){
-        mWebview.loadUrl(URL_ROOT + "questionForTeacher.html");
+        mWebview.loadUrl("http://10.0.0.9:1234");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mWebview.loadUrl("javascript:loadQuestion()");
+            }
+        },1000);
     }
 
     private ActionBean ab;
@@ -111,6 +107,8 @@ public class BaseH5Activity extends BaseMidiActivity {
             }else if(ab.getCodeByPositon(1) == 2){
                 //教师端收到成绩  发送给h5
                 mWebview.loadUrl("javascript:callJS('" + ab.getStringByPositon(2) + "')");
+
+
             }
         }
     }
@@ -123,16 +121,23 @@ public class BaseH5Activity extends BaseMidiActivity {
         // 定义JS需要调用的方法
         // 被JS调用的方法必须加入@JavascriptInterface注解
         @JavascriptInterface
-        public void next(String index) {
-            //通知学生下一步
-            actionNextQuestion(index);
+        public void nextQuestion() {
+            //下一步（题目）
+            actionNextQuestion();
         }
+
+        @JavascriptInterface
+        public void nextCourse(){
+            //下一课
+            onNextCourse();
+        }
+
     }
 
     //教师端控制下一题
-    public void actionNextQuestion(String arg){
-        //sendSynAction(ActionProtocol.ACTION_TEST_NUM + "|" + arg);
-        TeacherClient.getInstance().sendMsgToAll(ActionProtocol.ACTION_TEST_NUM + "|" + arg);
+    public void actionNextQuestion(){
+        //sendSynAction(ActionProtocol.ACTION_TEST_NUM + "|" + "1");
+        TeacherClient.getInstance().sendMsgToAll(ActionProtocol.ACTION_TEST_NUM + "|" + "1");
     }
 
 
@@ -152,4 +157,13 @@ public class BaseH5Activity extends BaseMidiActivity {
         mWebview.loadUrl("javascript:switchQuestion('" + questionIndex +"')");
     }
 
+
+    //----子类覆盖-----------------------------------
+    //下一节课
+    public void onNextCourse(){
+    }
+    //获取id
+    public String getID(){
+        return "";
+    }
 }
