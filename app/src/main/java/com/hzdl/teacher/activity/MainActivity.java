@@ -140,6 +140,9 @@ public class MainActivity extends BaseMidiActivity {
                         for (CrouseListBean1031.DetailLoginBean.ChildrenPartLoginBeanX.ChildrenPartLoginBean cpbb : cpb.getChildrenPart()) {
                             SimpleSection ss = new SimpleSection();
                             ss.setType(cpbb.getType());
+//                            if(cpbb.getType()==105){
+//                                Log.e("kaka","id========" + cpbb.getId() + " name " + cpbb.getSourceName());
+//                            }
                             ss.setShowName(cpbb.getName());
 
                             //处理画谱图片名称

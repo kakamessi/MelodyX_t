@@ -202,7 +202,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Utils.clearSonFile(new File(Utils.getVideoPath()));
+                //Utils.clearSonFile(new File(Utils.getVideoPath()));
             }
         }).start();
     }
@@ -1074,6 +1074,20 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
     //------------公共逻辑end----------------------------------------------------------------------------------------------------------------
 
+
+    //------------父类提供方法end----------------------------------------------------------------------------------------------------------------
+    @Override
+    public void onNextCourse() {
+        action();
+    }
+    @Override
+    public String getID() {
+        if(les!=null) {
+            String id = les.getSection(cellIndex).getId() + "";
+            return id;
+        }
+        return "";
+    }
 
 }
 
