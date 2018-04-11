@@ -99,23 +99,18 @@ public class BaseH5Activity extends BaseMidiActivity {
         Log.e("kaka", "----------H5Activity code------- " + str);
         ab = ActionResolver.getInstance().resolve(str);
         if (ab.getCodeByPositon(0) == 2) {
-            if(ab.getCodeByPositon(1) == 3){
-                questionIndex = ab.getStringByPositon(2);
-                nextQuestionImpl();
-            }else if(ab.getCodeByPositon(1) == 0){
-                finish();
-            }else if(ab.getCodeByPositon(1) == 2){
+
+            if(ab.getCodeByPositon(1) == 2){
                 //教师端收到成绩  发送给h5
                 mWebview.loadUrl("javascript:addStuScore('" + ab.getStringByPositon(2) + "')");
-
-
             }
+
         }
     }
 
     //---非公共逻辑-----------------------------------------------------------------------------------------------------
 
-    // 继承自Object类
+    // 继承自Object类  提供JS调用
     public class AndroidtoJs extends Object {
 
         // 定义JS需要调用的方法
@@ -123,7 +118,7 @@ public class BaseH5Activity extends BaseMidiActivity {
         @JavascriptInterface
         public void nextQuestion() {
             //下一步（题目）
-            actionNextQuestion();
+            onNextQuestion();
         }
 
         @JavascriptInterface
@@ -135,11 +130,10 @@ public class BaseH5Activity extends BaseMidiActivity {
     }
 
     //教师端控制下一题
-    public void actionNextQuestion(){
+    public void onNextQuestion(){
         //sendSynAction(ActionProtocol.ACTION_TEST_NUM + "|" + "1");
         TeacherClient.getInstance().sendMsgToAll(ActionProtocol.ACTION_TEST_NUM + "|" + "1");
     }
-
 
     //点击返回上一页面而不是退出浏览器
     @Override
@@ -153,11 +147,6 @@ public class BaseH5Activity extends BaseMidiActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void nextQuestionImpl(){
-        mWebview.loadUrl("javascript:switchQuestion('" + questionIndex +"')");
-    }
-
-
     //----子类覆盖-----------------------------------
     //下一节课
     public void onNextCourse(){
@@ -166,4 +155,5 @@ public class BaseH5Activity extends BaseMidiActivity {
     public String getID(){
         return "";
     }
+
 }
