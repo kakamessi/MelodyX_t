@@ -293,11 +293,6 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     }
 
     @Override
-    public void onNext() {
-        action();
-    }
-
-    @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
         Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
         return false;
