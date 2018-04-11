@@ -106,7 +106,7 @@ public class BaseH5Activity extends BaseMidiActivity {
                 finish();
             }else if(ab.getCodeByPositon(1) == 2){
                 //教师端收到成绩  发送给h5
-                mWebview.loadUrl("javascript:callJS('" + ab.getStringByPositon(2) + "')");
+                mWebview.loadUrl("javascript:addStuScore('" + ab.getStringByPositon(2) + "')");
 
 
             }
