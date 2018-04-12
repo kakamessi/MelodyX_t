@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -18,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,9 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hzdl.mex.utils.Log;
-import com.hzdl.mex.utils.Util;
 import com.hzdl.teacher.R;
-import com.hzdl.teacher.base.BaseMidiActivity;
 import com.hzdl.teacher.base.Constant;
 import com.hzdl.teacher.bean.lesson.LessonInfo;
 import com.hzdl.teacher.core.ActionBean;
@@ -39,10 +37,8 @@ import com.hzdl.teacher.core.NoteInfo;
 import com.hzdl.teacher.interfacex.OnItemClickLitener;
 import com.hzdl.teacher.utils.BasePopupWindow;
 import com.hzdl.teacher.utils.ButtonUtils;
-import com.hzdl.teacher.utils.Encrypter;
 import com.hzdl.teacher.utils.Utils;
 
-import java.io.File;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -56,7 +52,6 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
-import static com.hzdl.teacher.base.App.init;
 import static com.hzdl.teacher.core.MelodyU.d_color_1;
 import static com.hzdl.teacher.core.MelodyU.d_color_2;
 import static com.hzdl.teacher.core.MelodyU.d_color_3;
@@ -107,6 +102,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     ImageView ivBackmain;
     @BindView(R.id.rl_teacher_screen)
     ImageView rlTeacherScreen;
+    @BindView(R.id.webView)
+    WebView webView;
 
     public static int COURSE_TYPE = -1;
     public static final int TYPE_VEDIO = 1;
@@ -287,8 +284,15 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         //播放完成 跳入答题H5
         if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
             setUIType(R.id.webView);
+            webView.setFocusable(true);
+            webView.requestFocus();
             loadH5();
         }
+
+        setUIType(R.id.webView);
+        webView.setFocusable(true);
+        webView.requestFocus();
+        loadH5();
 
     }
 
