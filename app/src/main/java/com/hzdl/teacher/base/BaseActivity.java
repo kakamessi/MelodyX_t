@@ -75,6 +75,9 @@ public abstract class BaseActivity extends FragmentActivity {
         ActionDispatcher.getInstance().dispatch(action);
     }
 
+    protected void sendStudentAction(String action){
+        TeacherClient.getInstance().sendMsgToAll(action);
+    }
 
     private UniversalLoadingView uv;
     /**

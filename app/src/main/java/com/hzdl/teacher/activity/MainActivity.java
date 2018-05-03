@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hzdl.mex.utils.SPUtils;
 import com.hzdl.teacher.R;
@@ -46,6 +47,12 @@ public class MainActivity extends BaseMidiActivity {
     ImageView ivMy;
     @BindView(R.id.iv_test)
     ImageView ivTest;
+    @BindView(R.id.tv_num)
+    TextView tv_num;
+
+    private int num=0;
+    private volatile boolean aliveFlag = true;
+    private volatile boolean runFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,25 @@ public class MainActivity extends BaseMidiActivity {
         initMidi();
         initView();
 
+        new CheckAlive().start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        runFlag = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        runFlag = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        aliveFlag = false;
     }
 
     private void initView() {
@@ -70,11 +96,10 @@ public class MainActivity extends BaseMidiActivity {
     @Override
     protected void handleMsg(Message msg) {
         ActionBean ab = ActionResolver.getInstance().resolve((String) msg.obj);
-        int c1 = Integer.parseInt(ab.getCodes()[0]);
-        if (c1 == ActionProtocol.CODE_ACTION_CONNECTED) {
-            return;
+        if (ab.getCodeByPositon(0) == 0 && ab.getCodeByPositon(1)==2) {
+            //收到在线人数
+            num++;
         }
-
     }
 
     private void netLessonKit() {
@@ -216,5 +241,42 @@ public class MainActivity extends BaseMidiActivity {
 
         }
     }
+
+    class CheckAlive extends Thread{
+        @Override
+        public void run() {
+            while(aliveFlag){
+                if(runFlag) {
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv_num.setText(num + "");
+                            num = 0;
+                        }
+                    });
+
+                    //获取在线学生端
+                    sendSynAction(ActionProtocol.ACTION_STATU_ALIVENUM);
+
+                    try {
+                        Thread.sleep(4000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else{
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+
 
 }

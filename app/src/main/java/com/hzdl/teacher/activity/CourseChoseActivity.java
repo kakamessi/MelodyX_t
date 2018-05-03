@@ -174,8 +174,12 @@ public class CourseChoseActivity extends BaseActivity {
 
     @Override
     protected void handleMsg(Message msg) {
+        try {
+            doAction((String) msg.obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        doAction((String) msg.obj);
     }
 
     private ActionBean ab;
