@@ -97,7 +97,8 @@ public class DownloadNewAdapter extends BaseAdapter {
 
 
         //设置点击监听事件
-        holder.circleProgress.setOnClickListener(new View.OnClickListener() {
+        holder.tvCourseName.setFocusable(true);
+        holder.tvCourseName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

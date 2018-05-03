@@ -286,7 +286,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
             setUIType(R.id.webView);
             webView.setFocusable(true);
             webView.requestFocus();
-            loadH5(les.getSection(cellIndex).getSourceName());
+            loadH5(les.getSection(cellIndex).getSourceName() + les.getSection(cellIndex).getId());
         }
 
 //        setUIType(R.id.webView);
@@ -679,6 +679,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
         if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
             code_h5 = "|1";
+            //答题必须sync屏幕
+            code_Screen = "|1";
         }else{
             code_h5 = "|0";
         }

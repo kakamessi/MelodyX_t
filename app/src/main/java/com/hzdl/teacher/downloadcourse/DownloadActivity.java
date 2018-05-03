@@ -112,6 +112,8 @@ public class DownloadActivity extends BaseActivity {
     private void initView() {
 
         lvCourse = (ListView) findViewById(R.id.lv_course);
+        lvCourse.setItemsCanFocus(true);
+        lvCourse.setFocusable(false);
         ib_back = (Button) findViewById(R.id.ib_back);
         ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
