@@ -286,7 +286,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
             setUIType(R.id.webView);
             webView.setFocusable(true);
             webView.requestFocus();
-            loadH5(les.getSection(cellIndex).getSourceName() + les.getSection(cellIndex).getId());
+            loadH5(les.getSection(cellIndex).getSourceName() + "  id = "+les.getSection(cellIndex).getId());
         }
 
 //        setUIType(R.id.webView);
