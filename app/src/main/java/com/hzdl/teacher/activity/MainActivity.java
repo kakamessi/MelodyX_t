@@ -251,7 +251,7 @@ public class MainActivity extends BaseMidiActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tv_num.setText(num + "");
+                            tv_num.setText("学生端连接数： " + num);
                             num = 0;
                         }
                     });

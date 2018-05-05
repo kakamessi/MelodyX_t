@@ -109,6 +109,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     public static final int TYPE_VEDIO = 1;
     public static final int TYPE_PLAY = 2;
     public static final int TYPE_IMG = 3;
+    public static final int TYPE_ANSWER = 5;
 
     public static final int MSG_TYPE_SEDNVIEDO = 100;
 
@@ -281,18 +282,14 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        //播放完成 跳入答题H5
-        if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
-            setUIType(R.id.webView);
-            webView.setFocusable(true);
-            webView.requestFocus();
-            loadH5(les.getSection(cellIndex).getSourceName() + "  id = "+les.getSection(cellIndex).getId());
-        }
 
-//        setUIType(R.id.webView);
-//        webView.setFocusable(true);
-//        webView.requestFocus();
-//        loadH5(les.getSection(cellIndex).getSourceName());
+        //播放完成 跳入答题H5
+//        if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
+//            setUIType(R.id.webView);
+//            webView.setFocusable(true);
+//            webView.requestFocus();
+//            loadH5(les.getSection(cellIndex).getSourceName() + "  id = "+les.getSection(cellIndex).getId());
+//        }
 
     }
 
@@ -620,8 +617,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
             return;
         }
 
-        if ((les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) ||
-                (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5)) {
+        if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO) {
             //视频
             sendVideoAction();
 
@@ -632,6 +628,11 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_NOTEPLAY) {
             //画谱
             sendSynAction(ActionProtocol.ACTION_COURSE_NOTE + "|" + les.getSection(cellIndex).getSourceName());
+
+        } else if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5) {
+            //答题
+            sendSynAction(ActionProtocol.ACTION_COURSE_ANSWER + "|" + les.getSection(cellIndex).getId());
+
         }
 
     }
@@ -679,15 +680,14 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
         if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
             code_h5 = "|1";
-            //答题必须sync屏幕
-            code_Screen = "|1";
+
         }else{
             code_h5 = "|0";
         }
 
         String crouseName = "|" + les.getName();
 
-        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + code_light + code_Screen + crouseName + code_h5);
+        sendSynAction(ActionProtocol.ACTION_VEDIO_CHANGE + "|" + les.getSection(cellIndex).getSourceName() + code_light + code_Screen + crouseName);
 
     }
 
@@ -753,6 +753,11 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
                 resetVideo();
                 initImgSection();
 
+            }else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_ANSWER) {
+                //答题界面
+                resetVideo();
+                initAnswerSection();
+
             }
 
         }
@@ -809,6 +814,16 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         COURSE_TYPE = TYPE_IMG;
         setUIType(R.id.rl_teacher_screen);
         rlTeacherScreen.setImageBitmap(Utils.getBitMap(ab.getStringByPositon(2)));
+    }
+
+    private void initAnswerSection() {
+        COURSE_TYPE = TYPE_ANSWER;
+
+        setUIType(R.id.webView);
+        webView.setFocusable(true);
+        webView.requestFocus();
+        loadH5(les.getSection(cellIndex).getId() + "");
+
     }
 
     /******
