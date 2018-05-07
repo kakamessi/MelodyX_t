@@ -1,5 +1,6 @@
 package com.hzdl.teacher.activity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.hzdl.mex.socket.teacher.TeacherClient;
 import com.hzdl.mex.utils.Log;
@@ -20,7 +22,7 @@ import com.hzdl.teacher.core.ActionResolver;
 
 public class BaseH5Activity extends BaseMidiActivity {
 
-    public static final String URL_ROOT = "file:///android_asset/question-for-teacher1/";
+    public static final String URL_ROOT = "http://teacher.huangzhongdalv.com/";
     private String questionIndex = "";
 
     WebView mWebview;
@@ -72,18 +74,35 @@ public class BaseH5Activity extends BaseMidiActivity {
                     String progress = newProgress + "%";
                 }
             }
+
+        });
+
+        mWebview.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mWebview.loadUrl("javascript:loadQuestion('" + name +"')");
+            }
         });
 
     }
 
+    String name;
     public void loadH5(final String vName){
-        mWebview.loadUrl("http://10.0.0.9:1234");
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mWebview.loadUrl("javascript:loadQuestion('" + vName +"')");
-            }
-        },1000);
+        name = vName;
+        mWebview.loadUrl(URL_ROOT);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mWebview.loadUrl("javascript:loadQuestion('" + vName +"')");
+//            }
+//        },1000);
     }
 
     private ActionBean ab;
