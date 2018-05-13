@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hzdl.mex.utils.Log;
 import com.hzdl.mex.utils.SPUtils;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.App;
@@ -156,6 +157,7 @@ public class MainActivity extends BaseMidiActivity {
                 for (CrouseListBean1031.DetailLoginBean.ChildrenPartLoginBeanX cpb : dlb.getChildrenPart()) {
 
                     SimpleGroup sg = new SimpleGroup();
+                    //宫商角徵羽部分
                     sg.setName(cpb.getName());
 
                     if (cpb.getChildrenPart() != null) {

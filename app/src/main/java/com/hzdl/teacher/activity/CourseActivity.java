@@ -52,6 +52,7 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
+import static com.hzdl.teacher.R.id.rcy_course2;
 import static com.hzdl.teacher.core.MelodyU.d_color_1;
 import static com.hzdl.teacher.core.MelodyU.d_color_2;
 import static com.hzdl.teacher.core.MelodyU.d_color_3;
@@ -480,8 +481,9 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
         View vv = getLayoutInflater().inflate(R.layout.pop_course, null);
         RecyclerView rcy_course = (RecyclerView) vv.findViewById(R.id.rcy_course);
+
         //设置布局管理器
-        rcy_course.setLayoutManager(new GridLayoutManager(this, 5));
+        rcy_course.setLayoutManager(new GridLayoutManager(this, 8));
         CCAdapter cc = new CCAdapter();
         cc.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
@@ -500,6 +502,47 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         rcy_course.setItemAnimator(new DefaultItemAnimator());
         rcy_course.addItemDecoration(new SpaceItemDecoration(50));
 
+        CCAdapter2 cc2 = new CCAdapter2();
+        cc2.setOnItemClickLitener(new OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int offset = les.getSectionsGSJ().size();
+                setCellIndex(position - 1 + offset);
+                action();
+                popupWindow.dismiss();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+        RecyclerView rcy_course2 = (RecyclerView) vv.findViewById(R.id.rcy_course2);
+        rcy_course2.setLayoutManager(new GridLayoutManager(this, 8));
+        rcy_course2.setAdapter(cc2);
+        rcy_course2.setItemAnimator(new DefaultItemAnimator());
+        rcy_course2.addItemDecoration(new SpaceItemDecoration(50));
+
+        CCAdapter3 cc3 = new CCAdapter3();
+        cc3.setOnItemClickLitener(new OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int offset = les.getSectionsGSJ().size() + les.getSectionsCED().size();
+                setCellIndex(position - 1 + offset);
+                action();
+                popupWindow.dismiss();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+        RecyclerView rcy_course3 = (RecyclerView) vv.findViewById(R.id.rcy_course3);
+        rcy_course3.setLayoutManager(new GridLayoutManager(this, 8));
+        rcy_course3.setAdapter(cc3);
+        rcy_course3.setItemAnimator(new DefaultItemAnimator());
+        rcy_course3.addItemDecoration(new SpaceItemDecoration(50));
 
         popupWindow = new BasePopupWindow(this);
         popupWindow.setWidth(W - 150);
@@ -528,6 +571,11 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
     class CCAdapter extends RecyclerView.Adapter<CCAdapter.MyViewHolder> {
         private OnItemClickLitener mOnItemClickLitener;
+        private int size;
+
+        public CCAdapter() {
+
+        }
 
         public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
             this.mOnItemClickLitener = mOnItemClickLitener;
@@ -553,12 +601,113 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.tv_name.setText(les.getSection(position).getGroupName() + "  " + les.getSection(position).getShowName());
+             holder.tv_name.setText(les.getSectionsGSJ().get(position).getGroupName() + "  " + les.getSectionsGSJ().get(position).getShowName());
         }
 
         @Override
         public int getItemCount() {
-            return les.getSectionsList().size();
+            return les.getSectionsGSJ().size();
+        }
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
+            ImageView tv;
+            TextView tv_name;
+
+            public MyViewHolder(View view) {
+                super(view);
+                tv = (ImageView) view.findViewById(R.id.imageView);
+                tv_name = (TextView) view.findViewById(R.id.tv_name);
+            }
+        }
+    }
+
+    class CCAdapter2 extends RecyclerView.Adapter<CCAdapter2.MyViewHolder> {
+        private OnItemClickLitener mOnItemClickLitener;
+
+        public CCAdapter2() {
+
+        }
+
+        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
+            this.mOnItemClickLitener = mOnItemClickLitener;
+        }
+
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(CourseActivity.this).inflate(R.layout.item_pop_list, parent, false);
+            Utils.setOnFocusBG(v, R.drawable.shape_strock, -1);
+
+            final MyViewHolder holder = new MyViewHolder(v);
+            if (mOnItemClickLitener != null) {
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int pos = holder.getLayoutPosition();
+                        mOnItemClickLitener.onItemClick(holder.itemView, pos);
+                    }
+                });
+            }
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+            holder.tv_name.setText(les.getSectionsCED().get(position).getGroupName() + "  " + les.getSectionsCED().get(position).getShowName());
+        }
+
+        @Override
+        public int getItemCount() {
+            return les.getSectionsCED().size();
+        }
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
+            ImageView tv;
+            TextView tv_name;
+
+            public MyViewHolder(View view) {
+                super(view);
+                tv = (ImageView) view.findViewById(R.id.imageView);
+                tv_name = (TextView) view.findViewById(R.id.tv_name);
+            }
+        }
+    }
+
+    class CCAdapter3 extends RecyclerView.Adapter<CCAdapter3.MyViewHolder> {
+        private OnItemClickLitener mOnItemClickLitener;
+
+        public CCAdapter3() {
+        }
+
+        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
+            this.mOnItemClickLitener = mOnItemClickLitener;
+        }
+
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(CourseActivity.this).inflate(R.layout.item_pop_list, parent, false);
+            Utils.setOnFocusBG(v, R.drawable.shape_strock, -1);
+
+            final MyViewHolder holder = new MyViewHolder(v);
+            if (mOnItemClickLitener != null) {
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int pos = holder.getLayoutPosition();
+                        mOnItemClickLitener.onItemClick(holder.itemView, pos);
+                    }
+                });
+            }
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+            holder.tv_name.setText(les.getSectionsTZ().get(position).getGroupName() + "  " + les.getSectionsTZ().get(position).getShowName());
+        }
+
+        @Override
+        public int getItemCount() {
+            return les.getSectionsTZ().size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
@@ -579,10 +728,10 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
-            outRect.left = mSpace;
-            outRect.right = mSpace;
-            outRect.bottom = mSpace;
-            outRect.top = 10;
+            outRect.left = 10;
+            outRect.right = 10;
+            outRect.bottom = 0;
+            outRect.top = 0;
         }
 
         public SpaceItemDecoration(int space) {
