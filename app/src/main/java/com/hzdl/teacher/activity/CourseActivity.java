@@ -602,6 +602,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
              holder.tv_name.setText(les.getSectionsGSJ().get(position).getGroupName() + "  " + les.getSectionsGSJ().get(position).getShowName());
+             holder.tv.setImageResource(R.mipmap.item_bg_gs);
         }
 
         @Override
@@ -653,6 +654,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.tv_name.setText(les.getSectionsCED().get(position).getGroupName() + "  " + les.getSectionsCED().get(position).getShowName());
+            holder.tv.setImageResource(R.mipmap.item_bg_ce);
         }
 
         @Override
@@ -703,6 +705,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.tv_name.setText(les.getSectionsTZ().get(position).getGroupName() + "  " + les.getSectionsTZ().get(position).getShowName());
+            holder.tv.setImageResource(R.mipmap.item_bg_tz);
         }
 
         @Override
