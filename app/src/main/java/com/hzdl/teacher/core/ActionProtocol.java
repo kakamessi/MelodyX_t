@@ -33,6 +33,9 @@ public class ActionProtocol {
     //--图片界面 1|4|.png
     public static final String ACTION_COURSE_IMG = "1|4";
 
+    //--答题界面 1|5| 题目标识
+    public static final String ACTION_COURSE_ANSWER = "1|5";
+
     //-测试题环节--------------------------------------------------------------------------------------
 
     //开始测试
@@ -64,6 +67,8 @@ public class ActionProtocol {
     public static final int CODE_ACTION_SCORE = 3;
     //--图片界面
     public static final int CODE_ACTION_IMG = 4;
+    //--答题界面
+    public static final int CODE_ACTION_ANSWER = 5;
 
     //--学生连接通知
     public static final int CODE_ACTION_CONNECTED = 401;
