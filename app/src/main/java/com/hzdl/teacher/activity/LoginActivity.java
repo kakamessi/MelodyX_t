@@ -12,7 +12,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.hzdl.mex.utils.Log;
 import com.hzdl.mex.utils.SPUtils;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.BaseActivity;
@@ -41,7 +40,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.cb_login)
     CheckBox cbLogin;
 
-    private boolean getPsd;
+    private boolean psdCached;
     private GestureDetector gestureDetector;
 
     @Override
@@ -58,12 +57,14 @@ public class LoginActivity extends BaseActivity {
 
         int tag = (int) SPUtils.get(this,Constant.KEY_REMENBER_TAG,0);
         if(tag==1){
+            psdCached = true;
             cbLogin.setChecked(true);
             String id = (String) SPUtils.get(this,Constant.KEY_LOGIN_PHONE,"");
             String psd = (String) SPUtils.get(this,Constant.KEY_LOGIN_PSD,"");
             usernameEditText.setText(id);
             passwordEditText.setText(psd);
         }else{
+            psdCached = false;
             cbLogin.setChecked(false);
             SPUtils.remove(this,Constant.KEY_LOGIN_PHONE);
             SPUtils.remove(this,Constant.KEY_LOGIN_PSD);
@@ -86,10 +87,10 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    getPsd = true;
+                    psdCached = true;
                     SPUtils.put(LoginActivity.this,Constant.KEY_REMENBER_TAG,1);
                 }else{
-                    getPsd = false;
+                    psdCached = false;
                     SPUtils.put(LoginActivity.this,Constant.KEY_REMENBER_TAG,0);
                 }
             }
@@ -154,7 +155,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void setPsd() {
-        if(getPsd){
+        if(psdCached){
             SPUtils.put(this,Constant.KEY_LOGIN_PHONE,usernameEditText.getText().toString());
             SPUtils.put(this,Constant.KEY_LOGIN_PSD,passwordEditText.getText().toString());
         }
