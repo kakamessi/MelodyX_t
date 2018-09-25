@@ -1,7 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion 27
+
+    signingConfigs {
+        release {
+            keyAlias 'hzdl'
+            keyPassword 'hzdl1102'
+            storeFile file('hzdl.jks')
+            storePassword 'hzdl1102'
+        }
+    }
+
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.hzdl.teacher"
@@ -19,6 +30,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
