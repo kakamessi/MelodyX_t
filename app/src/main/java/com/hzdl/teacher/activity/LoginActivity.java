@@ -139,8 +139,7 @@ public class LoginActivity extends BaseActivity {
     @OnClick({R.id.password, R.id.btn_login})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.password:
-                break;
+
             case R.id.btn_login:
 
                 if(usernameEditText.getText().toString().equals("111")){
