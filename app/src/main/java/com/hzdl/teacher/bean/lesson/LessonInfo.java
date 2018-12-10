@@ -1,7 +1,5 @@
 package com.hzdl.teacher.bean.lesson;
 
-import com.hzdl.mex.utils.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +38,13 @@ public class LessonInfo {
                 for (SimpleSection ss : sg.getList()) {
                     ss.setGroupName(sg.getName());
 
-                    if("宫商角徴羽".equals(ss.getGroupName())){
+//                    if("宫商角徴羽".equals(ss.getGroupName())){
+//                        sectionsGSJ.add(ss);
+//                    }
+                    if(ss.getGroupName().contains("宫商")){
                         sectionsGSJ.add(ss);
-                    }else if(ss.getGroupName().equals("从耳德，与歌") || ss.getGroupName().equals("从耳德与歌")){
+                    }
+                    else if(ss.getGroupName().equals("从耳德，与歌") || ss.getGroupName().equals("从耳德与歌")){
                         sectionsCED.add(ss);
                     }else if(ss.getGroupName().equals("弹奏")){
                         sectionsTZ.add(ss);
