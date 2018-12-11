@@ -136,7 +136,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.password, R.id.btn_login})
+    @OnClick({R.id.btn_login})
     public void onClick(View view) {
         switch (view.getId()) {
 

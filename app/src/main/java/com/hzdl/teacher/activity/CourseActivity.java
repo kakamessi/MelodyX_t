@@ -882,7 +882,6 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     private ActionBean ab;
 
     private void doAction(String str) {
-
         /****** 开始新的一节， 重置各种状态 ******/
         resetLight();
 
@@ -982,19 +981,24 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
      * 显示指定图谱
      ******/
     public void initPlaySection() {
+        
         COURSE_TYPE = TYPE_PLAY;
         currentPlayIndex = 0;
 
-        //教师端独有代码，移植学生端需要手动删除
-        if (Utils.isTeacherClient(CourseActivity.this) && mBaseApp.isTV()) {
-            setUIType(R.id.rl_teacher_screen);
-            rlTeacherScreen.setBackgroundResource(R.mipmap.course_loading);
-            return;
-        }
+        setUIType(R.id.rl_teacher_screen);
+        //rlTeacherScreen.setBackgroundResource(R.mipmap.course_loading);
+        rlTeacherScreen.setImageResource(R.mipmap.course_loading);
 
-        setUIType(R.id.rl_score);
-        showTopLayout((currentPlayIndex + 1) + "");
-        initNoteAndLight();
+//        //教师端独有代码，移植学生端需要手动删除
+//        if (Utils.isTeacherClient(CourseActivity.this) && mBaseApp.isTV()) {
+//            setUIType(R.id.rl_teacher_screen);
+//            rlTeacherScreen.setBackgroundResource(R.mipmap.course_loading);
+//            return;
+//        }
+//
+//        setUIType(R.id.rl_score);
+//        showTopLayout((currentPlayIndex + 1) + "");
+//        initNoteAndLight();
     }
 
     //初始化音符
