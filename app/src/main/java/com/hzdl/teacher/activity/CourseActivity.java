@@ -981,7 +981,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
      * 显示指定图谱
      ******/
     public void initPlaySection() {
-        
+
         COURSE_TYPE = TYPE_PLAY;
         currentPlayIndex = 0;
 
