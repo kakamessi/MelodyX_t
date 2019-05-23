@@ -20,4 +20,23 @@
     <dimen name="image_thumbnail_size">100dp</dimen>
     <dimen name="image_thumbnail_spacing">1dp</dimen>
 
+
+    <!--启动屏-->
+    <dimen name="activity_sp_mR1">150dp</dimen>
+    <dimen name="activity_sp_mR2">130dp</dimen>
+
+    <dimen name="activity_main_mtop1">20dp</dimen>
+    <dimen name="activity_main_mtop2">20dp</dimen>
+    <dimen name="activity_main_mtop3">5dp</dimen>
+    <dimen name="activity_main_mtop4">5dp</dimen>
+
+
+    <dimen name="activity_login_inputheight">600dp</dimen>
+    <dimen name="activity_login_inputwith">670dp</dimen>
+    <dimen name="activity_login_inputtextsize">68sp</dimen>
+    <dimen name="activity_login_extsizemtop">80sp</dimen>
+    <dimen name="activity_login_idwidth">440dp</dimen>
+    <dimen name="activity_login_pswidth">440dp</dimen>
+    <dimen name="activity_login_btnwidth">450dp</dimen>
+
 </resources>
