@@ -38,6 +38,7 @@ import com.hzdl.teacher.interfacex.OnItemClickLitener;
 import com.hzdl.teacher.utils.BasePopupWindow;
 import com.hzdl.teacher.utils.ButtonUtils;
 import com.hzdl.teacher.utils.Utils;
+import com.hzdl.teacher.view.JZVideo;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -45,14 +46,11 @@ import java.util.concurrent.Executors;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.Jzvd;
 import io.vov.vitamio.MediaPlayer;
-import io.vov.vitamio.Vitamio;
-import io.vov.vitamio.widget.MediaController;
-import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
-import static com.hzdl.teacher.R.id.rcy_course2;
 import static com.hzdl.teacher.core.MelodyU.d_color_1;
 import static com.hzdl.teacher.core.MelodyU.d_color_2;
 import static com.hzdl.teacher.core.MelodyU.d_color_3;
@@ -87,8 +85,8 @@ import static com.hzdl.teacher.core.MelodyU.d_starttime_4;
  */
 public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
-    @BindView(R.id.vv)
-    VideoView vv;
+    @BindView(R.id.jzvideo)
+    JZVideo mJzvideo;
     @BindView(R.id.rl_video)
     RelativeLayout rlVideo;
     @BindView(R.id.rl_loading)
@@ -114,6 +112,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
     public static final int MSG_TYPE_SEDNVIEDO = 100;
 
+
     private MidiOutputDevice mOutputDevice;
     //当前消息
     private String actionMsg;
@@ -125,11 +124,11 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     //当前小节
     private int cellIndex = -1;
 
-    private Handler courseHandler = new Handler(){
+    private Handler courseHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch(msg.what){
+            switch (msg.what) {
                 case MSG_TYPE_SEDNVIEDO:
                     sendVideoActionInner();
                     break;
@@ -194,7 +193,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        vv.stopPlayback();
+        JZVideo.releaseAllVideos();
         closeView();
         stopTempleLight();
 
@@ -220,17 +219,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
      * 视频插件初始化
      */
     private void initVitamio() {
-        Vitamio.initialize(this);
-        MediaController mc = new MediaController(this);
-        mc.setVisibility(View.INVISIBLE);
-        vv.setMediaController(mc);
-        vv.setVideoChroma(MediaPlayer.VIDEOCHROMA_RGB565);
-        vv.setOnPreparedListener(this);
-        vv.setOnErrorListener(this);
-        vv.setOnCompletionListener(this);
 
-        //mVV.setVideoURI(Uri.parse("http://112.253.22.157/17/z/z/y/u/zzyuasjwufnqerzvyxgkuigrkcatxr/hc.yinyuetai.com/D046015255134077DDB3ACA0D7E68D45.flv"));
-        //vv.setVideoURI(Uri.parse(Utils.getVideoPath() + "hehe.mp4"));
     }
 
     /**
@@ -253,9 +242,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     }
 
     private void setFullScreen() {
-        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        vv.setLayoutParams(layoutParams1);
+
     }
 
 
@@ -265,32 +252,29 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
      * 切换资源
      */
     private void swichPlayScr(String name) {
-        vv.setVideoURI(Uri.parse(Utils.getVideoPath() + name));
-        vv.start();
+        mJzvideo.setUp(Utils.getVideoPath() + name,name, Jzvd.SCREEN_WINDOW_NORMAL);
+        mJzvideo.startPlaying();
     }
 
     /**
      * 播放/暂停
      */
     private void playOrPause() {
-        if (vv != null)
-            if (vv.isPlaying()) {
-                vv.pause();
-            } else {
-                vv.start();
-            }
+        if (mJzvideo != null){
+         mJzvideo.pause();
+        }
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
 
         //播放完成 跳入答题H5
-//        if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
-//            setUIType(R.id.webView);
-//            webView.setFocusable(true);
-//            webView.requestFocus();
-//            loadH5(les.getSection(cellIndex).getSourceName() + "  id = "+les.getSection(cellIndex).getId());
-//        }
+        //        if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
+        //            setUIType(R.id.webView);
+        //            webView.setFocusable(true);
+        //            webView.requestFocus();
+        //            loadH5(les.getSection(cellIndex).getSourceName() + "  id = "+les.getSection(cellIndex).getId());
+        //        }
 
     }
 
@@ -344,8 +328,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER) {
 
             if (COURSE_TYPE == TYPE_VEDIO) {
-                if (vv != null) {
-                    if (vv.isPlaying()) {
+                if (mJzvideo != null) {
+                    if (mJzvideo.isPlaying()) {
                         sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE);
                     } else {
                         sendSynAction(ActionProtocol.ACTION_VEDIO_ON);
@@ -388,8 +372,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         Utils.setOnFocusBG(tv_replay, R.drawable.shape_strock, -1);
         tv_select.requestFocus();
 
-        if (vv != null) {
-            if (vv.isPlaying()) {
+        if (mJzvideo != null) {
+            if (mJzvideo.isPlaying()) {
                 tv_pause.setImageResource(R.mipmap.btn_pause);
             } else {
                 tv_pause.setImageResource(R.mipmap.btn_play);
@@ -438,8 +422,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
             @Override
             public void onClick(View view) {
                 if (COURSE_TYPE == TYPE_VEDIO) {
-                    if (vv != null) {
-                        if (vv.isPlaying()) {
+                    if (mJzvideo != null) {
+                        if (mJzvideo.isPlaying()) {
                             sendSynAction(ActionProtocol.ACTION_VEDIO_PAUSE, les.getSection(cellIndex));
                         } else {
                             sendSynAction(ActionProtocol.ACTION_VEDIO_ON, les.getSection(cellIndex));
@@ -601,8 +585,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-             holder.tv_name.setText(les.getSectionsGSJ().get(position).getGroupName() + "  " + les.getSectionsGSJ().get(position).getShowName());
-             //holder.tv.setImageResource(R.mipmap.item_bg_gs);
+            holder.tv_name.setText(les.getSectionsGSJ().get(position).getGroupName() + "  " + les.getSectionsGSJ().get(position).getShowName());
+            //holder.tv.setImageResource(R.mipmap.item_bg_gs);
         }
 
         @Override
@@ -754,7 +738,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
      */
     private void action() {
 
-        if(ButtonUtils.isFastDoubleClick(1)){
+        if (ButtonUtils.isFastDoubleClick(1)) {
             return;
         }
 
@@ -763,7 +747,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         if (checkIndexOut()) {
             //课程结束
             setUIType(R.id.include_course_finish);
-            vv.pause();
+            mJzvideo.pause();
             --cellIndex;
             ivBackmain.requestFocus();
             return;
@@ -792,28 +776,28 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     //先解密视频文件，后发送消息
     private void sendVideoAction() {
 
-//        mExecutor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                //解密文件
-//                try {
-//
-//                    File f1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + les.getSection(cellIndex).getSourceName());
-//                    File f2 = new File(Utils.getVideoPath() + les.getSection(cellIndex).getSourceName());
-//                    Encrypter.decode(f1,f2,"xmelody");
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//
-//                sendMsg(MSG_TYPE_SEDNVIEDO);
-//            }
-//        });
+        //        mExecutor.execute(new Runnable() {
+        //            @Override
+        //            public void run() {
+        //                //解密文件
+        //                try {
+        //
+        //                    File f1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + les.getSection(cellIndex).getSourceName());
+        //                    File f2 = new File(Utils.getVideoPath() + les.getSection(cellIndex).getSourceName());
+        //                    Encrypter.decode(f1,f2,"xmelody");
+        //
+        //                } catch (Exception e) {
+        //                    e.printStackTrace();
+        //                }
+        //
+        //                sendMsg(MSG_TYPE_SEDNVIEDO);
+        //            }
+        //        });
 
         sendMsg(MSG_TYPE_SEDNVIEDO);
     }
 
-    private void sendVideoActionInner(){
+    private void sendVideoActionInner() {
 
         String code_light = "";
         String code_Screen = "";
@@ -830,10 +814,10 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
             code_Screen = "|0";
         }
 
-        if(les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5){
+        if (les.getSection(cellIndex).getType() == Constant.SECTION_TYPE_VIDEO_H5) {
             code_h5 = "|1";
 
-        }else{
+        } else {
             code_h5 = "|0";
         }
 
@@ -843,7 +827,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
     }
 
-    private void sendMsg(int actionCode){
+    private void sendMsg(int actionCode) {
         Message msg = Message.obtain();
         msg.what = actionCode;
         courseHandler.sendMessage(msg);
@@ -887,7 +871,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
         Log.e("kaka", "----------action code------- " + str);
         ab = ActionResolver.getInstance().resolve(str);
-        if(ab.getCodeByPositon(0) == 1) {
+        if (ab.getCodeByPositon(0) == 1) {
 
             if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
                 if (ab.getCodeByPositon(2) == 0) {
@@ -904,7 +888,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
                 resetVideo();
                 initImgSection();
 
-            }else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_ANSWER) {
+            } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_ANSWER) {
                 //答题界面
                 resetVideo();
                 initAnswerSection();
@@ -989,16 +973,16 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         //rlTeacherScreen.setBackgroundResource(R.mipmap.course_loading);
         rlTeacherScreen.setImageResource(R.mipmap.course_loading);
 
-//        //教师端独有代码，移植学生端需要手动删除
-//        if (Utils.isTeacherClient(CourseActivity.this) && mBaseApp.isTV()) {
-//            setUIType(R.id.rl_teacher_screen);
-//            rlTeacherScreen.setBackgroundResource(R.mipmap.course_loading);
-//            return;
-//        }
-//
-//        setUIType(R.id.rl_score);
-//        showTopLayout((currentPlayIndex + 1) + "");
-//        initNoteAndLight();
+        //        //教师端独有代码，移植学生端需要手动删除
+        //        if (Utils.isTeacherClient(CourseActivity.this) && mBaseApp.isTV()) {
+        //            setUIType(R.id.rl_teacher_screen);
+        //            rlTeacherScreen.setBackgroundResource(R.mipmap.course_loading);
+        //            return;
+        //        }
+        //
+        //        setUIType(R.id.rl_score);
+        //        showTopLayout((currentPlayIndex + 1) + "");
+        //        initNoteAndLight();
     }
 
     //初始化音符
@@ -1110,7 +1094,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
         }
         MelodyU.getInstance().offAllLight(mOutputDevice);
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
-        if(nextInfo.getInfo()!=null){
+        if (nextInfo.getInfo() != null) {
             mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getInfo().getNote() + 21, nextInfo.getInfo().isIdNoteRed(), true));
         }
     }
@@ -1131,8 +1115,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     }
 
     private void resetVideo() {
-        if (vv != null) {
-            vv.stopPlayback();
+        if (mJzvideo != null) {
+            mJzvideo.release();
         }
     }
 
@@ -1230,8 +1214,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
                         }
                         return;
                     }
-                    if (vv != null) {
-                        int curTime = (int) vv.getCurrentPosition();
+                    if (mJzvideo != null) {
+                        int curTime = (int) mJzvideo.getCurrentPositionWhenPlaying();
                         if (curTime > delay[xunhuan]) {
                             MelodyU.getInstance().lightTempo(md, dur, color, index);
                             xunhuan++;
@@ -1252,9 +1236,10 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     public void onNextCourse() {
         action();
     }
+
     @Override
     public String getID() {
-        if(les!=null) {
+        if (les != null) {
             String id = les.getSection(cellIndex).getId() + "";
             return id;
         }

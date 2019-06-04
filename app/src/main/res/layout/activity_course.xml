@@ -22,11 +22,15 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <io.vov.vitamio.widget.VideoView
-                android:layout_height="match_parent"
+            <!--<io.vov.vitamio.widget.VideoView-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:id="@+id/vv"-->
+                <!--&gt;</io.vov.vitamio.widget.VideoView>-->
+            <com.hzdl.teacher.view.JZVideo
+                android:id="@+id/jzvideo"
                 android:layout_width="match_parent"
-                android:id="@+id/vv"
-                ></io.vov.vitamio.widget.VideoView>
+                android:layout_height="match_parent" />
         </RelativeLayout>
 
         <RelativeLayout

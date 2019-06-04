@@ -1,5 +1,6 @@
 package com.hzdl.teacher.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -7,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hzdl.mex.utils.Log;
 import com.hzdl.mex.utils.SPUtils;
 import com.hzdl.teacher.R;
 import com.hzdl.teacher.base.App;
@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import kr.co.namee.permissiongen.PermissionGen;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,8 +63,19 @@ public class MainActivity extends BaseMidiActivity {
         ButterKnife.bind(this);
         initMidi();
         initView();
-
+        checkP();
         new CheckAlive().start();
+    }
+
+    private void checkP() {
+        PermissionGen.with(MainActivity.this)
+                .addRequestCode(0)
+                .permissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                .request();
+
     }
 
     @Override
