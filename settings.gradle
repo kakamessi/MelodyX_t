@@ -1,1 +1,1 @@
-include ':app', ':mex'
+include ':app', ':mex',':jiaozivideoplayer'
