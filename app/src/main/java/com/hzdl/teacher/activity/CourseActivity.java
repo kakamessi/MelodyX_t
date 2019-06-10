@@ -175,8 +175,10 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     }
 
     private void initView() {
+
         Utils.setOnFocusBG(tvMenu, R.drawable.shape_strock, -1);
         Utils.setOnFocusBG(ivBackmain, R.drawable.shape_strock, -1);
+        
     }
 
     int testInt = 21;
