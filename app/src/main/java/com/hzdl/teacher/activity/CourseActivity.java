@@ -47,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 import io.vov.vitamio.MediaPlayer;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
@@ -175,10 +176,8 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
     }
 
     private void initView() {
-
         Utils.setOnFocusBG(tvMenu, R.drawable.shape_strock, -1);
         Utils.setOnFocusBG(ivBackmain, R.drawable.shape_strock, -1);
-        
     }
 
     int testInt = 21;
@@ -1118,7 +1117,7 @@ public class CourseActivity extends BaseH5Activity implements MediaPlayer.OnPrep
 
     private void resetVideo() {
         if (mJzvideo != null) {
-            mJzvideo.release();
+            JzvdStd.releaseAllVideos();
         }
     }
 
