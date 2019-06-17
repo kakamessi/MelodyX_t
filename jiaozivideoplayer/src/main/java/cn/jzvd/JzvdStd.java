@@ -209,7 +209,7 @@ public class JzvdStd extends Jzvd {
     @Override
     public void onStatePause() {
         super.onStatePause();
-        changeUiToPauseShow();
+        //changeUiToPauseShow();
         cancelDismissControlViewTimer();
     }
 
